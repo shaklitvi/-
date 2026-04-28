@@ -1,0 +1,5592 @@
+<!DOCTYPE html>
+
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0d0d0e">
+<meta name="color-scheme" content="dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="פנוי תפוס">
+<meta name="application-name" content="פנוי תפוס">
+<meta name="description" content="רשת קהילתית למציאת חניה בתל אביב בזמן אמת">
+<title>פנוי תפוס · Tel Aviv</title>
+
+<!-- PWA Manifest (inline as data URL) -->
+
+<link rel="manifest" href='data:application/manifest+json;charset=utf-8,{"name":"פנוי תפוס","short_name":"פנוי תפוס","description":"רשת קהילתית למציאת חניה בתל אביב","start_url":"/-/","display":"standalone","orientation":"portrait","background_color":"%230d0d0e","theme_color":"%230d0d0e","lang":"he","dir":"rtl","categories":["navigation","social","utilities"],"icons":[{"src":"data:image/svg%2Bxml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22192%22 height=%22192%22 viewBox=%220 0 192 192%22><defs><radialGradient id=%22g%22 cx=%2230%25%22 cy=%2230%25%22><stop offset=%220%25%22 stop-color=%22%23e0c28c%22/><stop offset=%2240%25%22 stop-color=%22%23c9a770%22/><stop offset=%22100%25%22 stop-color=%22%238b6f47%22/></radialGradient></defs><rect width=%22192%22 height=%22192%22 rx=%2244%22 fill=%22%230d0d0e%22/><circle cx=%2296%22 cy=%2296%22 r=%2264%22 fill=%22url(%23g)%22/><text x=%2296%22 y=%22120%22 font-family=%22serif%22 font-size=%2280%22 font-weight=%22900%22 text-anchor=%22middle%22 fill=%22%232a1f1a%22>פ</text></svg>","sizes":"192x192","type":"image/svg+xml","purpose":"any"},{"src":"data:image/svg%2Bxml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22512%22 height=%22512%22 viewBox=%220 0 512 512%22><defs><radialGradient id=%22g%22 cx=%2230%25%22 cy=%2230%25%22><stop offset=%220%25%22 stop-color=%22%23e0c28c%22/><stop offset=%2240%25%22 stop-color=%22%23c9a770%22/><stop offset=%22100%25%22 stop-color=%22%238b6f47%22/></radialGradient></defs><rect width=%22512%22 height=%22512%22 rx=%22118%22 fill=%22%230d0d0e%22/><circle cx=%22256%22 cy=%22256%22 r=%22170%22 fill=%22url(%23g)%22/><text x=%22256%22 y=%22320%22 font-family=%22serif%22 font-size=%22214%22 font-weight=%22900%22 text-anchor=%22middle%22 fill=%22%232a1f1a%22>פ</text></svg>","sizes":"512x512","type":"image/svg+xml","purpose":"any"}]}'>
+
+<!-- Apple icons -->
+
+<link rel="apple-touch-icon" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180"><defs><radialGradient id="g" cx="30%25" cy="30%25"><stop offset="0%25" stop-color="%23e0c28c"/><stop offset="40%25" stop-color="%23c9a770"/><stop offset="100%25" stop-color="%238b6f47"/></radialGradient></defs><rect width="180" height="180" rx="40" fill="%230d0d0e"/><circle cx="90" cy="90" r="60" fill="url(%23g)"/><text x="90" y="113" font-family="serif" font-size="76" font-weight="900" text-anchor="middle" fill="%232a1f1a">פ</text></svg>'>
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><defs><radialGradient id="g" cx="30%25" cy="30%25"><stop offset="0%25" stop-color="%23e0c28c"/><stop offset="40%25" stop-color="%23c9a770"/><stop offset="100%25" stop-color="%238b6f47"/></radialGradient></defs><rect width="32" height="32" rx="7" fill="%230d0d0e"/><circle cx="16" cy="16" r="11" fill="url(%23g)"/><text x="16" y="20" font-family="serif" font-size="14" font-weight="900" text-anchor="middle" fill="%232a1f1a">פ</text></svg>'>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Assistant:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<style>
+  :root { color-scheme: dark; }
+
+- { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+height: 100%;
+width: 100%;
+overflow: hidden;
+font-family: ‘Assistant’, -apple-system, sans-serif;
+background: #0d0d0e;
+color: #ebe8e2;
+-webkit-font-smoothing: antialiased;
+-webkit-tap-highlight-color: transparent;
+user-select: none;
+touch-action: manipulation;
+}
+
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; font-weight: 500; }
+input, textarea { font-family: inherit; }
+
+.serif { font-family: ‘Frank Ruhl Libre’, serif; }
+.italic-serif { font-family: ‘Cormorant Garamond’, serif; font-style: italic; }
+
+/* ═══════ CONTAINERS ═══════ */
+#onboard {
+position: fixed; inset: 0; z-index: 2000;
+background: #0d0d0e;
+display: flex; flex-direction: column;
+transition: opacity 0.4s;
+}
+#onboard.hidden { opacity: 0; pointer-events: none; }
+
+#app {
+position: fixed; inset: 0;
+display: none;
+flex-direction: column;
+background: #0d0d0e;
+}
+#app.active { display: flex; }
+
+/* ═══════ ONBOARDING ═══════ */
+.onb-hero {
+flex: 1;
+display: flex; flex-direction: column;
+justify-content: center;
+padding: calc(env(safe-area-inset-top) + 40px) 30px 20px;
+text-align: center;
+background:
+radial-gradient(ellipse at top, rgba(201, 167, 112, 0.08) 0%, transparent 50%),
+radial-gradient(ellipse at bottom, rgba(139, 111, 71, 0.04) 0%, transparent 50%),
+#0d0d0e;
+}
+
+.onb-mark {
+width: 76px; height: 76px;
+border-radius: 50%;
+background: radial-gradient(circle at 30% 30%, #e0c28c, #c9a770 40%, #8b6f47 90%);
+margin: 0 auto 28px;
+display: grid; place-items: center;
+color: #2a1f1a;
+font-family: ‘Frank Ruhl Libre’, serif;
+font-weight: 900; font-size: 38px;
+box-shadow:
+inset 0 2px 2px rgba(255,255,255,0.35),
+inset 0 -2px 4px rgba(0,0,0,0.3),
+0 12px 40px rgba(201, 167, 112, 0.25);
+position: relative;
+}
+.onb-mark::after {
+content: ‘’; position: absolute; inset: 4px;
+border-radius: 50%;
+border: 0.5px solid rgba(255, 255, 255, 0.15);
+}
+
+.onb-eyebrow {
+font-family: ‘Inter’, sans-serif;
+font-size: 10px; font-weight: 500;
+letter-spacing: 0.4em;
+color: #c9a770;
+text-transform: uppercase;
+margin-bottom: 18px;
+}
+
+.onb-title {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 54px; font-weight: 500;
+line-height: 1; letter-spacing: -0.03em;
+color: #ebe8e2;
+margin-bottom: 8px;
+}
+.onb-title .it {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic; font-weight: 400;
+color: #c9a770;
+}
+
+.onb-tagline {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic; font-size: 18px;
+color: #8f8b82;
+margin-bottom: 44px;
+}
+
+.onb-bullets {
+max-width: 340px; width: 100%;
+margin: 0 auto; text-align: right;
+}
+.onb-bullet {
+display: flex; align-items: center;
+gap: 16px; padding: 14px 0;
+border-bottom: 1px solid #1f1f22;
+}
+.onb-bullet:last-child { border-bottom: 0; }
+.onb-bullet-num {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic; font-size: 22px;
+color: #c9a770;
+width: 26px; text-align: center;
+flex-shrink: 0;
+}
+.onb-bullet-ttl {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 15px; font-weight: 500;
+color: #ebe8e2;
+margin-bottom: 1px;
+}
+.onb-bullet-dsc {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic; font-size: 13px;
+color: #8f8b82;
+}
+
+.onb-foot {
+padding: 20px 30px calc(env(safe-area-inset-bottom) + 24px);
+background: #0d0d0e;
+}
+.onb-cta {
+width: 100%; padding: 20px;
+background: linear-gradient(180deg, #e0c28c 0%, #c9a770 50%, #b08f5a 100%);
+color: #2a1f1a;
+border-radius: 14px;
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 17px; font-weight: 600;
+display: flex; align-items: center; justify-content: space-between;
+transition: transform 0.1s;
+box-shadow:
+inset 0 1px 0 rgba(255, 255, 255, 0.3),
+0 8px 24px rgba(201, 167, 112, 0.25);
+}
+.onb-cta:active { transform: translateY(2px); }
+.onb-cta .arr { font-family: ‘Cormorant Garamond’, serif; font-size: 22px; }
+
+/* ═══════ HEADER ═══════ */
+.header {
+padding: calc(env(safe-area-inset-top) + 18px) 22px 16px;
+background: #0d0d0e;
+border-bottom: 1px solid #1f1f22;
+flex-shrink: 0;
+position: relative;
+z-index: 100;
+}
+
+.hdr-top {
+display: flex; align-items: center;
+justify-content: space-between;
+margin-bottom: 18px;
+}
+
+.brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.brand-mark {
+width: 36px; height: 36px;
+border-radius: 50%;
+background: radial-gradient(circle at 30% 30%, #e0c28c, #c9a770 40%, #8b6f47 90%);
+display: grid; place-items: center;
+color: #2a1f1a;
+font-family: ‘Frank Ruhl Libre’, serif;
+font-weight: 900; font-size: 19px;
+position: relative;
+box-shadow:
+inset 0 1px 1px rgba(255,255,255,0.3),
+inset 0 -1px 2px rgba(0,0,0,0.3);
+flex-shrink: 0;
+}
+.brand-mark::after {
+content: ‘’; position: absolute; inset: 2px;
+border-radius: 50%;
+border: 0.5px solid rgba(255,255,255,0.2);
+}
+.brand-txt { line-height: 1.1; min-width: 0; }
+.brand-name {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-weight: 700; font-size: 16px;
+color: #ebe8e2; white-space: nowrap;
+}
+.brand-name .it {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic; color: #c9a770;
+}
+.brand-sub {
+font-family: ‘Inter’, sans-serif;
+font-size: 9px; font-weight: 500;
+letter-spacing: 0.25em;
+color: #8f8b82;
+margin-top: 2px;
+text-transform: uppercase;
+}
+
+.hdr-chips { display: flex; gap: 6px; flex-shrink: 0; }
+.chip {
+padding: 6px 10px;
+border: 1px solid #2d2d31;
+border-radius: 99px;
+background: #1a1a1c;
+font-family: ‘Inter’, sans-serif;
+font-size: 10px; font-weight: 500;
+display: flex; align-items: center; gap: 5px;
+color: #ebe8e2;
+}
+.chip .dot {
+width: 5px; height: 5px;
+border-radius: 50%;
+background: #4a7a5c;
+box-shadow: 0 0 6px rgba(74, 122, 92, 0.6);
+animation: ping 2s infinite;
+}
+.chip.offline .dot { background: #7d3440; animation: none; box-shadow: 0 0 6px rgba(125, 52, 64, 0.6); }
+@keyframes ping { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.chip.champ { border-color: rgba(201, 167, 112, 0.3); }
+.chip.champ .dot { background: #c9a770; box-shadow: 0 0 6px rgba(201, 167, 112, 0.6); }
+.chip .v { font-weight: 600; }
+.chip .l { color: #8f8b82; font-size: 9px; }
+
+/* ─── Hero numbers ─── */
+.hero { text-align: center; padding: 4px 0 0; }
+.hero-label {
+display: flex; align-items: center;
+justify-content: center; gap: 10px;
+margin-bottom: 10px;
+}
+.hero-label .dash {
+width: 20px; height: 1px;
+background: #c9a770; opacity: 0.5;
+}
+.hero-label .eyebrow {
+font-family: ‘Inter’, sans-serif;
+font-size: 9px; font-weight: 500;
+letter-spacing: 0.24em;
+color: #8f8b82;
+text-transform: uppercase;
+}
+.hero-num {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-weight: 400; font-size: 58px;
+line-height: 1; letter-spacing: -0.04em;
+color: #f2ede3;
+font-variant-numeric: tabular-nums;
+}
+.hero-num .unit {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic; font-size: 15px;
+color: #8f8b82;
+margin-right: 8px;
+vertical-align: middle;
+}
+.hero-desc {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic; font-size: 14px;
+color: #8f8b82;
+margin-top: 2px;
+}
+.hero-meta {
+display: grid;
+grid-template-columns: 1fr 1px 1fr;
+margin-top: 14px; padding-top: 14px;
+border-top: 1px solid #1f1f22;
+}
+.hero-meta-item { text-align: center; }
+.hero-meta-item .v {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 22px; font-weight: 500;
+line-height: 1; color: #ebe8e2;
+}
+.hero-meta-item .l {
+font-family: ‘Inter’, sans-serif;
+font-size: 9px; font-weight: 500;
+letter-spacing: 0.2em;
+color: #8f8b82;
+margin-top: 6px;
+text-transform: uppercase;
+}
+.hero-divider { background: #2d2d31; width: 1px; }
+
+/* ═══════ SEGMENTED ═══════ */
+.seg {
+margin: 12px 22px 0;
+padding: 4px;
+background: #1a1a1c;
+border: 1px solid #2d2d31;
+border-radius: 99px;
+display: grid;
+grid-template-columns: 1fr 1fr;
+flex-shrink: 0;
+position: relative;
+z-index: 10;
+}
+.seg-btn {
+padding: 10px;
+border-radius: 99px;
+font-family: ‘Inter’, sans-serif;
+font-size: 12px; font-weight: 500;
+letter-spacing: 0.05em;
+color: #8f8b82;
+transition: all 0.22s;
+display: flex; align-items: center;
+justify-content: center; gap: 8px;
+}
+.seg-btn.active {
+background: linear-gradient(180deg, #2a2a2e, #212124);
+color: #ebe8e2;
+box-shadow:
+inset 0 1px 0 rgba(255,255,255,0.04),
+0 1px 2px rgba(0,0,0,0.4);
+}
+.seg-btn .c {
+padding: 1px 7px;
+border-radius: 99px;
+background: #0d0d0e;
+font-size: 10px;
+font-variant-numeric: tabular-nums;
+color: #8f8b82;
+}
+.seg-btn.active .c { background: #c9a770; color: #2a1f1a; font-weight: 600; }
+
+/* ═══════ CONTENT ═══════ */
+.content {
+flex: 1;
+position: relative;
+overflow: hidden;
+margin-top: 12px;
+}
+
+.list {
+position: absolute; inset: 0;
+overflow-y: auto;
+-webkit-overflow-scrolling: touch;
+padding: 0 22px 140px;
+}
+.list.hidden { display: none; }
+
+.empty {
+padding: 70px 20px 40px;
+text-align: center;
+}
+.empty-ornament {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic;
+color: #c9a770;
+opacity: 0.5;
+font-size: 42px;
+margin-bottom: 20px;
+}
+.empty-ttl {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 22px; font-weight: 400;
+color: #ebe8e2;
+margin-bottom: 8px;
+}
+.empty-sub {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic; font-size: 14px;
+color: #8f8b82;
+max-width: 260px; margin: 0 auto;
+line-height: 1.5;
+}
+
+.loading {
+padding: 70px 20px;
+text-align: center;
+color: #8f8b82;
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic;
+font-size: 14px;
+}
+.loading::before {
+content: ‘◌’;
+display: block;
+font-size: 36px;
+color: #c9a770;
+margin-bottom: 12px;
+animation: spin 1.5s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.spot {
+display: grid;
+grid-template-columns: auto 1fr auto;
+gap: 16px;
+padding: 18px 4px;
+border-bottom: 1px solid #1f1f22;
+align-items: center;
+position: relative;
+transition: background 0.2s;
+}
+.spot:active { background: rgba(201, 167, 112, 0.03); }
+.spot.fresh::before {
+content: ‘’;
+position: absolute;
+right: -22px; top: 50%;
+transform: translateY(-50%);
+width: 3px; height: 32px;
+background: linear-gradient(180deg, transparent, #c9a770, transparent);
+}
+
+.spot-badge {
+width: 42px; height: 42px;
+border-radius: 12px;
+display: grid; place-items: center;
+font-family: ‘Frank Ruhl Libre’, serif;
+font-weight: 700; font-size: 18px;
+background: #1a1a1c;
+border: 1px solid #2d2d31;
+}
+.spot-badge.blue {
+color: #5a6675;
+background: linear-gradient(180deg, rgba(90, 102, 117, 0.1), rgba(90, 102, 117, 0.04));
+border-color: rgba(90, 102, 117, 0.3);
+}
+.spot-badge.free {
+color: #4a7a5c;
+background: linear-gradient(180deg, rgba(74, 122, 92, 0.1), rgba(74, 122, 92, 0.04));
+border-color: rgba(74, 122, 92, 0.3);
+}
+.spot-badge.red {
+color: #7d3440;
+background: linear-gradient(180deg, rgba(125, 52, 64, 0.1), rgba(125, 52, 64, 0.04));
+border-color: rgba(125, 52, 64, 0.3);
+}
+
+.spot-body { min-width: 0; }
+.spot-street {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-weight: 500; font-size: 16px;
+color: #ebe8e2;
+margin-bottom: 2px;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+}
+.spot-meta {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic; font-size: 13px;
+color: #8f8b82;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+}
+.spot-meta .sep {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-style: normal;
+color: #c9a770;
+opacity: 0.6; margin: 0 6px;
+}
+
+.spot-right {
+display: flex; flex-direction: column;
+align-items: flex-end;
+gap: 6px;
+}
+.spot-dist {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 18px; font-weight: 500;
+color: #ebe8e2;
+line-height: 1;
+font-variant-numeric: tabular-nums;
+}
+.spot-dist .unit {
+font-family: ‘Inter’, sans-serif;
+font-size: 9px; font-weight: 500;
+letter-spacing: 0.12em;
+color: #8f8b82;
+margin-right: 3px;
+}
+.spot-age {
+font-family: ‘Inter’, sans-serif;
+font-size: 10px; font-weight: 500;
+color: #5a5651;
+font-variant-numeric: tabular-nums;
+}
+.spot-age.fresh { color: #c9a770; }
+
+/* Map */
+#map {
+position: absolute; inset: 0;
+background: #000;
+}
+.map-view.hidden { display: none; }
+.leaflet-container {
+background: #0a0a0b !important;
+font-family: ‘Assistant’, sans-serif !important;
+}
+.leaflet-control-attribution {
+background: rgba(13, 13, 14, 0.75) !important;
+color: #5a5651 !important;
+font-size: 8px !important;
+border: 0 !important;
+padding: 2px 6px !important;
+}
+.leaflet-control-attribution a { color: #8f8b82 !important; }
+.leaflet-control-zoom { display: none !important; }
+.leaflet-popup-content-wrapper {
+background: #212124 !important;
+color: #ebe8e2 !important;
+border-radius: 12px !important;
+border: 1px solid #2d2d31 !important;
+box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6) !important;
+padding: 0 !important;
+}
+.leaflet-popup-content { margin: 14px !important; }
+.leaflet-popup-tip { background: #212124 !important; }
+.leaflet-popup-close-button { display: none !important; }
+
+.pin-drop {
+width: 32px; height: 40px;
+position: relative;
+display: grid; place-items: center;
+}
+.pin-drop::before {
+content: ‘’; position: absolute; inset: 0;
+background: #212124;
+border: 1.5px solid #3a3a40;
+border-radius: 50% 50% 50% 0;
+transform: rotate(-45deg);
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+.pin-drop .label {
+position: relative;
+font-family: ‘Frank Ruhl Libre’, serif;
+font-weight: 700; font-size: 14px;
+color: #ebe8e2;
+z-index: 2;
+}
+.pin.blue .pin-drop::before { background: #5a6675; }
+.pin.free .pin-drop::before { background: #4a7a5c; }
+.pin.red .pin-drop::before { background: #7d3440; }
+.pin.stale { opacity: 0.5; filter: saturate(0.4); }
+
+.me-pin {
+width: 14px; height: 14px;
+border-radius: 50%;
+background: radial-gradient(circle, #e0c28c, #c9a770 70%);
+border: 2px solid #0d0d0e;
+box-shadow: 0 0 0 2px #c9a770, 0 0 16px rgba(201, 167, 112, 0.6);
+}
+
+.pop-street {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 16px; font-weight: 500;
+margin-bottom: 4px;
+}
+.pop-meta {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic; font-size: 13px;
+color: #8f8b82;
+margin-bottom: 14px;
+}
+.pop-btns {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 6px;
+}
+.pop-btn {
+padding: 10px 6px;
+font-size: 11px; font-weight: 500;
+letter-spacing: 0.05em;
+border-radius: 8px;
+}
+.pop-btn.primary {
+background: linear-gradient(180deg, #e0c28c, #c9a770);
+color: #2a1f1a;
+font-weight: 600;
+}
+.pop-btn.ghost {
+background: #1a1a1c;
+color: #ebe8e2;
+border: 1px solid #3a3a40;
+}
+
+.map-fabs {
+position: absolute;
+left: 16px; bottom: 110px;
+display: flex; flex-direction: column; gap: 10px;
+z-index: 20;
+}
+.fab {
+width: 44px; height: 44px;
+border-radius: 50%;
+background: rgba(20, 20, 21, 0.9);
+backdrop-filter: blur(12px);
+-webkit-backdrop-filter: blur(12px);
+border: 1px solid #3a3a40;
+display: grid; place-items: center;
+font-size: 15px; color: #ebe8e2;
+box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+transition: all 0.2s;
+}
+.fab:active {
+background: #c9a770;
+color: #2a1f1a;
+border-color: #c9a770;
+}
+
+/* ═══════ BOTTOM CTA ═══════ */
+.btm {
+position: absolute;
+bottom: 0; left: 0; right: 0;
+padding: 18px 22px calc(env(safe-area-inset-bottom) + 18px);
+background: linear-gradient(0deg, #0d0d0e 0%, #0d0d0e 60%, rgba(13, 13, 14, 0) 100%);
+z-index: 50;
+}
+.cta {
+width: 100%; padding: 18px 22px;
+background: linear-gradient(180deg, #e0c28c 0%, #c9a770 50%, #b08f5a 100%);
+color: #2a1f1a;
+border-radius: 14px;
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 16px; font-weight: 600;
+display: flex; align-items: center; justify-content: space-between;
+box-shadow:
+inset 0 1px 0 rgba(255, 255, 255, 0.3),
+0 8px 24px rgba(201, 167, 112, 0.2);
+transition: transform 0.1s;
+}
+.cta:active { transform: translateY(2px); }
+.cta-txt { display: flex; align-items: center; gap: 10px; }
+.cta-plus {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 20px; opacity: 0.7;
+}
+.cta-arr { font-family: ‘Cormorant Garamond’, serif; font-size: 22px; }
+
+/* ═══════ SHEETS ═══════ */
+.sheet-bg {
+position: fixed; inset: 0;
+background: rgba(0, 0, 0, 0.7);
+backdrop-filter: blur(8px);
+-webkit-backdrop-filter: blur(8px);
+z-index: 800;
+opacity: 0; pointer-events: none;
+transition: opacity 0.25s;
+}
+.sheet-bg.show { opacity: 1; pointer-events: auto; }
+
+.sheet {
+position: fixed;
+bottom: 0; left: 0; right: 0;
+z-index: 900;
+background: #141415;
+border-top-left-radius: 24px;
+border-top-right-radius: 24px;
+padding: 0 22px calc(env(safe-area-inset-bottom) + 24px);
+transform: translateY(110%);
+transition: transform 0.32s cubic-bezier(0.32, 0.72, 0, 1);
+max-height: 92vh;
+overflow-y: auto;
+box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.6);
+border-top: 1px solid #2d2d31;
+}
+.sheet.show { transform: translateY(0); }
+
+.sheet-grip {
+width: 36px; height: 4px;
+background: #3a3a40;
+border-radius: 99px;
+margin: 10px auto 18px;
+}
+
+.sheet-hdr {
+display: flex;
+align-items: flex-start;
+justify-content: space-between;
+padding-bottom: 20px;
+margin-bottom: 24px;
+border-bottom: 1px solid #1f1f22;
+}
+.sheet-eyebrow {
+font-family: ‘Inter’, sans-serif;
+font-size: 9px; font-weight: 500;
+letter-spacing: 0.3em;
+color: #c9a770;
+text-transform: uppercase;
+margin-bottom: 8px;
+}
+.sheet-title {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 28px; font-weight: 500;
+line-height: 1.1; letter-spacing: -0.02em;
+color: #ebe8e2;
+}
+.sheet-title .it {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic; font-weight: 400;
+color: #c9a770;
+}
+.sheet-close {
+width: 34px; height: 34px;
+border-radius: 50%;
+border: 1px solid #3a3a40;
+display: grid; place-items: center;
+color: #8f8b82;
+font-size: 14px;
+font-family: ‘Cormorant Garamond’, serif;
+}
+
+.field { margin-bottom: 22px; }
+.field-row {
+display: flex; align-items: center;
+gap: 10px; margin-bottom: 12px;
+}
+.field-num {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic; font-size: 18px;
+color: #c9a770; opacity: 0.6;
+}
+.field-lbl {
+font-family: ‘Inter’, sans-serif;
+font-size: 10px; font-weight: 500;
+color: #8f8b82;
+letter-spacing: 0.22em;
+text-transform: uppercase;
+}
+.field-line {
+flex: 1; height: 1px;
+background: #1f1f22;
+}
+
+.type-grid {
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+gap: 8px;
+}
+.type-opt {
+padding: 16px 8px;
+border-radius: 14px;
+background: #1a1a1c;
+border: 1px solid #2d2d31;
+text-align: center;
+transition: all 0.22s;
+}
+.type-opt .em {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 24px; font-weight: 700;
+display: block;
+margin-bottom: 6px;
+color: #ebe8e2;
+}
+.type-opt .nm {
+font-size: 12px; font-weight: 500;
+color: #8f8b82;
+}
+.type-opt.sel-blue.selected {
+background: linear-gradient(180deg, rgba(90, 102, 117, 0.2), rgba(90, 102, 117, 0.06));
+border-color: #5a6675;
+}
+.type-opt.sel-free.selected {
+background: linear-gradient(180deg, rgba(74, 122, 92, 0.2), rgba(74, 122, 92, 0.06));
+border-color: #4a7a5c;
+}
+.type-opt.sel-red.selected {
+background: linear-gradient(180deg, rgba(125, 52, 64, 0.2), rgba(125, 52, 64, 0.06));
+border-color: #7d3440;
+}
+.type-opt.selected .em,
+.type-opt.selected .nm { color: #f2ede3; }
+
+.input {
+width: 100%; padding: 14px 16px;
+background: #1a1a1c;
+border: 1px solid #2d2d31;
+color: #ebe8e2;
+font-size: 14px; font-weight: 400;
+border-radius: 12px;
+resize: none;
+}
+.input:focus { outline: none; border-color: #c9a770; }
+.input::placeholder {
+color: #5a5651;
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic;
+}
+
+.loc-status {
+display: flex; align-items: center; gap: 12px;
+padding: 14px 16px;
+background: #1a1a1c;
+border: 1px solid #2d2d31;
+border-radius: 12px;
+margin-bottom: 22px;
+}
+.loc-status .ic {
+width: 22px; height: 22px;
+border-radius: 50%;
+border: 1.5px solid #5a5651;
+display: grid; place-items: center;
+font-size: 10px;
+color: #5a5651;
+flex-shrink: 0;
+}
+.loc-status .txt {
+flex: 1;
+font-size: 12px;
+color: #8f8b82;
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic;
+}
+.loc-status .act {
+font-size: 11px; font-weight: 500;
+color: #c9a770;
+text-decoration: underline;
+text-underline-offset: 3px;
+}
+.loc-status.ok { border-color: rgba(74, 122, 92, 0.4); }
+.loc-status.ok .ic {
+border-color: #4a7a5c;
+color: #4a7a5c;
+background: rgba(74, 122, 92, 0.1);
+}
+.loc-status.ok .txt {
+color: #ebe8e2;
+font-style: normal;
+font-family: ‘Assistant’, sans-serif;
+font-weight: 500;
+}
+.loc-status.err { border-color: rgba(125, 52, 64, 0.4); }
+.loc-status.err .ic { border-color: #7d3440; color: #7d3440; }
+
+.submit {
+width: 100%; padding: 18px;
+background: linear-gradient(180deg, #e0c28c 0%, #c9a770 50%, #b08f5a 100%);
+color: #2a1f1a;
+border-radius: 14px;
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 16px; font-weight: 600;
+margin-top: 8px;
+transition: all 0.15s;
+box-shadow:
+inset 0 1px 0 rgba(255, 255, 255, 0.3),
+0 6px 20px rgba(201, 167, 112, 0.15);
+}
+.submit:active { transform: translateY(2px); }
+.submit:disabled {
+background: #2a2a2e;
+color: #5a5651;
+box-shadow: none;
+}
+
+/* ═══════ STATS SHEET ═══════ */
+.stats-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 10px;
+margin-bottom: 24px;
+}
+.stat-cell {
+background: #1a1a1c;
+border: 1px solid #2d2d31;
+border-radius: 14px;
+padding: 20px 16px;
+text-align: center;
+}
+.stat-cell .num {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 44px; font-weight: 500;
+line-height: 1; letter-spacing: -0.03em;
+font-variant-numeric: tabular-nums;
+}
+.stat-cell .num.c { color: #c9a770; }
+.stat-cell .num.g { color: #4a7a5c; }
+.stat-cell .num.b { color: #5a6675; }
+.stat-cell .num.r { color: #7d3440; }
+.stat-cell .lbl {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic; font-size: 13px;
+color: #8f8b82;
+margin-top: 8px;
+}
+
+.prog-card {
+background: #1a1a1c;
+border: 1px solid #2d2d31;
+border-radius: 14px;
+padding: 20px;
+margin-bottom: 24px;
+}
+.prog-head {
+display: flex; align-items: baseline;
+justify-content: space-between;
+margin-bottom: 14px;
+}
+.prog-lvl {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 18px; font-weight: 500;
+}
+.prog-lvl .it {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic; color: #c9a770;
+}
+.prog-txt {
+font-size: 11px;
+color: #8f8b82;
+font-variant-numeric: tabular-nums;
+letter-spacing: 0.05em;
+}
+.prog-bar {
+height: 6px;
+background: #0d0d0e;
+border-radius: 99px;
+overflow: hidden;
+}
+.prog-fill {
+height: 100%;
+background: linear-gradient(90deg, #8b6f47, #c9a770, #e0c28c);
+border-radius: 99px;
+transition: width 0.8s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.section-head {
+display: flex; align-items: baseline;
+gap: 10px; margin-bottom: 14px;
+}
+.section-head .dash { flex: 1; height: 1px; background: #2d2d31; }
+.section-ttl {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 16px; font-weight: 500;
+}
+.section-ttl .it {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic; font-weight: 400;
+color: #c9a770;
+}
+
+/* ═══════ SEARCH BAR (Trip mode) ═══════ */
+.search-row {
+padding: 8px 22px 0;
+flex-shrink: 0;
+position: relative;
+}
+.search-wrap {
+display: flex;
+align-items: center;
+gap: 10px;
+padding: 10px 14px;
+background: #1a1a1c;
+border: 1px solid #2d2d31;
+border-radius: 12px;
+transition: border-color 0.2s;
+}
+.search-wrap:focus-within {
+border-color: rgba(201,167,112,0.5);
+}
+.search-ic {
+font-size: 18px;
+color: #8f8b82;
+}
+.search-input {
+flex: 1;
+background: transparent;
+border: none;
+outline: none;
+color: #ebe8e2;
+font-family: ‘Assistant’, sans-serif;
+font-size: 14px;
+direction: rtl;
+padding: 0;
+}
+.search-input::placeholder {
+color: #5a5651;
+font-style: italic;
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 14px;
+}
+.search-clear {
+width: 22px; height: 22px;
+border-radius: 50%;
+background: #2d2d31;
+color: #8f8b82;
+font-size: 11px;
+display: grid;
+place-items: center;
+}
+.search-results {
+position: absolute;
+top: calc(100% + 4px);
+left: 22px;
+right: 22px;
+background: #1a1a1c;
+border: 1px solid #2d2d31;
+border-radius: 12px;
+box-shadow: 0 12px 36px rgba(0,0,0,0.6);
+max-height: 240px;
+overflow-y: auto;
+z-index: 50;
+}
+.search-result-item {
+width: 100%;
+text-align: right;
+padding: 12px 14px;
+border-bottom: 1px solid #2d2d31;
+background: transparent;
+transition: background 0.15s;
+direction: rtl;
+}
+.search-result-item:last-child { border-bottom: none; }
+.search-result-item:active { background: #232325; }
+.sr-name {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 14px;
+color: #ebe8e2;
+margin-bottom: 2px;
+}
+.sr-area {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic;
+font-size: 11px;
+color: #8f8b82;
+}
+
+/* ═══════ TRIP MODE BANNER ═══════ */
+.trip-banner {
+margin: 8px 22px 0;
+padding: 12px 14px;
+background: linear-gradient(180deg, rgba(201,167,112,0.15), rgba(201,167,112,0.05));
+border: 1px solid rgba(201,167,112,0.4);
+border-radius: 12px;
+display: flex;
+align-items: center;
+gap: 12px;
+flex-shrink: 0;
+}
+.trip-info { flex: 1; min-width: 0; }
+.trip-label {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic;
+font-size: 10px;
+color: #8f8b82;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+margin-bottom: 2px;
+}
+.trip-name {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 14px;
+color: #e0c28c;
+font-weight: 500;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+}
+.trip-stats {
+text-align: center;
+flex-shrink: 0;
+padding: 0 8px;
+border-right: 1px solid rgba(201,167,112,0.2);
+}
+.trip-stats span:first-child {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 22px;
+font-weight: 500;
+color: #c9a770;
+line-height: 1;
+display: block;
+font-variant-numeric: tabular-nums;
+}
+.trip-stats-l {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic;
+font-size: 10px;
+color: #8f8b82;
+}
+.trip-close {
+width: 28px; height: 28px;
+border-radius: 50%;
+background: rgba(201,167,112,0.1);
+color: #c9a770;
+font-size: 12px;
+flex-shrink: 0;
+}
+
+/* ═══════ FILTER PILLS (compact, simple) ═══════ */
+.filters {
+display: flex;
+gap: 6px;
+padding: 12px 22px 0;
+overflow-x: auto;
+-webkit-overflow-scrolling: touch;
+flex-shrink: 0;
+scrollbar-width: none;
+}
+.filters::-webkit-scrollbar { display: none; }
+.filter-pill {
+padding: 7px 14px;
+background: transparent;
+border: 1px solid #2d2d31;
+border-radius: 99px;
+font-family: ‘Inter’, sans-serif;
+font-size: 11px; font-weight: 500;
+color: #8f8b82;
+display: flex; align-items: center; gap: 5px;
+flex-shrink: 0;
+transition: all 0.2s;
+letter-spacing: 0.03em;
+}
+.filter-pill:active { transform: scale(0.95); }
+.filter-pill.active {
+background: linear-gradient(180deg, rgba(201, 167, 112, 0.18), rgba(201, 167, 112, 0.06));
+border-color: rgba(201, 167, 112, 0.5);
+color: #e0c28c;
+}
+.filter-pill .dot {
+width: 6px; height: 6px;
+border-radius: 50%;
+flex-shrink: 0;
+}
+.filter-pill .dot.blue { background: #5a6675; }
+.filter-pill .dot.free { background: #4a7a5c; }
+.filter-pill .dot.red { background: #7d3440; }
+
+/* ═══════ BOTTOM NAV BAR (proper app navigation) ═══════ */
+.bottom-nav {
+position: absolute;
+bottom: 0; left: 0; right: 0;
+height: calc(64px + env(safe-area-inset-bottom));
+padding-bottom: env(safe-area-inset-bottom);
+background: linear-gradient(180deg, rgba(13,13,14,0.5) 0%, #0d0d0e 30%);
+border-top: 1px solid #1f1f22;
+display: grid;
+grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+align-items: center;
+z-index: 100;
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+}
+.nav-item {
+display: flex; flex-direction: column;
+align-items: center;
+justify-content: center;
+gap: 3px;
+height: 100%;
+color: #5a5651;
+transition: color 0.2s;
+position: relative;
+padding: 0 2px;
+}
+.nav-item:active { transform: scale(0.92); }
+.nav-item.active {
+color: #c9a770;
+}
+.nav-icon {
+font-size: 19px;
+line-height: 1;
+height: 22px;
+display: grid;
+place-items: center;
+}
+.nav-label {
+font-family: ‘Inter’, sans-serif;
+font-size: 9px;
+font-weight: 600;
+letter-spacing: 0.05em;
+}
+.nav-badge {
+position: absolute;
+top: 6px;
+right: 50%;
+transform: translateX(14px);
+background: #c9a770;
+color: #2a1f1a;
+font-family: ‘Inter’, sans-serif;
+font-size: 9px;
+font-weight: 700;
+min-width: 16px;
+height: 16px;
+border-radius: 99px;
+display: grid;
+place-items: center;
+padding: 0 4px;
+border: 2px solid #0d0d0e;
+}
+/* Center FAB - the report button */
+.nav-fab {
+width: 52px; height: 52px;
+border-radius: 50%;
+background: linear-gradient(180deg, #e0c28c 0%, #c9a770 50%, #b08f5a 100%);
+color: #2a1f1a;
+box-shadow:
+inset 0 1px 0 rgba(255,255,255,0.4),
+0 6px 18px rgba(201, 167, 112, 0.45);
+margin: 0 auto;
+display: grid;
+place-items: center;
+transform: translateY(-12px);
+transition: transform 0.15s;
+border: 3px solid #0d0d0e;
+}
+.nav-fab:active {
+transform: translateY(-8px) scale(0.95);
+}
+.nav-fab-icon {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 28px;
+font-weight: 400;
+line-height: 1;
+}
+
+/* Adjust list padding so nav doesn’t cover content */
+.list { padding-bottom: 90px !important; }
+.map-fabs { bottom: 90px !important; }
+
+/* ═══════ MORE MENU ROWS ═══════ */
+.more-row {
+width: 100%;
+display: flex;
+align-items: center;
+gap: 14px;
+padding: 16px 14px;
+background: #1a1a1c;
+border: 1px solid #2d2d31;
+border-radius: 14px;
+margin-bottom: 10px;
+text-align: right;
+transition: background 0.2s;
+}
+.more-row:active { background: #232325; }
+.more-ic {
+width: 44px; height: 44px;
+border-radius: 12px;
+background: rgba(201, 167, 112, 0.08);
+border: 1px solid rgba(201, 167, 112, 0.2);
+display: grid;
+place-items: center;
+font-size: 20px;
+flex-shrink: 0;
+}
+.more-txt { flex: 1; min-width: 0; }
+.more-name {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 16px;
+font-weight: 500;
+margin-bottom: 2px;
+}
+.more-desc {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic;
+font-size: 12px;
+color: #8f8b82;
+}
+.more-arr {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 22px;
+color: #c9a770;
+opacity: 0.6;
+}
+
+/* ═══════ HELP/FAQ BOT ═══════ */
+.help-cat-title {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic;
+font-size: 11px;
+color: #c9a770;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+margin: 18px 0 10px;
+padding: 0 4px;
+}
+.help-q {
+width: 100%;
+padding: 14px 16px;
+background: #1a1a1c;
+border: 1px solid #2d2d31;
+border-radius: 12px;
+margin-bottom: 8px;
+text-align: right;
+direction: rtl;
+color: #ebe8e2;
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 13.5px;
+line-height: 1.4;
+cursor: pointer;
+transition: all 0.2s;
+}
+.help-q:active { background: #232325; border-color: rgba(201, 167, 112, 0.3); }
+.help-answer-title {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 16px;
+font-weight: 500;
+color: #c9a770;
+margin-bottom: 12px;
+line-height: 1.4;
+}
+.help-answer-body {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 13.5px;
+color: #c8c4bc;
+line-height: 1.8;
+}
+.help-answer-body strong {
+color: #ebe8e2;
+font-weight: 600;
+}
+.help-answer-body ol, .help-answer-body ul {
+padding-right: 18px;
+margin: 8px 0;
+}
+.help-answer-body li {
+margin-bottom: 6px;
+}
+.help-tip {
+background: rgba(201,167,112,0.08);
+border: 1px solid rgba(201,167,112,0.2);
+border-radius: 10px;
+padding: 12px;
+margin-top: 12px;
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic;
+font-size: 12.5px;
+color: #c9a770;
+}
+
+/* ═══════ NOTIFICATIONS SETTINGS ═══════ */
+.notif-row {
+display: flex;
+align-items: center;
+gap: 12px;
+padding: 14px;
+background: #1a1a1c;
+border: 1px solid #2d2d31;
+border-radius: 12px;
+margin-bottom: 8px;
+}
+.notif-row-info { flex: 1; min-width: 0; }
+.notif-row-name {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 14px;
+font-weight: 500;
+margin-bottom: 2px;
+}
+.notif-row-desc {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic;
+font-size: 11px;
+color: #8f8b82;
+}
+.notif-toggle {
+width: 48px;
+height: 28px;
+border-radius: 99px;
+background: #2d2d31;
+position: relative;
+transition: background 0.2s;
+flex-shrink: 0;
+}
+.notif-toggle.active {
+background: linear-gradient(180deg, #e0c28c, #c9a770);
+}
+.notif-toggle-circle {
+position: absolute;
+top: 3px;
+right: 3px;
+width: 22px;
+height: 22px;
+border-radius: 50%;
+background: #fff;
+transition: transform 0.2s;
+box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.notif-toggle.active .notif-toggle-circle {
+transform: translateX(-20px);
+}
+.notif-segments {
+display: flex;
+gap: 4px;
+background: #0d0d0e;
+padding: 3px;
+border-radius: 99px;
+border: 1px solid #2d2d31;
+}
+.notif-seg {
+padding: 6px 10px;
+border-radius: 99px;
+font-family: ‘Inter’, sans-serif;
+font-size: 10px;
+font-weight: 600;
+color: #8f8b82;
+transition: all 0.2s;
+white-space: nowrap;
+}
+.notif-seg.active {
+background: linear-gradient(180deg, #e0c28c, #c9a770);
+color: #2a1f1a;
+}
+
+/* ═══════ SHARE BUTTONS ═══════ */
+.share-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 10px;
+margin-top: 16px;
+}
+.share-btn {
+padding: 14px;
+border-radius: 12px;
+background: #1a1a1c;
+border: 1px solid #2d2d31;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 10px;
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 14px;
+font-weight: 600;
+color: #ebe8e2;
+transition: all 0.2s;
+}
+.share-btn:active { transform: scale(0.97); }
+.share-btn.whatsapp {
+background: linear-gradient(135deg, #25d366, #128c7e);
+color: #fff;
+border-color: transparent;
+}
+.share-btn .ic { font-size: 18px; }
+
+/* ═══════ MY SPOTS / HISTORY LIST ═══════ */
+.my-spot {
+display: flex;
+align-items: center;
+gap: 12px;
+padding: 12px;
+background: #1a1a1c;
+border: 1px solid #2d2d31;
+border-radius: 12px;
+margin-bottom: 8px;
+}
+.my-spot-info { flex: 1; min-width: 0; }
+.my-spot-street {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 14px; font-weight: 500;
+margin-bottom: 2px;
+}
+.my-spot-meta {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic;
+font-size: 12px; color: #8f8b82;
+}
+.my-spot-del {
+width: 34px; height: 34px;
+border-radius: 10px;
+background: rgba(125, 52, 64, 0.15);
+color: #c46570;
+display: grid; place-items: center;
+font-size: 14px;
+border: 1px solid rgba(125, 52, 64, 0.3);
+flex-shrink: 0;
+}
+
+/* “שלי” tag on spots */
+.spot.mine::after {
+content: ‘שלי’;
+position: absolute;
+top: 6px; left: 0;
+background: rgba(201, 167, 112, 0.15);
+color: #c9a770;
+font-family: ‘Inter’, sans-serif;
+font-size: 9px;
+font-weight: 600;
+padding: 2px 7px;
+border-radius: 99px;
+letter-spacing: 0.1em;
+border: 1px solid rgba(201, 167, 112, 0.3);
+}
+.pin.mine .pin-drop::before {
+box-shadow: 0 0 0 2px #c9a770, 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+.pop-btn.danger {
+background: rgba(125, 52, 64, 0.15);
+color: #c46570;
+border: 1px solid rgba(125, 52, 64, 0.4);
+grid-column: 1 / -1;
+}
+.pop-btn.flag {
+background: transparent;
+color: #8f8b82;
+border: 1px dashed #3a3a40;
+font-size: 10px !important;
+}
+
+/* ═══════ COUNTDOWN TIMER ═══════ */
+.spot-age.countdown {
+font-family: ‘Inter’, sans-serif;
+font-variant-numeric: tabular-nums;
+font-weight: 600;
+letter-spacing: 0.02em;
+}
+.spot-age.cd-warm {
+color: #c9a770;
+background: rgba(201, 167, 112, 0.12);
+padding: 2px 7px;
+border-radius: 99px;
+}
+.spot-age.cd-hot {
+color: #d97757;
+background: rgba(217, 119, 87, 0.15);
+padding: 2px 7px;
+border-radius: 99px;
+}
+.spot-age.cd-critical {
+color: #c46570;
+background: rgba(125, 52, 64, 0.2);
+padding: 2px 7px;
+border-radius: 99px;
+animation: pulse-red 1s ease-in-out infinite;
+}
+@keyframes pulse-red {
+0%, 100% { opacity: 1; }
+50% { opacity: 0.55; }
+}
+
+/* Confetti animation */
+@keyframes confetti-fall {
+0% {
+transform: translateY(0) rotate(0deg);
+opacity: 1;
+}
+100% {
+transform: translateY(100vh) rotate(720deg);
+opacity: 0;
+}
+}
+
+/* ═══════ WEEKLY CHART ═══════ */
+.weekly-chart {
+display: grid;
+grid-template-columns: repeat(7, 1fr);
+gap: 6px;
+height: 100px;
+align-items: end;
+}
+.chart-day {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 4px;
+height: 100%;
+justify-content: flex-end;
+}
+.chart-bar-wrap {
+flex: 1;
+width: 100%;
+display: flex;
+align-items: flex-end;
+justify-content: center;
+min-height: 8px;
+}
+.chart-bar {
+width: 100%;
+max-width: 18px;
+background: linear-gradient(180deg, #5a6675, #3a4250);
+border-radius: 3px 3px 0 0;
+position: relative;
+overflow: hidden;
+min-height: 3px;
+transition: height 0.4s ease-out;
+}
+.chart-bar-released {
+position: absolute;
+top: 0; left: 0; right: 0;
+background: linear-gradient(180deg, #e0c28c, #c9a770);
+border-radius: 3px 3px 0 0;
+}
+.chart-bar-empty {
+width: 100%;
+max-width: 18px;
+height: 3px;
+background: #2d2d31;
+border-radius: 99px;
+}
+.chart-day-num {
+font-family: ‘Inter’, sans-serif;
+font-size: 9px;
+font-weight: 700;
+color: #c9a770;
+height: 12px;
+}
+.chart-day-name {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic;
+font-size: 10px;
+color: #8f8b82;
+}
+.chart-day.today .chart-day-name {
+color: #c9a770;
+font-weight: 600;
+}
+
+/* ═══════ “SOMEONE ON THE WAY” ═══════ */
+.spot.taking {
+background: linear-gradient(90deg, rgba(201, 167, 112, 0.06), transparent);
+}
+.spot.taking::before {
+background: linear-gradient(180deg, transparent, #d97757, transparent) !important;
+animation: pulse-amber 1.2s ease-in-out infinite;
+}
+@keyframes pulse-amber {
+0%, 100% { opacity: 1; box-shadow: 0 0 12px rgba(217, 119, 87, 0.5); }
+50% { opacity: 0.5; box-shadow: 0 0 4px rgba(217, 119, 87, 0.3); }
+}
+.spot-meta .taking-tag {
+color: #d97757;
+font-weight: 600;
+font-family: ‘Inter’, sans-serif;
+font-size: 11px;
+letter-spacing: 0.05em;
+}
+.spot-meta .taking-tag::before {
+content: ’🚗 ’;
+}
+
+.pin.taking .pin-drop::before {
+box-shadow: 0 0 0 3px #d97757, 0 4px 14px rgba(217, 119, 87, 0.5) !important;
+animation: pulse-amber 1.2s ease-in-out infinite;
+}
+
+/* ═══════ ARRIVED CONFIRMATION SHEET ═══════ */
+.arrived-modal {
+position: fixed;
+inset: 0;
+z-index: 1200;
+background: rgba(0, 0, 0, 0.85);
+backdrop-filter: blur(10px);
+-webkit-backdrop-filter: blur(10px);
+display: none;
+align-items: center;
+justify-content: center;
+padding: 30px;
+}
+.arrived-modal.show { display: flex; }
+.arrived-card {
+background: #141415;
+border: 1px solid #2d2d31;
+border-radius: 18px;
+padding: 28px 24px 24px;
+max-width: 360px;
+width: 100%;
+text-align: center;
+box-shadow: 0 24px 80px rgba(0, 0, 0, 0.7);
+}
+.arrived-icon {
+width: 64px; height: 64px;
+border-radius: 50%;
+background: radial-gradient(circle at 30% 30%, #e0c28c, #c9a770 40%, #8b6f47 90%);
+margin: 0 auto 18px;
+display: grid; place-items: center;
+color: #2a1f1a;
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 28px; font-weight: 900;
+box-shadow: inset 0 1px 1px rgba(255,255,255,0.3);
+}
+.arrived-title {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 22px; font-weight: 500;
+color: #ebe8e2;
+margin-bottom: 6px;
+}
+.arrived-title .it {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic;
+color: #c9a770;
+}
+.arrived-sub {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic;
+font-size: 14px;
+color: #8f8b82;
+margin-bottom: 20px;
+}
+.arrived-timer {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 48px;
+font-weight: 500;
+color: #c9a770;
+line-height: 1;
+font-variant-numeric: tabular-nums;
+margin-bottom: 4px;
+}
+.arrived-timer-lbl {
+font-family: ‘Inter’, sans-serif;
+font-size: 10px;
+font-weight: 500;
+letter-spacing: 0.25em;
+color: #8f8b82;
+text-transform: uppercase;
+margin-bottom: 24px;
+}
+.arrived-bar {
+height: 4px;
+background: #2d2d31;
+border-radius: 99px;
+overflow: hidden;
+margin-bottom: 22px;
+}
+.arrived-bar-fill {
+height: 100%;
+background: linear-gradient(90deg, #c9a770, #e0c28c);
+transition: width 1s linear;
+border-radius: 99px;
+}
+.arrived-btns {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 8px;
+}
+.arrived-btn {
+padding: 14px;
+border-radius: 12px;
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 14px;
+font-weight: 600;
+transition: transform 0.1s;
+}
+.arrived-btn:active { transform: translateY(2px); }
+.arrived-btn.primary {
+background: linear-gradient(180deg, #e0c28c 0%, #c9a770 50%, #b08f5a 100%);
+color: #2a1f1a;
+box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+}
+.arrived-btn.ghost {
+background: #1a1a1c;
+color: #ebe8e2;
+border: 1px solid #3a3a40;
+}
+
+.badge-list {
+display: grid;
+grid-template-columns: 1fr;
+gap: 8px;
+}
+.badge-row {
+display: flex; align-items: center;
+gap: 14px;
+padding: 14px 16px;
+background: #1a1a1c;
+border: 1px solid #2d2d31;
+border-radius: 12px;
+}
+.badge-row.locked { opacity: 0.45; }
+.badge-row.earned {
+border-color: rgba(201, 167, 112, 0.4);
+background: linear-gradient(180deg, rgba(201, 167, 112, 0.04), #1a1a1c);
+}
+.badge-seal {
+width: 40px; height: 40px;
+border-radius: 50%;
+display: grid; place-items: center;
+font-family: ‘Frank Ruhl Libre’, serif;
+font-weight: 700; font-size: 16px;
+flex-shrink: 0;
+background: #0d0d0e;
+border: 1px solid #3a3a40;
+color: #5a5651;
+}
+.badge-row.earned .badge-seal {
+background: radial-gradient(circle at 30% 30%, #e0c28c, #c9a770 40%, #8b6f47 90%);
+color: #2a1f1a;
+border-color: #c9a770;
+}
+.badge-nm {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 14px; font-weight: 500;
+margin-bottom: 1px;
+}
+.badge-dsc {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic; font-size: 12px;
+color: #8f8b82;
+}
+
+/* ═══════ MAP PICKER ═══════ */
+.picker {
+position: fixed; inset: 0;
+z-index: 1100;
+background: #0d0d0e;
+display: flex; flex-direction: column;
+transform: translateY(100%);
+transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.picker.show { transform: translateY(0); }
+.picker-hdr {
+padding: calc(env(safe-area-inset-top) + 14px) 20px 14px;
+border-bottom: 1px solid #1f1f22;
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+.picker-hdr h3 {
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 17px; font-weight: 500;
+}
+#pickerMap { flex: 1; background: #000; }
+.picker-cross {
+position: fixed;
+top: 50%; left: 50%;
+transform: translate(-50%, calc(-50% - 30px));
+pointer-events: none;
+z-index: 500;
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 34px;
+color: #c9a770;
+text-shadow: 0 0 10px rgba(0,0,0,0.8);
+}
+.picker-foot {
+padding: 16px 22px calc(env(safe-area-inset-bottom) + 18px);
+border-top: 1px solid #1f1f22;
+}
+
+/* ═══════ TOAST ═══════ */
+.toast {
+position: fixed;
+top: calc(env(safe-area-inset-top) + 14px);
+right: 20px; left: 20px;
+z-index: 1500;
+padding: 14px 18px;
+background: #212124;
+border: 1px solid #3a3a40;
+border-radius: 14px;
+display: flex; align-items: center; gap: 12px;
+transform: translateY(-200%);
+transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+.toast.show { transform: translateY(0); }
+.toast .ic {
+width: 26px; height: 26px;
+border-radius: 50%;
+background: #1a1a1c;
+display: grid; place-items: center;
+font-family: ‘Frank Ruhl Libre’, serif;
+font-size: 13px;
+}
+.toast .msg {
+flex: 1;
+font-size: 13px; font-weight: 500;
+color: #ebe8e2;
+}
+.toast.xp { border-color: rgba(201, 167, 112, 0.4); }
+.toast.xp .ic { background: #c9a770; color: #2a1f1a; }
+.toast.win {
+background: linear-gradient(180deg, rgba(201, 167, 112, 0.15), #212124);
+border-color: #c9a770;
+}
+.toast.win .ic { background: #c9a770; color: #2a1f1a; }
+.toast.err .ic { background: #7d3440; color: #f2ede3; }
+</style>
+
+</head>
+<body>
+
+<!-- ═══════ ONBOARDING ═══════ -->
+
+<div id="onboard">
+  <div class="onb-hero">
+    <div class="onb-mark">פ</div>
+    <div class="onb-eyebrow">Tel Aviv · Est. 2026</div>
+    <h1 class="onb-title">פנוי <span class="it">תפוס</span></h1>
+    <div class="onb-tagline">חניה קהילתית. בזמן אמת. בלי רעש.</div>
+    <div class="onb-bullets">
+      <div class="onb-bullet">
+        <div class="onb-bullet-num">i</div>
+        <div>
+          <div class="onb-bullet-ttl">יוצא מחניה?</div>
+          <div class="onb-bullet-dsc">לחיצה אחת — והחניה שלך עולה לשכנים</div>
+        </div>
+      </div>
+      <div class="onb-bullet">
+        <div class="onb-bullet-num">ii</div>
+        <div>
+          <div class="onb-bullet-ttl">מחפש חניה?</div>
+          <div class="onb-bullet-dsc">רשימה חיה של מקומות פנויים בסביבתך</div>
+        </div>
+      </div>
+      <div class="onb-bullet">
+        <div class="onb-bullet-num">iii</div>
+        <div>
+          <div class="onb-bullet-ttl">קהילה אמיתית</div>
+          <div class="onb-bullet-dsc">כולם רואים את אותן החניות בזמן אמת</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="onb-foot">
+    <button class="onb-cta" id="startBtn">
+      <span>בוא נתחיל</span>
+      <span class="arr">→</span>
+    </button>
+  </div>
+</div>
+
+<!-- ═══════ NAME MODAL ═══════ -->
+
+<div id="nameModal" style="position:fixed;inset:0;z-index:1900;background:#0d0d0e;display:none;flex-direction:column;padding:calc(env(safe-area-inset-top) + 60px) 30px calc(env(safe-area-inset-bottom) + 24px);">
+  <div style="text-align:center;margin-bottom:40px;">
+    <div class="onb-eyebrow" style="margin-bottom:16px;">Welcome</div>
+    <h1 style="font-family:'Frank Ruhl Libre',serif;font-size:36px;font-weight:500;letter-spacing:-0.02em;color:#ebe8e2;margin-bottom:12px;">איך <span style="font-family:'Cormorant Garamond',serif;font-style:italic;color:#c9a770;">קוראים לך</span>?</h1>
+    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:#8f8b82;">השם שלך יופיע ליד חניות שתדווח</p>
+  </div>
+
+  <div style="flex:1;">
+    <input id="nameInput" class="input" type="text" maxlength="20" placeholder="שם פרטי — לדוגמה: שקד" autocomplete="given-name" style="text-align:center;font-size:18px;padding:18px;font-family:'Frank Ruhl Libre',serif;" />
+    <p style="text-align:center;margin-top:14px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:#5a5651;">פרטיות מלאה · אין צורך בטלפון או אימייל</p>
+  </div>
+
+  <button class="onb-cta" id="saveNameBtn" disabled style="opacity:0.5;">
+    <span>המשך</span>
+    <span class="arr">→</span>
+  </button>
+</div>
+
+<!-- ═══════ APP ═══════ -->
+
+<div id="app">
+  <header class="header">
+    <div class="hdr-top">
+      <div class="brand">
+        <div class="brand-mark">פ</div>
+        <div class="brand-txt">
+          <div class="brand-name">פנוי <span class="it">תפוס</span></div>
+          <div class="brand-sub">Tel Aviv</div>
+        </div>
+      </div>
+      <div class="hdr-chips">
+        <div class="chip" id="liveChip">
+          <div class="dot"></div>
+          <span class="v">LIVE</span>
+        </div>
+        <div class="chip" id="streakChip" style="display:none;border-color:rgba(217,119,87,0.4);">
+          <span class="v" style="color:#d97757;">🔥</span>
+          <span class="v" id="streakNum">0</span>
+        </div>
+        <button class="chip champ" id="xpChip">
+          <div class="dot"></div>
+          <span class="v" id="xpNum">0</span>
+          <span class="l">XP</span>
+        </button>
+      </div>
+    </div>
+    <div class="hero">
+      <div class="hero-label">
+        <span class="dash"></span>
+        <span class="eyebrow">Currently available</span>
+        <span class="dash"></span>
+      </div>
+      <div class="hero-num">
+        <span id="availCount">0</span>
+        <span class="unit">חניות</span>
+      </div>
+      <div class="hero-desc" id="availDesc">בתל אביב כרגע</div>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <div class="v" id="nearbyCount">—</div>
+          <div class="l">בסביבתך</div>
+        </div>
+        <div class="hero-divider"></div>
+        <div class="hero-meta-item">
+          <div class="v" id="lvlNum">I</div>
+          <div class="l">רמה</div>
+        </div>
+      </div>
+      <div id="peakBanner" style="display:none;margin-top:14px;padding:8px 14px;background:linear-gradient(180deg,rgba(201,167,112,0.12),rgba(201,167,112,0.04));border:1px solid rgba(201,167,112,0.3);border-radius:99px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:#e0c28c;text-align:center;"></div>
+    </div>
+  </header>
+
+  <!-- Search bar (Trip mode) -->
+
+  <div class="search-row">
+    <div class="search-wrap" id="searchWrap">
+      <span class="search-ic">⌕</span>
+      <input type="text" class="search-input" id="searchInput" placeholder="חפש כתובת או יעד..." autocomplete="off">
+      <button class="search-clear" id="searchClear" style="display:none;">✕</button>
+    </div>
+    <div class="search-results" id="searchResults" style="display:none;"></div>
+  </div>
+
+  <!-- Trip Mode Banner (when searching toward destination) -->
+
+  <div class="trip-banner" id="tripBanner" style="display:none;">
+    <div class="trip-info">
+      <div class="trip-label">בדרך אל</div>
+      <div class="trip-name" id="tripName">—</div>
+    </div>
+    <div class="trip-stats">
+      <span id="tripCount">0</span>
+      <span class="trip-stats-l">חניות בקרבה</span>
+    </div>
+    <button class="trip-close" id="tripClose">✕</button>
+  </div>
+
+  <!-- Compact filter pills -->
+
+  <div class="filters">
+    <button class="filter-pill active" data-filter="all">הכל</button>
+    <button class="filter-pill" data-filter="blue">
+      <span class="dot blue"></span>כחול-לבן
+    </button>
+    <button class="filter-pill" data-filter="free">
+      <span class="dot free"></span>חינם
+    </button>
+    <button class="filter-pill" data-filter="red">
+      <span class="dot red"></span>תושבים
+    </button>
+  </div>
+
+  <div class="seg">
+    <button class="seg-btn active" id="listTab">
+      רשימה <span class="c" id="listCount">0</span>
+    </button>
+    <button class="seg-btn" id="mapTab">מפה</button>
+  </div>
+
+  <div class="content">
+    <div class="list" id="listView">
+      <div id="listContent">
+        <div class="loading">טוען חניות מהקהילה…</div>
+      </div>
+    </div>
+    <div class="map-view hidden" id="mapView">
+      <div id="map"></div>
+      <div class="map-fabs">
+        <button class="fab" id="locateBtn">⊙</button>
+        <button class="fab" id="refreshBtn">↻</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Nav Bar (proper app navigation) -->
+
+  <nav class="bottom-nav">
+    <button class="nav-item active" id="navHome">
+      <span class="nav-icon">⌂</span>
+      <span class="nav-label">בית</span>
+    </button>
+    <button class="nav-item" id="navHeat">
+      <span class="nav-icon">🔥</span>
+      <span class="nav-label">חמים</span>
+    </button>
+    <button class="nav-fab" id="navReport">
+      <span class="nav-fab-icon">+</span>
+    </button>
+    <button class="nav-item" id="navMine">
+      <span class="nav-icon">🚗</span>
+      <span class="nav-label">שלי</span>
+      <span class="nav-badge" id="mineBadge" style="display:none;">0</span>
+    </button>
+    <button class="nav-item" id="navMore">
+      <span class="nav-icon">⋯</span>
+      <span class="nav-label">עוד</span>
+    </button>
+  </nav>
+</div>
+
+<!-- More menu sheet (history + share) -->
+
+<div class="sheet" id="moreSheet">
+  <div class="sheet-grip"></div>
+  <div class="sheet-hdr">
+    <div>
+      <div class="sheet-eyebrow">More</div>
+      <h2 class="sheet-title">עוד <span class="it">פעולות</span></h2>
+    </div>
+    <button class="sheet-close" data-close>✕</button>
+  </div>
+  <button class="more-row" id="moreHistory">
+    <span class="more-ic">📜</span>
+    <div class="more-txt">
+      <div class="more-name">היסטוריה</div>
+      <div class="more-desc">חניות שתפסת ושיחררת</div>
+    </div>
+    <span class="more-arr">←</span>
+  </button>
+  <button class="more-row" id="moreShare">
+    <span class="more-ic">↗</span>
+    <div class="more-txt">
+      <div class="more-name">שתף עם חברים</div>
+      <div class="more-desc">הזמן שכנים שיצטרפו</div>
+    </div>
+    <span class="more-arr">←</span>
+  </button>
+  <button class="more-row" id="moreProfile">
+    <span class="more-ic">★</span>
+    <div class="more-txt">
+      <div class="more-name">הפרופיל שלי</div>
+      <div class="more-desc">XP, רמות ותגים</div>
+    </div>
+    <span class="more-arr">←</span>
+  </button>
+  <button class="more-row" id="moreNotif">
+    <span class="more-ic">🔔</span>
+    <div class="more-txt">
+      <div class="more-name">התראות</div>
+      <div class="more-desc" id="moreNotifDesc">התראות כבויות</div>
+    </div>
+    <span class="more-arr">←</span>
+  </button>
+  <button class="more-row" id="moreFavArea">
+    <span class="more-ic">📍</span>
+    <div class="more-txt">
+      <div class="more-name">האזור שלי</div>
+      <div class="more-desc" id="moreFavAreaDesc">לא הוגדר</div>
+    </div>
+    <span class="more-arr">←</span>
+  </button>
+
+  <!-- Divider -->
+
+  <div style="height:1px;background:#2d2d31;margin:14px 0 8px;"></div>
+
+  <button class="more-row" id="moreHelp">
+    <span class="more-ic">💡</span>
+    <div class="more-txt">
+      <div class="more-name">עזרה ושאלות</div>
+      <div class="more-desc">תמיכה, בוט עזרה, צור קשר</div>
+    </div>
+    <span class="more-arr">←</span>
+  </button>
+  <button class="more-row" id="moreAbout">
+    <span class="more-ic">ℹ️</span>
+    <div class="more-txt">
+      <div class="more-name">אודות</div>
+      <div class="more-desc">תנאי שימוש ופרטיות</div>
+    </div>
+    <span class="more-arr">←</span>
+  </button>
+</div>
+
+<!-- Favorite Area Sheet -->
+
+<div class="sheet" id="favAreaSheet">
+  <div class="sheet-grip"></div>
+  <div class="sheet-hdr">
+    <div>
+      <div class="sheet-eyebrow">My Area</div>
+      <h2 class="sheet-title">האזור <span class="it">שלי</span></h2>
+    </div>
+    <button class="sheet-close" data-close>✕</button>
+  </div>
+
+  <div id="favAreaContent">
+    <!-- Empty state -->
+    <div id="favAreaEmpty" style="text-align:center;padding:24px 12px;">
+      <div style="font-size:48px;margin-bottom:12px;">📍</div>
+      <div style="font-family:'Frank Ruhl Libre',serif;font-size:18px;color:#ebe8e2;margin-bottom:8px;">בחר את האזור שלך</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:#8f8b82;line-height:1.5;margin-bottom:20px;">קבל התראות חזקות כשמתפנות חניות באזור שלך — גם כשאתה לא שם</div>
+      <button id="favAreaPickHere" class="submit" style="margin-bottom:10px;">📍 בחר את המיקום הנוכחי שלי</button>
+      <button id="favAreaPickMap" style="width:100%;padding:14px;background:#1a1a1c;border:1px solid #2d2d31;border-radius:12px;color:#ebe8e2;font-family:'Frank Ruhl Libre',serif;font-size:14px;">🗺️ בחר על המפה</button>
+    </div>
+
+```
+<!-- Active state -->
+<div id="favAreaActive" style="display:none;">
+  <div style="background:linear-gradient(180deg,rgba(201,167,112,0.1),rgba(201,167,112,0.02));border:1px solid rgba(201,167,112,0.3);border-radius:14px;padding:18px;margin-bottom:14px;">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
+      <div style="width:48px;height:48px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#e0c28c,#c9a770 40%,#8b6f47 90%);display:grid;place-items:center;color:#2a1f1a;font-size:22px;flex-shrink:0;">📍</div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11px;color:#8f8b82;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:2px;">האזור שלך</div>
+        <div id="favAreaName" style="font-family:'Frank Ruhl Libre',serif;font-size:18px;color:#ebe8e2;font-weight:500;">לב העיר</div>
+      </div>
+    </div>
+    <div id="favAreaStats" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="background:#0d0d0e;border:1px solid #2d2d31;border-radius:10px;padding:10px;text-align:center;">
+        <div id="favAreaSpotCount" style="font-family:'Frank Ruhl Libre',serif;font-size:24px;font-weight:500;color:#c9a770;">0</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11px;color:#8f8b82;">חניות פנויות עכשיו</div>
+      </div>
+      <div style="background:#0d0d0e;border:1px solid #2d2d31;border-radius:10px;padding:10px;text-align:center;">
+        <div id="favAreaActivity" style="font-family:'Frank Ruhl Libre',serif;font-size:24px;font-weight:500;color:#c9a770;">—</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11px;color:#8f8b82;">פעילות שעה אחרונה</div>
+      </div>
+    </div>
+  </div>
+
+  <button id="favAreaNavigate" class="submit" style="margin-bottom:10px;">🚗 נווט אליי הביתה</button>
+  <button id="favAreaShowMap" style="width:100%;padding:14px;background:#1a1a1c;border:1px solid #2d2d31;border-radius:12px;color:#ebe8e2;font-family:'Frank Ruhl Libre',serif;font-size:14px;margin-bottom:10px;">🗺️ הצג חניות באזור</button>
+  <button id="favAreaChange" style="width:100%;padding:12px;background:transparent;color:#8f8b82;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;">שנה אזור</button>
+</div>
+```
+
+  </div>
+
+  <div style="margin-top:18px;padding:12px;background:rgba(201,167,112,0.05);border:1px solid rgba(201,167,112,0.15);border-radius:10px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:#8f8b82;line-height:1.5;text-align:center;">
+    💡 כשמתפנה חניה ב-300 מטר מהאזור שלך, תקבל התראה מיוחדת עם רעידה חזקה
+  </div>
+</div>
+
+<!-- Notifications Settings Sheet -->
+
+<div class="sheet" id="notifSheet">
+  <div class="sheet-grip"></div>
+  <div class="sheet-hdr">
+    <div>
+      <div class="sheet-eyebrow">Notifications</div>
+      <h2 class="sheet-title">התראות <span class="it">חכמות</span></h2>
+    </div>
+    <button class="sheet-close" data-close>✕</button>
+  </div>
+
+  <!-- Status Card -->
+
+  <div id="notifStatus" style="margin-bottom:16px;padding:18px;background:linear-gradient(180deg,rgba(201,167,112,0.1),rgba(201,167,112,0.02));border:1px solid rgba(201,167,112,0.3);border-radius:14px;text-align:center;">
+    <div id="notifIcon" style="font-size:36px;margin-bottom:8px;">🔔</div>
+    <div id="notifStatusText" style="font-family:'Frank Ruhl Libre',serif;font-size:16px;color:#ebe8e2;margin-bottom:14px;">התראות כבויות</div>
+    <button id="notifEnableBtn" style="padding:12px 24px;background:linear-gradient(180deg,#e0c28c,#c9a770 50%,#b08f5a);color:#2a1f1a;border-radius:99px;font-family:'Frank Ruhl Libre',serif;font-size:14px;font-weight:600;box-shadow:inset 0 1px 0 rgba(255,255,255,0.3);">הפעל התראות</button>
+  </div>
+
+  <!-- Settings (only when enabled) -->
+
+  <div id="notifSettings" style="display:none;">
+    <div class="notif-row">
+      <div class="notif-row-info">
+        <div class="notif-row-name">📍 רדיוס התראות</div>
+        <div class="notif-row-desc">מרחק שבו תקבל התראות</div>
+      </div>
+      <div class="notif-segments">
+        <button class="notif-seg" data-radius="0.1">100מ׳</button>
+        <button class="notif-seg active" data-radius="0.3">300מ׳</button>
+        <button class="notif-seg" data-radius="0.5">500מ׳</button>
+      </div>
+    </div>
+
+```
+<div class="notif-row">
+  <div class="notif-row-info">
+    <div class="notif-row-name">🌙 שעות שקט</div>
+    <div class="notif-row-desc">לא תקבל התראות בלילה</div>
+  </div>
+  <button class="notif-toggle active" id="notifQuietToggle">
+    <span class="notif-toggle-circle"></span>
+  </button>
+</div>
+
+<div class="notif-row">
+  <div class="notif-row-info">
+    <div class="notif-row-name">📳 רעידות</div>
+    <div class="notif-row-desc">רעידה בעת התראה</div>
+  </div>
+  <button class="notif-toggle active" id="notifVibrateToggle">
+    <span class="notif-toggle-circle"></span>
+  </button>
+</div>
+
+<div class="notif-row">
+  <div class="notif-row-info">
+    <div class="notif-row-name">🔊 צלילים</div>
+    <div class="notif-row-desc">צליל בעת התראה</div>
+  </div>
+  <button class="notif-toggle active" id="notifSoundToggle">
+    <span class="notif-toggle-circle"></span>
+  </button>
+</div>
+
+<button id="notifTestBtn" style="width:100%;padding:14px;margin-top:12px;background:#1a1a1c;border:1px dashed rgba(201,167,112,0.4);border-radius:12px;color:#c9a770;font-family:'Frank Ruhl Libre',serif;font-size:14px;">🔔 שלח התראת בדיקה</button>
+
+<button id="notifDisableBtn" style="width:100%;padding:14px;margin-top:8px;background:transparent;color:#8f8b82;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;">השבת התראות</button>
+```
+
+  </div>
+
+  <div style="margin-top:20px;padding:12px;background:rgba(125,52,64,0.08);border:1px solid rgba(125,52,64,0.2);border-radius:10px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:#8f8b82;line-height:1.5;text-align:center;">
+    💡 הערה: באייפון, התראות עובדות הכי טוב אחרי שמתקינים את האפליקציה למסך הבית
+  </div>
+</div>
+
+<!-- Sheets -->
+
+<div class="sheet-bg" id="sheetBg"></div>
+
+<div class="sheet" id="releaseSheet">
+  <div class="sheet-grip"></div>
+  <div class="sheet-hdr">
+    <div>
+      <div class="sheet-eyebrow">New Release</div>
+      <h2 class="sheet-title">דיווח <span class="it">חניה</span></h2>
+    </div>
+    <button class="sheet-close" data-close>✕</button>
+  </div>
+
+  <div class="loc-status" id="locStatus">
+    <div class="ic">◌</div>
+    <div class="txt">ממתין למיקום…</div>
+  </div>
+
+  <div class="field">
+    <div class="field-row">
+      <span class="field-num">i</span>
+      <span class="field-lbl">סוג חניה</span>
+      <span class="field-line"></span>
+    </div>
+    <div class="type-grid">
+      <button class="type-opt sel-blue selected" data-type="blue">
+        <span class="em">P</span><span class="nm">כחול-לבן</span>
+      </button>
+      <button class="type-opt sel-free" data-type="free">
+        <span class="em">✓</span><span class="nm">חינם</span>
+      </button>
+      <button class="type-opt sel-red" data-type="red">
+        <span class="em">R</span><span class="nm">תושבים</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="field-row">
+      <span class="field-num">ii</span>
+      <span class="field-lbl">כתובת או הערה</span>
+      <span class="field-line"></span>
+    </div>
+    <textarea class="input" id="noteInput" rows="2" placeholder="לדוגמה — דיזנגוף 120, מול הקפה"></textarea>
+  </div>
+
+<button class="submit" id="submitRelease">דווח על חניה · +5 XP</button>
+
+</div>
+
+<div class="sheet" id="statsSheet">
+  <div class="sheet-grip"></div>
+  <div class="sheet-hdr">
+    <div>
+      <div class="sheet-eyebrow">Your Journey</div>
+      <h2 class="sheet-title">הפרופיל <span class="it">שלי</span></h2>
+    </div>
+    <button class="sheet-close" data-close>✕</button>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-cell"><div class="num c" id="sXp">0</div><div class="lbl">נקודות XP</div></div>
+    <div class="stat-cell"><div class="num c" id="sCredits" style="color:#e0c28c">0</div><div class="lbl">קרדיטים</div></div>
+    <div class="stat-cell"><div class="num g" id="sReleased">0</div><div class="lbl">חניות ששיחררת</div></div>
+    <div class="stat-cell"><div class="num r" id="sHelped">0</div><div class="lbl">נהגים שעזרת</div></div>
+    <div class="stat-cell"><div class="num b" id="sStreak">0</div><div class="lbl">🔥 רצף ימים</div></div>
+    <div class="stat-cell"><div class="num b" id="sTrust">⭐⭐⭐</div><div class="lbl">רמת אמון</div></div>
+  </div>
+
+  <!-- Priority Access Card -->
+
+  <div class="prog-card" id="priorityCard" style="display:none;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="width:36px;height:36px;border-radius:10px;background:radial-gradient(circle at 30% 30%,#e0c28c,#c9a770 40%,#8b6f47 90%);display:grid;place-items:center;color:#2a1f1a;font-size:18px;font-weight:900;">★</div>
+      <div style="flex:1;">
+        <div style="font-family:'Frank Ruhl Libre',serif;font-size:14px;font-weight:600;">גישה מועדפת פעילה</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:#8f8b82;margin-top:2px;">אתה רואה חניות חדשות 5 שניות לפני כולם</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prog-card">
+    <div class="prog-head">
+      <div class="prog-lvl">רמה <span class="it" id="pLvl">I</span> → <span class="it" id="pNxt">II</span></div>
+      <div class="prog-txt" id="pTxt">0 / 20 XP</div>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+  </div>
+
+  <!-- Weekly Activity Chart -->
+
+  <div class="prog-card" style="padding:18px 16px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+      <div style="font-family:'Frank Ruhl Libre',serif;font-size:14px;font-weight:600;color:#ebe8e2;">פעילות שבועית</div>
+      <div style="display:flex;gap:10px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11px;color:#8f8b82;">
+        <span><span style="display:inline-block;width:8px;height:8px;background:#c9a770;border-radius:2px;margin-left:4px;"></span>שיחרור</span>
+        <span><span style="display:inline-block;width:8px;height:8px;background:#5a6675;border-radius:2px;margin-left:4px;"></span>תפיסה</span>
+      </div>
+    </div>
+    <div class="weekly-chart" id="weeklyChart"></div>
+  </div>
+
+  <div class="section-head">
+    <span class="section-ttl">אוסף <span class="it">התגים</span></span>
+    <span class="dash"></span>
+  </div>
+  <div class="badge-list" id="badgesGrid"></div>
+</div>
+
+<!-- My Spots Sheet -->
+
+<div class="sheet" id="mineSheet">
+  <div class="sheet-grip"></div>
+  <div class="sheet-hdr">
+    <div>
+      <div class="sheet-eyebrow">Your Reports</div>
+      <h2 class="sheet-title">החניות <span class="it">שלי</span></h2>
+    </div>
+    <button class="sheet-close" data-close>✕</button>
+  </div>
+  <div id="mineList"></div>
+</div>
+
+<!-- History Sheet -->
+
+<div class="sheet" id="historySheet">
+  <div class="sheet-grip"></div>
+  <div class="sheet-hdr">
+    <div>
+      <div class="sheet-eyebrow">Recent</div>
+      <h2 class="sheet-title">היסטוריית <span class="it">חניות</span></h2>
+    </div>
+    <button class="sheet-close" data-close>✕</button>
+  </div>
+  <div id="historyList"></div>
+</div>
+
+<!-- Share Sheet -->
+
+<div class="sheet" id="shareSheet">
+  <div class="sheet-grip"></div>
+  <div class="sheet-hdr">
+    <div>
+      <div class="sheet-eyebrow">Share</div>
+      <h2 class="sheet-title">שתף עם <span class="it">חברים</span></h2>
+    </div>
+    <button class="sheet-close" data-close>✕</button>
+  </div>
+  <div style="background:#1a1a1c;border:1px solid #2d2d31;border-radius:14px;padding:16px;margin-bottom:16px;">
+    <div style="font-family:'Frank Ruhl Libre',serif;font-size:15px;font-weight:500;margin-bottom:8px;">כמה שיותר משתמשים, יותר חניות</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:#8f8b82;line-height:1.5;">שתף את פנוי תפוס עם שכנים וחברים בתל אביב. ככל שיותר אנשים משתמשים, כולם מוצאים חניה יותר מהר.</div>
+  </div>
+  <div class="share-grid">
+    <button class="share-btn whatsapp" id="shareWaBtn">
+      <span class="ic">💬</span><span>WhatsApp</span>
+    </button>
+    <button class="share-btn" id="shareCopyBtn">
+      <span class="ic">📋</span><span>העתק לינק</span>
+    </button>
+  </div>
+  <div style="margin-top:14px;padding:10px 14px;background:#0d0d0e;border-radius:10px;font-family:'Inter',monospace;font-size:11px;color:#8f8b82;text-align:center;border:1px solid #2d2d31;" id="shareUrl">shaklitvi.github.io</div>
+</div>
+
+<!-- Heat Zone Sheet -->
+
+<div class="sheet" id="heatSheet">
+  <div class="sheet-grip"></div>
+  <div class="sheet-hdr">
+    <div>
+      <div class="sheet-eyebrow">Hotspots</div>
+      <h2 class="sheet-title">אזורים <span class="it">חמים</span></h2>
+    </div>
+    <button class="sheet-close" data-close>✕</button>
+  </div>
+  <div style="background:#1a1a1c;border:1px solid #2d2d31;border-radius:14px;padding:14px;margin-bottom:12px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:#8f8b82;line-height:1.5;">
+    האזורים שהכי הרבה חניות מתפנות בהם עכשיו. לחיצה על אזור פותחת את המפה שם.
+  </div>
+  <div id="heatList"></div>
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+
+<!-- HELP & SUPPORT SHEET (FAQ Bot) -->
+
+<!-- ════════════════════════════════════════════ -->
+
+<div class="sheet" id="helpSheet">
+  <div class="sheet-grip"></div>
+  <div class="sheet-hdr">
+    <div>
+      <div class="sheet-eyebrow">Help</div>
+      <h2 class="sheet-title">עזרה <span class="it">ושאלות</span></h2>
+    </div>
+    <button class="sheet-close" data-close>✕</button>
+  </div>
+
+  <!-- Bot intro -->
+
+  <div style="background:linear-gradient(180deg,rgba(201,167,112,0.1),rgba(201,167,112,0.02));border:1px solid rgba(201,167,112,0.3);border-radius:14px;padding:16px;margin-bottom:14px;">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+      <div style="width:42px;height:42px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#e0c28c,#c9a770 40%,#8b6f47 90%);display:grid;place-items:center;font-size:22px;flex-shrink:0;">🤖</div>
+      <div>
+        <div style="font-family:'Frank Ruhl Libre',serif;font-size:16px;font-weight:500;color:#ebe8e2;">בוט עזרה</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:#8f8b82;">מענה מיידי לכל שאלה</div>
+      </div>
+    </div>
+    <div style="font-family:'Frank Ruhl Libre',serif;font-size:13px;color:#c8c4bc;line-height:1.6;">בחר נושא או חפש שאלה ספציפית. אם לא תמצא תשובה — אפשר לשלוח לנו אימייל.</div>
+  </div>
+
+  <!-- Search bar -->
+
+  <div style="position:relative;margin-bottom:14px;">
+    <input type="text" id="helpSearch" placeholder="חפש שאלה..." style="width:100%;padding:14px 16px 14px 44px;background:#0d0d0e;border:1px solid #2d2d31;border-radius:12px;color:#ebe8e2;font-family:'Frank Ruhl Libre',serif;font-size:14px;direction:rtl;text-align:right;">
+    <span style="position:absolute;right:14px;top:50%;transform:translateY(-50%);color:#8f8b82;font-size:16px;">🔍</span>
+  </div>
+
+  <!-- Categories -->
+
+  <div id="helpCategories">
+    <div class="help-cat-title">🚀 התחלה</div>
+    <button class="help-q" data-q="install">📱 איך מתקינים את האפליקציה במסך הבית?</button>
+    <button class="help-q" data-q="firstuse">⚡ איך מתחילים לעבוד עם האפליקציה?</button>
+    <button class="help-q" data-q="changename">✏️ איך משנים את השם שלי?</button>
+
+```
+<div class="help-cat-title">🚗 דיווח חניה</div>
+<button class="help-q" data-q="report">➕ איך מדווחים על חניה פנויה?</button>
+<button class="help-q" data-q="cancelreport">❌ איך מבטלים דיווח שהיה בטעות?</button>
+<button class="help-q" data-q="ttl">⏱ למה החניה שדיווחתי נעלמה?</button>
+
+<div class="help-cat-title">🔍 חיפוש חניה</div>
+<button class="help-q" data-q="search">📍 איך מוצאים חניה ברחוב מסוים?</button>
+<button class="help-q" data-q="onway">🚶 מה זה "מישהו בדרך"?</button>
+<button class="help-q" data-q="trip">🎯 איך עובד מצב יעד?</button>
+
+<div class="help-cat-title">🔔 התראות</div>
+<button class="help-q" data-q="notif">🔕 ההתראות שלי לא עובדות</button>
+<button class="help-q" data-q="favarea">⭐ מה זה אזור מועדף?</button>
+<button class="help-q" data-q="quiet">🌙 איך משתיקים בלילה?</button>
+
+<div class="help-cat-title">💎 משחק וקרדיטים</div>
+<button class="help-q" data-q="credits">💰 מה זה קרדיטים? איך משיגים?</button>
+<button class="help-q" data-q="xp">⭐ מה זה XP ורמות?</button>
+<button class="help-q" data-q="streak">🔥 מה זה רצף ימים?</button>
+<button class="help-q" data-q="trust">⭐ מה זה דירוג אמון?</button>
+
+<div class="help-cat-title">🛡️ פרטיות ובטיחות</div>
+<button class="help-q" data-q="privacy">🔒 האם המיקום שלי גלוי לכולם?</button>
+<button class="help-q" data-q="flag">🚩 מישהו דיווח דיווח כוזב — מה עושים?</button>
+<button class="help-q" data-q="loc">📍 האפליקציה לא מוצאת אותי</button>
+```
+
+  </div>
+
+  <!-- Answer area (hidden initially) -->
+
+  <div id="helpAnswer" style="display:none;">
+    <button id="helpBack" style="background:none;border:none;color:#c9a770;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;padding:8px 0;margin-bottom:10px;cursor:pointer;">← חזור לכל השאלות</button>
+    <div id="helpAnswerContent" style="background:#1a1a1c;border:1px solid #2d2d31;border-radius:14px;padding:18px;"></div>
+  </div>
+
+  <!-- Contact section (always visible at bottom) -->
+
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid #2d2d31;">
+    <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:#8f8b82;text-align:center;margin-bottom:10px;">לא מצאת תשובה?</div>
+    <button id="helpEmail" style="width:100%;padding:14px;background:#1a1a1c;border:1px solid rgba(201,167,112,0.3);border-radius:12px;color:#c9a770;font-family:'Frank Ruhl Libre',serif;font-size:14px;font-weight:500;cursor:pointer;">
+      ✉️ שלח לנו אימייל
+    </button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+
+<!-- ABOUT SHEET (Terms, Privacy, Info) -->
+
+<!-- ════════════════════════════════════════════ -->
+
+<div class="sheet" id="aboutSheet">
+  <div class="sheet-grip"></div>
+  <div class="sheet-hdr">
+    <div>
+      <div class="sheet-eyebrow">About</div>
+      <h2 class="sheet-title">אודות <span class="it">פנוי תפוס</span></h2>
+    </div>
+    <button class="sheet-close" data-close>✕</button>
+  </div>
+
+  <!-- App info -->
+
+  <div style="text-align:center;margin-bottom:24px;padding:20px 0;">
+    <div style="width:72px;height:72px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#e0c28c,#c9a770 40%,#8b6f47 90%);margin:0 auto 12px;display:grid;place-items:center;color:#2a1f1a;font-family:'Frank Ruhl Libre',serif;font-size:36px;font-weight:900;box-shadow:0 8px 24px rgba(201,167,112,0.3);">פ</div>
+    <div style="font-family:'Frank Ruhl Libre',serif;font-size:24px;color:#ebe8e2;font-weight:500;">פנוי <span style="font-family:'Cormorant Garamond',serif;font-style:italic;color:#c9a770;">תפוס</span></div>
+    <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:#8f8b82;margin-top:6px;">חניה קהילתית · תל אביב</div>
+    <div style="font-family:'Inter',sans-serif;font-size:11px;color:#8f8b82;margin-top:8px;letter-spacing:0.1em;">VERSION 1.0 · 2026</div>
+  </div>
+
+  <!-- Mission -->
+
+  <div style="background:#1a1a1c;border:1px solid #2d2d31;border-radius:14px;padding:18px;margin-bottom:16px;">
+    <div style="font-family:'Frank Ruhl Libre',serif;font-size:15px;font-weight:500;color:#ebe8e2;margin-bottom:8px;">המטרה שלנו</div>
+    <div style="font-family:'Frank Ruhl Libre',serif;font-size:13px;color:#c8c4bc;line-height:1.6;">
+      פנוי תפוס היא רשת קהילתית של נהגים בתל אביב שעוזרים אחד לשני למצוא חניה. כשאתה עוזב חניה, השכן מקבל התראה. ככה כולם חוסכים זמן ודלק.
+    </div>
+  </div>
+
+  <!-- Privacy summary -->
+
+  <div style="background:#1a1a1c;border:1px solid #2d2d31;border-radius:14px;padding:18px;margin-bottom:16px;">
+    <div style="font-family:'Frank Ruhl Libre',serif;font-size:15px;font-weight:500;color:#ebe8e2;margin-bottom:10px;">🔒 הפרטיות שלך</div>
+    <div style="font-family:'Frank Ruhl Libre',serif;font-size:13px;color:#c8c4bc;line-height:1.7;">
+      • לא מבקשים טלפון או אימייל<br>
+      • המיקום שלך משמש רק לחיפוש חניות<br>
+      • כל הדיווחים אנונימיים<br>
+      • אין גישה לאנשי הקשר<br>
+      • אין מודעות במוצר
+    </div>
+  </div>
+
+  <!-- Terms link -->
+
+  <button class="more-row" id="openTerms">
+    <span class="more-ic">📜</span>
+    <div class="more-txt">
+      <div class="more-name">תנאי שימוש</div>
+      <div class="more-desc">חוקי השימוש באפליקציה</div>
+    </div>
+    <span class="more-arr">←</span>
+  </button>
+  <button class="more-row" id="openPrivacy">
+    <span class="more-ic">🔒</span>
+    <div class="more-txt">
+      <div class="more-name">מדיניות פרטיות</div>
+      <div class="more-desc">איך אנחנו שומרים על המידע שלך</div>
+    </div>
+    <span class="more-arr">←</span>
+  </button>
+  <button class="more-row" id="openContact">
+    <span class="more-ic">✉️</span>
+    <div class="more-txt">
+      <div class="more-name">צור קשר</div>
+      <div class="more-desc">דווח באג, הצעות, שאלות</div>
+    </div>
+    <span class="more-arr">←</span>
+  </button>
+
+  <!-- Credit -->
+
+  <div style="text-align:center;margin-top:20px;padding:14px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:#5a564f;line-height:1.6;">
+    נבנה באהבה לתל אביב<br>
+    Made with ♥ in Tel Aviv
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+
+<!-- LEGAL TEXT SHEET (shared for Terms/Privacy/Contact) -->
+
+<!-- ════════════════════════════════════════════ -->
+
+<div class="sheet" id="legalSheet">
+  <div class="sheet-grip"></div>
+  <div class="sheet-hdr">
+    <div>
+      <div class="sheet-eyebrow" id="legalEyebrow">Legal</div>
+      <h2 class="sheet-title" id="legalTitle">תנאי <span class="it">שימוש</span></h2>
+    </div>
+    <button class="sheet-close" data-close>✕</button>
+  </div>
+  <div id="legalContent" style="font-family:'Frank Ruhl Libre',serif;font-size:13px;color:#c8c4bc;line-height:1.8;padding:0 4px 20px;"></div>
+</div>
+
+<div class="picker" id="pickerOverlay">
+  <div class="picker-hdr">
+    <button class="sheet-close" id="pickerClose">✕</button>
+    <h3>בחירת מיקום</h3>
+    <button class="sheet-close" style="visibility:hidden">✕</button>
+  </div>
+  <div id="pickerMap"></div>
+  <div class="picker-cross">⊕</div>
+  <div class="picker-foot">
+    <button class="submit" id="pickerConfirm">אישור המיקום · +5 XP</button>
+  </div>
+</div>
+
+<!-- Arrived Confirmation Modal -->
+
+<div class="arrived-modal" id="arrivedModal">
+  <div class="arrived-card">
+    <div class="arrived-icon">⏱</div>
+    <div class="arrived-title">בדרך <span class="it">לחניה</span></div>
+    <div class="arrived-sub" id="arrivedStreet">מנווט אותך אל החניה...</div>
+    <div class="arrived-timer" id="arrivedTimer">60</div>
+    <div class="arrived-timer-lbl">שניות לאישור</div>
+    <div class="arrived-bar"><div class="arrived-bar-fill" id="arrivedBar" style="width:100%"></div></div>
+    <div class="arrived-btns">
+      <button class="arrived-btn ghost" id="arrivedCancel">ביטול</button>
+      <button class="arrived-btn primary" id="arrivedConfirm">הגעתי · +2 XP</button>
+    </div>
+  </div>
+</div>
+
+<!-- Feedback Modal (after arrival) -->
+
+<div class="arrived-modal" id="feedbackModal">
+  <div class="arrived-card">
+    <div class="arrived-icon" style="background:radial-gradient(circle at 30% 30%,#a8d4b0,#7ab088 40%,#4a7a5c 90%);">?</div>
+    <div class="arrived-title">החניה <span class="it">הייתה שם</span>?</div>
+    <div class="arrived-sub">דיווח של <span id="feedbackReporter" style="color:#c9a770;">אנונימי</span> · <span id="feedbackStreet" style="color:#ebe8e2;">רחוב</span></div>
+    <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:#8f8b82;margin-bottom:18px;">המשוב שלך עוזר לבנות אמון בקהילה</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <button class="arrived-btn ghost" id="feedbackNo" style="background:rgba(125,52,64,0.15);color:#c46570;border-color:rgba(125,52,64,0.4);">👎 לא הייתה</button>
+      <button class="arrived-btn primary" id="feedbackYes" style="background:linear-gradient(180deg,#a8d4b0,#7ab088 50%,#4a7a5c);color:#0d2818;">👍 הייתה שם</button>
+    </div>
+    <button id="feedbackSkip" style="width:100%;margin-top:10px;padding:8px;background:transparent;color:#8f8b82;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;">דלג</button>
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <div class="ic" id="toastIc">✦</div>
+  <div class="msg" id="toastMsg"></div>
+</div>
+
+<!-- Firebase + App Logic -->
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import {
+  getFirestore, collection, addDoc, onSnapshot,
+  deleteDoc, updateDoc, doc, query, where, orderBy, Timestamp,
+  serverTimestamp, getDocs
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+// ═══════════════════════════════════════════════════
+// FIREBASE CONFIG
+// ═══════════════════════════════════════════════════
+const firebaseConfig = {
+  apiKey: "AIzaSyCZT_7L8SIUkfaf5fqXXAHEA2FvVdHG2VY",
+  authDomain: "haniya-bechik.firebaseapp.com",
+  projectId: "haniya-bechik",
+  storageBucket: "haniya-bechik.firebasestorage.app",
+  messagingSenderId: "936970869131",
+  appId: "1:936970869131:web:92ba84914d63f06e07f78e",
+  measurementId: "G-600PJX6FTW"
+};
+
+const fbApp = initializeApp(firebaseConfig);
+const db = getFirestore(fbApp);
+const spotsCol = collection(db, 'spots');
+const takesCol = collection(db, 'takes');
+
+// ═══════════════════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════════════════
+const TLV = [32.0809, 34.7806];
+const SPOT_TTL_MAX = 5 * 60 * 1000;       // Max TTL for quiet areas
+const SPOT_TTL_MEDIUM = 3 * 60 * 1000;    // 3 min for moderate areas (2-4 spots)
+const SPOT_TTL_HOT = 90 * 1000;           // 90 seconds for hot areas (5+ spots)
+const ARRIVE_TIMEOUT = 60 * 1000;         // 60 seconds to confirm arrival
+const FRESH_MS = 60 * 1000;
+const STALE_MS = 3 * 60 * 1000;
+const NEARBY_KM = 0.8;
+const STORAGE_KEY = 'bechik_user_v1';
+
+const STREETS = [
+  'דיזנגוף', 'אבן גבירול', 'בן יהודה', 'רוטשילד', 'אלנבי',
+  'יהודה הלוי', 'ארלוזורוב', 'פרישמן', 'בוגרשוב', 'שיינקין'
+];
+
+const BADGES = [
+  { id: 'first',     name: 'הדיווח הראשון',   dsc: 'פתחת את הדלת',           emoji: 'I',   need: s => s.released >= 1 },
+  { id: 'giver5',    name: 'נדיב השכונה',     dsc: 'חמישה שיחרורים',         emoji: 'V',   need: s => s.released >= 5 },
+  { id: 'giver25',   name: 'שגריר הרחוב',     dsc: 'עשרים וחמישה שיחרורים',  emoji: 'XXV', need: s => s.released >= 25 },
+  { id: 'helper',    name: 'שכן הגון',        dsc: 'עזרת לנהג אחר',          emoji: '⊙',   need: s => s.helped >= 1 },
+  { id: 'xp100',     name: 'מאה נקודות',      dsc: 'הגעת ל־100 XP',          emoji: 'C',   need: s => s.xp >= 100 },
+  { id: 'streak3',   name: 'שלושה ימים',      dsc: 'רצף של 3 ימים',          emoji: '◐',   need: s => (s.streak || 0) >= 3 },
+  { id: 'streak7',   name: 'שבוע מלא',        dsc: 'רצף של 7 ימים',          emoji: '◉',   need: s => (s.streak || 0) >= 7 },
+  { id: 'trusted',   name: 'אמין',            dsc: '5 כוכבי אמון',           emoji: '★',   need: s => (s.trustLevel || 0) >= 5 },
+  { id: 'priority',  name: 'גישה מועדפת',     dsc: '10 קרדיטים',             emoji: '⚡',  need: s => (s.credits || 0) >= 10 }
+];
+
+const LEVELS = [
+  { thr: 0, name: 'I' },   { thr: 20, name: 'II' },  { thr: 50, name: 'III' },
+  { thr: 100, name: 'IV' },{ thr: 200, name: 'V' },  { thr: 400, name: 'VI' },
+  { thr: 700, name: 'VII' },{ thr: 1000, name: 'VIII' }
+];
+
+const state = {
+  userId: null,
+  userName: null,
+  user: {
+    xp: 0,
+    credits: 0,           // earned credits → priority alerts
+    released: 0,
+    helped: 0,
+    arrivedConfirmed: 0,  // confirmed arrivals (trust signal)
+    falseReports: 0,      // times their reports were flagged
+    trustLevel: 3,        // 1-5 stars
+    streak: 0,            // consecutive days reporting
+    lastActiveDay: null,
+    favoriteArea: null,   // {lat, lng, name}
+    badges: []
+  },
+  notif: {
+    enabled: false,         // user enabled notifications
+    permission: null,       // 'granted' | 'denied' | 'default'
+    radius: 0.3,            // alert radius in km
+    quietStart: 22,         // 22:00
+    quietEnd: 7,            // 07:00
+    sound: true,
+    vibrate: true
+  },
+  spots: [],
+  myLoc: null,
+  locError: null,
+  selType: 'blue',
+  view: 'list',
+  filter: 'all',
+  initialLoad: true,
+  history: [],
+  lastNotifiedTakes: {}
+};
+const HISTORY_KEY = 'bechik_gold_history';
+const HISTORY_MAX = 50;
+
+// ═══════════════════════════════════════════════════
+// USER ID & LOCAL STATE
+// ═══════════════════════════════════════════════════
+function loadState() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const d = JSON.parse(saved);
+      state.userId = d.userId;
+      state.userName = d.userName || null;
+      state.user = { ...state.user, ...d.user };
+      if (d.notif) state.notif = { ...state.notif, ...d.notif };
+    }
+    const hist = localStorage.getItem(HISTORY_KEY);
+    if (hist) state.history = JSON.parse(hist);
+  } catch(e) {
+    console.warn('loadState err:', e);
+  }
+  if (!state.userId) {
+    state.userId = 'u_' + Math.random().toString(36).slice(2, 11) + Date.now().toString(36);
+  }
+}
+
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      userId: state.userId,
+      userName: state.userName,
+      user: state.user,
+      notif: state.notif
+    }));
+  } catch(e) {
+    // QuotaExceeded - try to clean up history
+    if (e.name === 'QuotaExceededError' || e.code === 22) {
+      try {
+        // Trim history aggressively
+        state.history = state.history.slice(0, 20);
+        localStorage.setItem(HISTORY_KEY, JSON.stringify(state.history));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          userId: state.userId,
+          userName: state.userName,
+          user: state.user,
+          notif: state.notif
+        }));
+      } catch(e2) {
+        console.warn('saveState: localStorage full', e2);
+      }
+    }
+  }
+}
+
+function saveHistory() {
+  try { localStorage.setItem(HISTORY_KEY, JSON.stringify(state.history.slice(0, HISTORY_MAX))); } catch(e) {}
+}
+
+function addToHistory(spot, action) {
+  state.history.unshift({ ...spot, action: action, actionAt: Date.now() });
+  if (state.history.length > HISTORY_MAX) state.history = state.history.slice(0, HISTORY_MAX);
+  saveHistory();
+}
+
+function filterSpots(spots) {
+  if (state.filter === 'all') return spots;
+  return spots.filter(s => s.type === state.filter);
+}
+
+function calculateHeatZones() {
+  const CLUSTER_KM = 0.4;
+  const clusters = [];
+  state.spots.forEach(sp => {
+    let added = false;
+    for (const c of clusters) {
+      if (dist(sp.lat, sp.lng, c.lat, c.lng) < CLUSTER_KM) {
+        c.spots.push(sp);
+        c.lat = c.spots.reduce((a, s) => a + s.lat, 0) / c.spots.length;
+        c.lng = c.spots.reduce((a, s) => a + s.lng, 0) / c.spots.length;
+        added = true; break;
+      }
+    }
+    if (!added) clusters.push({ lat: sp.lat, lng: sp.lng, spots: [sp] });
+  });
+  return clusters.filter(c => c.spots.length >= 2).sort((a, b) => b.spots.length - a.spots.length);
+}
+
+function getAreaName(lat, lng) {
+  if (lat > 32.085) return 'צפון הישן / בבלי';
+  if (lat < 32.070 && lng < 34.770) return 'יפו';
+  if (lat < 32.075) return 'פלורנטין / נווה צדק';
+  if (lng > 34.785) return 'רמת אביב';
+  if (lng < 34.770) return 'מערב העיר';
+  return 'לב העיר';
+}
+
+// Returns dynamic TTL for a spot based on how many spots are nearby
+function getSpotTTL(spot, allSpots) {
+  const NEAR_KM = 0.5;
+  const nearby = allSpots.filter(s => dist(s.lat, s.lng, spot.lat, spot.lng) < NEAR_KM).length;
+  if (nearby >= 5) return SPOT_TTL_HOT;
+  if (nearby >= 2) return SPOT_TTL_MEDIUM;
+  return SPOT_TTL_MAX;
+}
+
+// Returns ms remaining until spot expires
+function getSpotRemaining(spot, allSpots) {
+  const ttl = getSpotTTL(spot, allSpots);
+  const elapsed = Date.now() - spot.at;
+  return Math.max(0, ttl - elapsed);
+}
+
+// ═══════════════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════════════
+function dist(lat1, lng1, lat2, lng2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLng = (lng2 - lng1) * Math.PI / 180;
+  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+function fmtDist(km) {
+  if (km < 1) return { n: Math.round(km * 1000), u: 'מ׳' };
+  return { n: km.toFixed(1), u: 'ק״מ' };
+}
+
+function fmtAge(ms) {
+  const s = Math.floor(ms / 1000);
+  if (s < 60) return { t: 'עכשיו', fresh: true };
+  const m = Math.floor(s / 60);
+  return { t: m + ' ד׳', fresh: s < 60 };
+}
+
+function getLevel(xp) {
+  for (let i = LEVELS.length - 1; i >= 0; i--) {
+    if (xp >= LEVELS[i].thr) {
+      const cur = LEVELS[i];
+      const nxt = LEVELS[i+1] || { thr: xp + 500, name: 'IX' };
+      return { lvl: i+1, name: cur.name, nxtName: nxt.name, curMin: cur.thr, nextAt: nxt.thr };
+    }
+  }
+  return { lvl: 1, name: 'I', nxtName: 'II', curMin: 0, nextAt: 20 };
+}
+
+function randStreet() { return STREETS[Math.floor(Math.random() * STREETS.length)]; }
+
+// ═══════════════════════════════════════════════════
+// XP & BADGES
+// ═══════════════════════════════════════════════════
+function addXP(n, reason) {
+  // Golden hour bonus: 18:00-19:00 = 2x XP for releases
+  const hour = new Date().getHours();
+  const goldenHour = hour >= 18 && hour < 19;
+  if (goldenHour && reason.includes('שחררת')) {
+    n = n * 2;
+    reason += ' (שעת זהב 2x!)';
+  }
+  const before = getLevel(state.user.xp).lvl;
+  state.user.xp += n;
+  const after = getLevel(state.user.xp);
+  toast('xp', `+${n} XP · ${reason}`);
+  if (after.lvl > before) {
+    setTimeout(() => {
+      toast('win', `🎉 עלית לרמה ${after.name}`);
+      showConfetti();
+      vibrate([100, 50, 100, 50, 200]);
+    }, 1200);
+  }
+  checkBadges();
+  saveState();
+  renderAll();
+}
+
+// 🎉 Confetti animation for level ups
+function showConfetti() {
+  const colors = ['#c9a770', '#e0c28c', '#b08f5a', '#8b6f47', '#f0d9a8'];
+  const container = document.createElement('div');
+  container.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:2000;overflow:hidden;';
+  document.body.appendChild(container);
+
+  for (let i = 0; i < 40; i++) {
+    const piece = document.createElement('div');
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const left = Math.random() * 100;
+    const delay = Math.random() * 0.5;
+    const duration = 1.5 + Math.random() * 1.5;
+    const size = 6 + Math.random() * 8;
+    piece.style.cssText = `
+      position:absolute;
+      top:-20px;
+      left:${left}%;
+      width:${size}px;
+      height:${size * 0.6}px;
+      background:${color};
+      border-radius:2px;
+      animation:confetti-fall ${duration}s ${delay}s ease-in forwards;
+      transform:rotate(${Math.random() * 360}deg);
+    `;
+    container.appendChild(piece);
+  }
+  setTimeout(() => container.remove(), 3500);
+}
+
+function addCredits(n, reason) {
+  state.user.credits += n;
+  if (n > 0) toast('xp', `+${n} קרדיט · ${reason}`);
+  saveState();
+  renderAll();
+}
+
+function updateStreak() {
+  const today = new Date().toDateString();
+  const last = state.user.lastActiveDay;
+  if (!last) {
+    state.user.streak = 1;
+    state.user.lastActiveDay = today;
+    return;
+  }
+  if (last === today) return; // already counted today
+  // Check if yesterday
+  const yesterday = new Date(Date.now() - 24*60*60*1000).toDateString();
+  if (last === yesterday) {
+    state.user.streak++;
+    if (state.user.streak === 5) {
+      addCredits(10, '🔥 5 ימים ברצף!');
+    } else if (state.user.streak === 10) {
+      addCredits(25, '🔥🔥 10 ימים ברצף!');
+    } else if (state.user.streak % 7 === 0) {
+      addCredits(15, `🔥 ${state.user.streak} ימים ברצף!`);
+    }
+  } else {
+    // Streak broken
+    state.user.streak = 1;
+  }
+  state.user.lastActiveDay = today;
+  saveState();
+}
+
+function isGoldenHour() {
+  const h = new Date().getHours();
+  return h >= 18 && h < 19;
+}
+
+function getPeakHourMessage() {
+  const h = new Date().getHours();
+  const day = new Date().getDay(); // 0=Sun
+  if (h >= 17 && h <= 19) return '🔥 שעת שיא — הרבה חניות מתפנות עכשיו';
+  if (h >= 7 && h <= 9 && day >= 0 && day <= 4) return '🚗 שעת בוקר — תושבים יוצאים לעבודה';
+  if (h >= 22 || h <= 6) return '🌙 שעות שקטות — חניות נשארות זמן רב';
+  if (isGoldenHour()) return '✨ שעת זהב — XP כפול על דיווחים!';
+  return null;
+}
+
+// 💡 Daily tips - shown once per day on home screen
+const TIPS = [
+  '💡 דווח על חניה ברגע שאתה זז — לא 5 דקות לפני',
+  '🎯 אם דיווחת 7 ימים ברצף, אתה מקבל 25 קרדיטי בונוס',
+  '✨ דיווחים בין 18:00-19:00 מקנים XP כפול',
+  '⭐ ככל שאמינות שלך גבוהה יותר — החניות שלך מקבלות עדיפות',
+  '🔥 באזורים חמים החניות נעלמות תוך 90 שניות — מהר!',
+  '📍 הגדר אזור מועדף וקבל התראות חזקות כשמתפנות חניות שם',
+  '🚩 רואה חניה מזויפת? לחץ על הדגל — 3 דיווחים והיא נעלמת',
+  '👥 משתמשים עם 10+ קרדיטים מקבלים התראות מהירות יותר',
+  '💎 כל חניה תקפה לפי האזור — חמים=90ש׳, רגילים=3 דק׳',
+  '🚗 כשמשתמש בדרך אליך — תקבל התראה משמחת',
+  '🏆 רמות I→VIII — עלייה מקנה תגים מיוחדים',
+  '📱 הוסף את האפליקציה למסך הבית להתראות הטובות ביותר',
+  '🌟 דיווח אמיתי = +1 קרדיט. דיווח כשגוי = -2',
+  '🎁 הזמן חברים והוסף לקהילה הצומחת',
+  '⏱️ "מישהו בדרך" שומר חניה ל-60 שניות — לא יותר',
+  '🚥 שעת בוקר 7-9 = הזמן הטוב ביותר לדווח חניות',
+  '🗺️ חפש כתובת ספציפית כשנוסעים ליעד מסוים',
+  '🌃 בלילה החניות נשארות פנויות זמן רב יותר'
+];
+
+function getDailyTip() {
+  // Show different tip each day, deterministic by date
+  const today = new Date();
+  const dayIndex = Math.floor((today.getTime() - new Date(2026, 0, 1).getTime()) / (1000 * 60 * 60 * 24));
+  return TIPS[Math.abs(dayIndex) % TIPS.length];
+}
+
+function maybeShowDailyTip() {
+  const today = new Date().toDateString();
+  const lastTipDay = localStorage.getItem('bechik_last_tip_day');
+  if (lastTipDay === today) return;
+  localStorage.setItem('bechik_last_tip_day', today);
+  // Show after a delay
+  setTimeout(() => {
+    if (!document.querySelector('.sheet.show') && !document.querySelector('.arrived-modal.show')) {
+      toast('xp', getDailyTip());
+    }
+  }, 3500);
+}
+
+// Update trust level based on activity
+function updateTrust() {
+  const u = state.user;
+  let trust = 3; // default
+  // Boost from confirmed arrivals
+  if (u.arrivedConfirmed >= 20) trust = 5;
+  else if (u.arrivedConfirmed >= 10) trust = 4;
+  // Penalty from false reports
+  if (u.falseReports >= 5) trust = Math.max(1, trust - 2);
+  else if (u.falseReports >= 2) trust = Math.max(2, trust - 1);
+  state.user.trustLevel = trust;
+}
+
+// Check if user has priority access (gets new spots faster)
+function hasPriorityAccess() {
+  return state.user.credits >= 10;
+}
+
+function checkBadges() {
+  updateTrust();
+  BADGES.forEach(b => {
+    if (b.need(state.user) && !state.user.badges.find(x => x.id === b.id)) {
+      state.user.badges.push({ id: b.id, at: Date.now() });
+      setTimeout(() => toast('win', `תג חדש · ${b.name}`), 2300);
+    }
+  });
+}
+
+function vibrate(pattern) {
+  if (navigator.vibrate) {
+    try { navigator.vibrate(pattern); } catch(e) {}
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// 🔔 NOTIFICATIONS (Browser API - free, works in background)
+// ═══════════════════════════════════════════════════
+
+// Check current notification permission status
+// ═══════════════════════════════════════════════════
+// 📊 Weekly activity chart - shows last 7 days of activity
+function renderWeeklyChart() {
+  const wrap = document.getElementById('weeklyChart');
+  if (!wrap) return;
+  const today = new Date();
+  const days = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const dayStr = d.toDateString();
+    const startMs = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+    const endMs = startMs + 24 * 60 * 60 * 1000;
+    const released = state.history.filter(h =>
+      h.action === 'released' && h.actionAt >= startMs && h.actionAt < endMs
+    ).length;
+    const taken = state.history.filter(h =>
+      h.action === 'taken' && h.actionAt >= startMs && h.actionAt < endMs
+    ).length;
+    const dayName = ['א׳','ב׳','ג׳','ד׳','ה׳','ו׳','ש׳'][d.getDay()];
+    days.push({ name: dayName, released, taken, isToday: dayStr === today.toDateString() });
+  }
+  const maxVal = Math.max(1, ...days.map(d => d.released + d.taken));
+  wrap.innerHTML = days.map(d => {
+    const total = d.released + d.taken;
+    const heightPct = (total / maxVal) * 100;
+    const releasedPct = total > 0 ? (d.released / total) * 100 : 0;
+    return `
+      <div class="chart-day ${d.isToday ? 'today' : ''}">
+        <div class="chart-bar-wrap">
+          ${total > 0 ? `<div class="chart-bar" style="height:${Math.max(8, heightPct)}%;">
+            ${d.released > 0 ? `<div class="chart-bar-released" style="height:${releasedPct}%;"></div>` : ''}
+          </div>` : '<div class="chart-bar-empty"></div>'}
+        </div>
+        <div class="chart-day-num">${total > 0 ? total : ''}</div>
+        <div class="chart-day-name">${d.name}</div>
+      </div>
+    `;
+  }).join('');
+}
+// ═══════════════════════════════════════════════════
+// 📍 FAVORITE AREA (User's home/preferred neighborhood)
+// ═══════════════════════════════════════════════════
+
+async function setFavAreaToCurrent() {
+  if (!state.myLoc) {
+    toast('err', 'צריך לאתר אותך קודם');
+    locate().catch(() => {});
+    return;
+  }
+  const areaName = getAreaName(state.myLoc[0], state.myLoc[1]);
+  state.user.favoriteArea = {
+    lat: state.myLoc[0],
+    lng: state.myLoc[1],
+    name: areaName,
+    setAt: Date.now()
+  };
+  saveState();
+  toast('win', `📍 האזור נקבע: ${areaName}`);
+  vibrate([100, 50, 100]);
+  renderFavArea();
+}
+
+function clearFavArea() {
+  state.user.favoriteArea = null;
+  saveState();
+  renderFavArea();
+}
+
+// Open map picker to choose favorite area
+function pickFavAreaOnMap() {
+  closeSheet('favAreaSheet');
+  switchView('map');
+  toast('xp', 'לחץ על המפה במקום הרצוי');
+  // Show a one-time tap handler on map
+  if (!map) return;
+  const handler = (e) => {
+    const lat = e.latlng.lat;
+    const lng = e.latlng.lng;
+    const name = getAreaName(lat, lng);
+    state.user.favoriteArea = { lat, lng, name, setAt: Date.now() };
+    saveState();
+    toast('win', `📍 האזור נקבע: ${name}`);
+    vibrate([100, 50, 100]);
+    map.off('click', handler);
+    setTimeout(() => {
+      openSheet('favAreaSheet');
+      renderFavArea();
+    }, 600);
+  };
+  map.on('click', handler);
+  // Cancel after 30 seconds if no click
+  setTimeout(() => map.off('click', handler), 30000);
+}
+
+function renderFavArea() {
+  const fav = state.user.favoriteArea;
+  const empty = document.getElementById('favAreaEmpty');
+  const active = document.getElementById('favAreaActive');
+  const desc = document.getElementById('moreFavAreaDesc');
+
+  if (!fav) {
+    empty.style.display = 'block';
+    active.style.display = 'none';
+    if (desc) desc.textContent = 'לא הוגדר';
+    return;
+  }
+  empty.style.display = 'none';
+  active.style.display = 'block';
+  document.getElementById('favAreaName').textContent = fav.name || 'האזור שלך';
+  if (desc) desc.textContent = fav.name || 'מוגדר';
+
+  // Calculate stats
+  const RADIUS_KM = 0.5;
+  const nearby = state.spots.filter(s => dist(s.lat, s.lng, fav.lat, fav.lng) <= RADIUS_KM);
+  document.getElementById('favAreaSpotCount').textContent = nearby.length;
+  // Activity = spots created in the last hour
+  const oneHourAgo = Date.now() - 60 * 60 * 1000;
+  const activityCount = state.spots.filter(s =>
+    s.at >= oneHourAgo && dist(s.lat, s.lng, fav.lat, fav.lng) <= RADIUS_KM
+  ).length;
+  document.getElementById('favAreaActivity').textContent = activityCount > 0 ? activityCount : '—';
+}
+
+function showFavAreaOnMap() {
+  const fav = state.user.favoriteArea;
+  if (!fav || !map) return;
+  closeSheet('favAreaSheet');
+  switchView('map');
+  setTimeout(() => {
+    map.flyTo([fav.lat, fav.lng], 16, { duration: 0.7 });
+    // Add a temporary highlight circle
+    if (window._favCircle) map.removeLayer(window._favCircle);
+    window._favCircle = L.circle([fav.lat, fav.lng], {
+      radius: 500,
+      color: '#c9a770',
+      fillColor: '#c9a770',
+      fillOpacity: 0.1,
+      weight: 2,
+      dashArray: '5, 5'
+    }).addTo(map);
+    // Remove circle after 5 seconds
+    setTimeout(() => {
+      if (window._favCircle) {
+        map.removeLayer(window._favCircle);
+        window._favCircle = null;
+      }
+    }, 8000);
+  }, 100);
+}
+
+function navigateToFavArea() {
+  const fav = state.user.favoriteArea;
+  if (!fav) return;
+  window.open(`https://waze.com/ul?ll=${fav.lat},${fav.lng}&navigate=yes`, '_blank');
+}
+
+function checkNotifPermission() {
+  if (!('Notification' in window)) return 'unsupported';
+  state.notif.permission = Notification.permission;
+  return Notification.permission;
+}
+
+// Request permission from user
+async function requestNotifPermission() {
+  if (!('Notification' in window)) {
+    toast('err', 'הדפדפן לא תומך בהתראות');
+    return false;
+  }
+  if (Notification.permission === 'granted') {
+    state.notif.permission = 'granted';
+    state.notif.enabled = true;
+    saveState();
+    return true;
+  }
+  if (Notification.permission === 'denied') {
+    toast('err', 'התראות חסומות. הפעל בהגדרות הדפדפן');
+    return false;
+  }
+  try {
+    const result = await Notification.requestPermission();
+    state.notif.permission = result;
+    if (result === 'granted') {
+      state.notif.enabled = true;
+      saveState();
+      // Send a welcome notification
+      sendNotif('🎉 התראות הופעלו!', 'תקבל התראה כשמתפנות חניות בקרבתך');
+      return true;
+    } else {
+      toast('err', 'דחית את ההרשאה');
+      return false;
+    }
+  } catch(e) {
+    console.warn('notif perm err:', e);
+    return false;
+  }
+}
+
+// Check if currently in quiet hours
+function isQuietHours() {
+  if (!state.notif.quietStart && !state.notif.quietEnd) return false;
+  const h = new Date().getHours();
+  const start = state.notif.quietStart;
+  const end = state.notif.quietEnd;
+  if (start < end) {
+    return h >= start && h < end;
+  } else {
+    // Crosses midnight (e.g., 22:00 to 07:00)
+    return h >= start || h < end;
+  }
+}
+
+// Send a browser notification
+function sendNotif(title, body, data) {
+  if (!state.notif.enabled) return;
+  if (state.notif.permission !== 'granted') return;
+  if (isQuietHours()) {
+    // Just vibrate silently
+    if (state.notif.vibrate) vibrate(100);
+    return;
+  }
+  try {
+    const opts = {
+      body: body,
+      icon: 'data:image/svg+xml;base64,' + btoa(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+          <defs><radialGradient id="g" cx="30%" cy="30%"><stop offset="0%" stop-color="#e0c28c"/><stop offset="40%" stop-color="#c9a770"/><stop offset="100%" stop-color="#8b6f47"/></radialGradient></defs>
+          <rect width="192" height="192" rx="44" fill="#0d0d0e"/>
+          <circle cx="96" cy="96" r="64" fill="url(#g)"/>
+          <text x="96" y="120" font-family="serif" font-size="80" font-weight="900" text-anchor="middle" fill="#2a1f1a">פ</text>
+        </svg>
+      `),
+      badge: 'data:image/svg+xml;base64,' + btoa(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 72 72">
+          <circle cx="36" cy="36" r="32" fill="#c9a770"/>
+        </svg>
+      `),
+      tag: data?.tag || 'spot-alert',
+      renotify: true,
+      requireInteraction: false,
+      silent: !state.notif.sound,
+      data: data || {}
+    };
+    if (state.notif.vibrate) opts.vibrate = [200, 100, 200];
+    const n = new Notification(title, opts);
+    n.onclick = () => {
+      window.focus();
+      n.close();
+      if (data?.lat && data?.lng && map) {
+        switchView('map');
+        map.flyTo([data.lat, data.lng], 17, { duration: 0.7 });
+      }
+    };
+    // Auto close after 8s
+    setTimeout(() => { try { n.close(); } catch(e) {} }, 8000);
+  } catch(e) {
+    console.warn('notif send err:', e);
+  }
+}
+
+// Try to keep screen awake when app is foregrounded
+let wakeLock = null;
+async function tryWakeLock() {
+  if (!('wakeLock' in navigator)) return;
+  try {
+    wakeLock = await navigator.wakeLock.request('screen');
+    wakeLock.addEventListener('release', () => { wakeLock = null; });
+  } catch(e) {
+    // Silently fail - not critical
+  }
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && state.notif.enabled) {
+    tryWakeLock();
+  }
+});
+
+// ═══════════════════════════════════════════════════
+// FIREBASE SYNC
+// ═══════════════════════════════════════════════════
+let unsubscribeSpots = null;
+
+function subscribeToSpots() {
+  try {
+    unsubscribeSpots = onSnapshot(spotsCol, (snapshot) => {
+      const now = Date.now();
+      // First pass: collect all raw spots (so we can compute density)
+      const raw = [];
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const at = typeof data.at === 'number' ? data.at : (data.at?.toMillis?.() || 0);
+        raw.push({
+          id: doc.id,
+          ref: doc.ref,
+          lat: data.lat,
+          lng: data.lng,
+          type: data.type,
+          street: data.street,
+          note: data.note,
+          userId: data.userId,
+          userName: data.userName,
+          reporterTrust: data.reporterTrust || 3,
+          at: at,
+          takingBy: data.takingBy || null,
+          takingName: data.takingName || null,
+          takingAt: data.takingAt || null,
+          flags: data.flags || []
+        });
+      });
+      // Second pass: apply dynamic TTL based on density
+      const spots = [];
+      raw.forEach(spot => {
+        if (spot.at <= 0) return;
+        const ttl = getSpotTTL(spot, raw);
+        // Special case: if someone is on the way, give it 60s grace beyond claim time
+        if (spot.takingBy && spot.takingAt) {
+          const claimAge = now - spot.takingAt;
+          if (claimAge < ARRIVE_TIMEOUT) {
+            // Spot is reserved - keep it
+            spots.push(spot);
+            return;
+          } else {
+            // Claim expired - revert it
+            spot.takingBy = null;
+            spot.takingName = null;
+            spot.takingAt = null;
+            updateDoc(spot.ref, { takingBy: null, takingName: null, takingAt: null }).catch(() => {});
+          }
+        }
+        // Normal expiry
+        if (now - spot.at >= ttl) {
+          deleteDoc(spot.ref).catch(() => {});
+          return;
+        }
+        spots.push(spot);
+      });
+      // Detect new "takingBy" events on spots I own (notification before arrival)
+      const previousSpots = state.spots;
+      spots.forEach(newSp => {
+        if (newSp.userId === state.userId && newSp.takingBy && newSp.takingBy !== state.userId) {
+          const oldSp = previousSpots.find(p => p.id === newSp.id);
+          if (!oldSp || !oldSp.takingBy) {
+            // Someone just claimed my spot
+            toast('win', `🚗 ${newSp.takingName || 'מישהו'} בדרך לחניה שלך`);
+            vibrate([200, 100, 200]);
+            sendNotif(`🚗 ${newSp.takingName || 'מישהו'} בדרך`, `לחניה שלך ב${newSp.street}`, {
+              lat: newSp.lat, lng: newSp.lng, tag: 'my-claim'
+            });
+          }
+        }
+      });
+
+      // 🔔 Detect new spots near me & alert (works in foreground + background!)
+      // Only fires after first load to avoid alert flood on app open
+      if (!state.initialLoad) {
+        const fav = state.user.favoriteArea;
+        spots.forEach(newSp => {
+          if (newSp.userId === state.userId) return; // skip my own
+          const wasKnown = previousSpots.find(p => p.id === newSp.id);
+          if (wasKnown) return; // already shown
+
+          // Check 1: Spot near user's current location
+          if (state.myLoc) {
+            const d = dist(state.myLoc[0], state.myLoc[1], newSp.lat, newSp.lng);
+            const radius = state.notif.radius || 0.3;
+            if (d <= radius) {
+              const dStr = Math.round(d * 1000) + 'מ׳';
+              const typ = newSp.type === 'blue' ? 'כחול-לבן' : newSp.type === 'free' ? 'חינם' : 'תושבים';
+              if (hasPriorityAccess()) {
+                vibrate([100, 50, 100, 50, 200]);
+                toast('win', `⚡ חניה חדשה ${dStr} ממך · ${newSp.street}`);
+                sendNotif(`⚡ חניה ${dStr} ממך`, `${newSp.street} · ${typ}`, {
+                  lat: newSp.lat, lng: newSp.lng, tag: 'priority-spot'
+                });
+              } else {
+                vibrate(150);
+                toast('xp', `🚗 חניה ${dStr} ממך`);
+                sendNotif(`🚗 חניה חדשה ${dStr} ממך`, `${newSp.street} · ${typ}`, {
+                  lat: newSp.lat, lng: newSp.lng, tag: 'nearby-spot'
+                });
+              }
+              return; // Don't double-alert if also in favorite area
+            }
+          }
+
+          // Check 2: Spot near favorite area (even if user is elsewhere)
+          if (fav) {
+            const dFav = dist(fav.lat, fav.lng, newSp.lat, newSp.lng);
+            if (dFav <= 0.3) {
+              // Strong alert - this is their home/work area
+              const dStr = Math.round(dFav * 1000) + 'מ׳';
+              const typ = newSp.type === 'blue' ? 'כחול-לבן' : newSp.type === 'free' ? 'חינם' : 'תושבים';
+              vibrate([200, 100, 200, 100, 300]); // Strong vibration
+              toast('win', `📍 חניה ב${fav.name}! ${newSp.street}`);
+              sendNotif(`📍 חניה ב${fav.name}`, `${newSp.street} · ${typ} · ${dStr} מהאזור שלך`, {
+                lat: newSp.lat, lng: newSp.lng, tag: 'fav-area-spot'
+              });
+            }
+          }
+        });
+      }
+
+      state.spots = spots;
+      state.initialLoad = false;
+      setLiveChip(true);
+      renderAll();
+    }, (err) => {
+      console.warn('Firestore err:', err);
+      setLiveChip(false);
+      state.initialLoad = false;
+      renderAll();
+    });
+  } catch(e) {
+    console.warn('subscribe err:', e);
+    setLiveChip(false);
+  }
+}
+
+// Reverse geocode lat/lng to street name using OpenStreetMap Nominatim (free, no key)
+async function reverseGeocode(lat, lng) {
+  try {
+    const ctrl = new AbortController();
+    const timeout = setTimeout(() => ctrl.abort(), 4000);
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&accept-language=he`,
+      { signal: ctrl.signal, headers: { 'User-Agent': 'BechikApp/1.0' } }
+    );
+    clearTimeout(timeout);
+    if (!res.ok) throw new Error('geocode fail');
+    const data = await res.json();
+    const addr = data.address || {};
+    const road = addr.road || addr.pedestrian || addr.residential || '';
+    const houseNum = addr.house_number || '';
+    if (road) {
+      return houseNum ? `${road} ${houseNum}` : road;
+    }
+    return null;
+  } catch(e) {
+    console.warn('geocode err:', e.message);
+    return null;
+  }
+}
+
+// 🔍 Forward geocode - search for an address in Tel Aviv
+async function searchAddress(query) {
+  try {
+    const ctrl = new AbortController();
+    const timeout = setTimeout(() => ctrl.abort(), 5000);
+    // Bias search to Tel Aviv area
+    const TLV_BBOX = '34.74,32.04,34.84,32.13';
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&accept-language=he&viewbox=${TLV_BBOX}&bounded=1&limit=5`,
+      { signal: ctrl.signal, headers: { 'User-Agent': 'BechikApp/1.0' } }
+    );
+    clearTimeout(timeout);
+    if (!res.ok) throw new Error('search fail');
+    return await res.json();
+  } catch(e) {
+    console.warn('search err:', e.message);
+    return [];
+  }
+}
+
+// Debounced search
+let searchTimer = null;
+function onSearchInput(value) {
+  clearTimeout(searchTimer);
+  const wrap = document.getElementById('searchClear');
+  const results = document.getElementById('searchResults');
+  if (!value || value.length < 2) {
+    wrap.style.display = 'none';
+    results.style.display = 'none';
+    return;
+  }
+  wrap.style.display = 'grid';
+  searchTimer = setTimeout(async () => {
+    const found = await searchAddress(value);
+    if (found.length === 0) {
+      results.style.display = 'block';
+      results.innerHTML = `<div style="padding:18px;text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;color:#8f8b82;font-size:13px;">לא נמצאו תוצאות</div>`;
+      return;
+    }
+    results.style.display = 'block';
+    results.innerHTML = found.map(item => {
+      const name = item.display_name.split(',').slice(0, 2).join(',').trim();
+      const area = item.display_name.split(',').slice(2, 4).join(',').trim();
+      return `<button class="search-result-item" data-lat="${item.lat}" data-lng="${item.lon}" data-name="${name.replace(/"/g, '&quot;')}">
+        <div class="sr-name">${name}</div>
+        <div class="sr-area">${area}</div>
+      </button>`;
+    }).join('');
+    results.querySelectorAll('.search-result-item').forEach(btn => {
+      btn.onclick = () => {
+        const lat = parseFloat(btn.dataset.lat);
+        const lng = parseFloat(btn.dataset.lng);
+        const name = btn.dataset.name;
+        startTripMode(lat, lng, name);
+        results.style.display = 'none';
+        document.getElementById('searchInput').value = '';
+        wrap.style.display = 'none';
+      };
+    });
+  }, 400);
+}
+
+// 🚗 Trip Mode - virtual destination, sort spots by distance to it
+let tripDestination = null;
+let tripCircle = null;
+
+function startTripMode(lat, lng, name) {
+  tripDestination = { lat, lng, name };
+  document.getElementById('tripBanner').style.display = 'flex';
+  document.getElementById('tripName').textContent = name;
+  toast('xp', `🎯 מחפש חניות ליד ${name}`);
+  vibrate(50);
+  // Show destination on map
+  switchView('map');
+  setTimeout(() => {
+    if (map) {
+      map.flyTo([lat, lng], 16, { duration: 0.7 });
+      if (tripCircle) map.removeLayer(tripCircle);
+      tripCircle = L.circle([lat, lng], {
+        radius: 500,
+        color: '#c9a770',
+        fillColor: '#c9a770',
+        fillOpacity: 0.08,
+        weight: 2,
+        dashArray: '5, 5'
+      }).addTo(map);
+      // Marker at destination
+      L.marker([lat, lng], {
+        icon: L.divIcon({
+          className: '',
+          html: `<div style="background:linear-gradient(180deg,#e0c28c,#c9a770);width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#2a1f1a;font-size:18px;font-weight:900;border:3px solid #0d0d0e;box-shadow:0 4px 12px rgba(0,0,0,0.5);">⌖</div>`,
+          iconSize: [36, 36],
+          iconAnchor: [18, 18]
+        })
+      }).addTo(map);
+    }
+  }, 100);
+  renderAll();
+}
+
+function endTripMode() {
+  tripDestination = null;
+  document.getElementById('tripBanner').style.display = 'none';
+  if (tripCircle && map) {
+    map.removeLayer(tripCircle);
+    tripCircle = null;
+  }
+  toast('xp', 'יציאה ממצב יעד');
+  renderAll();
+}
+
+async function publishSpot(loc, type, note) {
+  try {
+    // Try to get accurate street name from OpenStreetMap
+    let street = (note && note.length > 2) ? note.split(/[,.\n]/)[0].trim().slice(0, 40) : null;
+    if (!street) {
+      const geocoded = await reverseGeocode(loc[0], loc[1]);
+      street = geocoded || (randStreet() + ' ' + Math.floor(Math.random() * 80 + 1));
+    }
+    const newSpot = {
+      lat: loc[0],
+      lng: loc[1],
+      type: type,
+      street: street,
+      note: note || '',
+      userId: state.userId,
+      userName: state.userName || 'אנונימי',
+      reporterTrust: state.user.trustLevel || 3,
+      flags: [],
+      confirmations: [],   // users who said "spot was real"
+      rejections: [],      // users who said "spot was fake"
+      at: Date.now()
+    };
+    console.log('[Haniv] Publishing spot:', newSpot);
+    const docRef = await addDoc(spotsCol, newSpot);
+    console.log('[Haniv] ✅ Published with id:', docRef.id);
+    addToHistory({ ...newSpot, id: docRef.id }, 'released');
+    toast('xp', 'נשלח לקהילה ✓');
+    return true;
+  } catch(e) {
+    console.error('[Haniv] ❌ publish err:', e);
+    toast('err', 'שגיאה: ' + (e.message || 'לא ידוע'));
+    return false;
+  }
+}
+
+async function removeSpot(id) {
+  try {
+    await deleteDoc(doc(db, 'spots', id));
+  } catch(e) {
+    console.warn('remove err:', e);
+  }
+}
+
+function setLiveChip(online) {
+  const chip = document.getElementById('liveChip');
+  if (online) {
+    chip.classList.remove('offline');
+    chip.querySelector('.v').textContent = 'LIVE';
+  } else {
+    chip.classList.add('offline');
+    chip.querySelector('.v').textContent = 'OFFLINE';
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// MAP
+// ═══════════════════════════════════════════════════
+let map, meMarker;
+const pinsMap = new Map();
+
+function initMap() {
+  if (map) return;
+  map = L.map('map', {
+    center: state.myLoc || TLV,
+    zoom: 15,
+    zoomControl: false,
+    attributionControl: true
+  });
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
+    attribution: '© OSM © CARTO',
+    subdomains: 'abcd', maxZoom: 19
+  }).addTo(map);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png', {
+    subdomains: 'abcd', maxZoom: 19
+  }).addTo(map);
+  renderPins();
+  if (state.myLoc) showMe();
+}
+
+function spotPin(spot) {
+  const remaining = getSpotRemaining(spot, state.spots);
+  const stale = remaining < 30000; // less than 30s left
+  const isMine = spot.userId === state.userId;
+  const isTaking = !!spot.takingBy;
+  const lbl = spot.type === 'blue' ? 'P' : spot.type === 'free' ? '✓' : 'R';
+  const cls = `pin ${spot.type} ${stale && !isTaking ? 'stale' : ''} ${isMine ? 'mine' : ''} ${isTaking ? 'taking' : ''}`;
+  return L.divIcon({
+    className: '',
+    html: `<div class="${cls}"><div class="pin-drop"><span class="label">${lbl}</span></div></div>`,
+    iconSize: [32, 40],
+    iconAnchor: [16, 38]
+  });
+}
+
+function renderPins() {
+  if (!map) return;
+  const visible = filterSpots(state.spots);
+  pinsMap.forEach((m, id) => {
+    if (!visible.find(s => s.id === id)) {
+      map.removeLayer(m);
+      pinsMap.delete(id);
+    }
+  });
+  visible.forEach(sp => {
+    if (pinsMap.has(sp.id)) {
+      const existing = pinsMap.get(sp.id);
+      existing.setIcon(spotPin(sp));
+      // Re-bind popup so it has fresh data when reopened
+      existing.setPopupContent(popupHTML(sp));
+      return;
+    }
+    const m = L.marker([sp.lat, sp.lng], { icon: spotPin(sp) }).addTo(map);
+    m.bindPopup(popupHTML(sp));
+    m.on('popupopen', () => {
+      // Refresh popup content with latest data
+      const fresh = state.spots.find(x => x.id === sp.id) || sp;
+      m.setPopupContent(popupHTML(fresh));
+      document.querySelectorAll('[data-take]').forEach(b => {
+        b.onclick = () => takeSpot(sp.id);
+      });
+      document.querySelectorAll('[data-nav]').forEach(b => {
+        b.onclick = () => window.open(`https://waze.com/ul?ll=${sp.lat},${sp.lng}&navigate=yes`, '_blank');
+      });
+      document.querySelectorAll('[data-del]').forEach(b => {
+        b.onclick = () => deleteMySpot(sp.id);
+      });
+      document.querySelectorAll('[data-arrived]').forEach(b => {
+        b.onclick = () => {
+          // Find current claim (if any matches this spot)
+          const fresh = state.spots.find(x => x.id === sp.id);
+          if (fresh && fresh.takingBy === state.userId) {
+            currentClaim = fresh;
+            confirmArrival();
+          }
+        };
+      });
+      document.querySelectorAll('[data-cancel]').forEach(b => {
+        b.onclick = () => {
+          const fresh = state.spots.find(x => x.id === sp.id);
+          if (fresh && fresh.takingBy === state.userId) {
+            currentClaim = fresh;
+            cancelClaim(false);
+          }
+        };
+      });
+      document.querySelectorAll('[data-flag]').forEach(b => {
+        b.onclick = () => flagSpot(sp.id);
+      });
+    });
+    pinsMap.set(sp.id, m);
+  });
+}
+
+async function flagSpot(id) {
+  const sp = state.spots.find(s => s.id === id);
+  if (!sp) return;
+  const flags = sp.flags || [];
+  if (flags.includes(state.userId)) {
+    toast('err', 'כבר דיווחת על החניה הזאת');
+    return;
+  }
+  flags.push(state.userId);
+  try {
+    if (flags.length >= 3) {
+      // Three flags = remove the spot
+      await removeSpot(id);
+      toast('xp', '🚩 החניה הוסרה (3 דיווחי שווא)');
+    } else {
+      await updateDoc(doc(db, 'spots', id), { flags: flags });
+      toast('xp', `🚩 דיווחת. עוד ${3 - flags.length} דיווחים והחניה תוסר`);
+    }
+    if (map) map.closePopup();
+  } catch(e) {
+    console.warn('flag err:', e);
+    toast('err', 'שגיאה בדיווח');
+  }
+}
+
+function popupHTML(sp) {
+  const remaining = getSpotRemaining(sp, state.spots);
+  const cdLabel = formatCountdown(remaining);
+  const typ = sp.type === 'blue' ? 'כחול-לבן' : sp.type === 'free' ? 'חינם' : 'תושבים';
+  const isMine = sp.userId === state.userId;
+  const isTaking = sp.takingBy && sp.takingBy !== state.userId;
+  const isMyClaim = sp.takingBy === state.userId;
+  const trustStars = '⭐'.repeat(sp.reporterTrust || 3);
+  const byLine = sp.userName && sp.userName !== 'אנונימי' && !isMine ? ` · <span style="color:#c9a770;">${sp.userName} ${trustStars}</span>` : '';
+  const note = sp.note && sp.note !== sp.street ? ' · ' + sp.note : '';
+  const flagCount = (sp.flags || []).length;
+  const iFlagged = (sp.flags || []).includes(state.userId);
+
+  let btns;
+  if (isMine) {
+    btns = '<button class="pop-btn danger" data-del>מחק את הדיווח שלי</button>';
+  } else if (isMyClaim) {
+    btns = '<button class="pop-btn primary" data-arrived>הגעתי · +5 XP</button><button class="pop-btn ghost" data-cancel>בטל</button>';
+  } else if (isTaking) {
+    btns = `<div style="grid-column:1/-1;text-align:center;color:#d97757;font-family:'Inter',sans-serif;font-size:11px;font-weight:600;padding:10px;background:rgba(217,119,87,0.1);border-radius:8px;">🚗 ${sp.takingName || 'מישהו'} כבר בדרך</div>`;
+  } else {
+    btns = `<button class="pop-btn primary" data-take>תפסתי + נווט</button><button class="pop-btn ghost" data-nav>רק נווט</button><button class="pop-btn flag" data-flag style="grid-column:1/-1;font-size:10px;padding:6px;${iFlagged ? 'opacity:0.5;' : ''}">${iFlagged ? '🚩 דיווחת כלא נכון' : '🚩 לדווח שהחניה לא קיימת'}${flagCount > 0 ? ` (${flagCount})` : ''}</button>`;
+  }
+
+  return `
+    <div>
+      <div class="pop-street">${sp.street || 'חניה'}${isMine ? ' 🚗' : ''}</div>
+      <div class="pop-meta">${typ} · ${cdLabel}${byLine}${note}</div>
+      <div class="pop-btns">${btns}</div>
+    </div>
+  `;
+}
+
+function formatCountdown(ms) {
+  if (ms <= 0) return 'פג תוקף';
+  const s = Math.ceil(ms / 1000);
+  if (s < 60) return s + ' ש׳';
+  const m = Math.floor(s / 60);
+  const r = s % 60;
+  return `${m}:${r.toString().padStart(2,'0')}`;
+}
+
+function showMe() {
+  if (!map || !state.myLoc) return;
+  if (meMarker) map.removeLayer(meMarker);
+  meMarker = L.marker(state.myLoc, {
+    icon: L.divIcon({ className: '', html: '<div class="me-pin"></div>', iconSize: [18,18], iconAnchor: [9,9] })
+  }).addTo(map);
+}
+
+function flyToMe() {
+  if (state.myLoc && map) map.flyTo(state.myLoc, 16, { duration: 0.6 });
+}
+
+// "I claimed this spot - I'm on my way" - reserves it for 60s
+async function takeSpot(id) {
+  const sp = state.spots.find(s => s.id === id);
+  if (!sp) return;
+  // Already taken by someone else?
+  if (sp.takingBy && sp.takingBy !== state.userId) {
+    toast('err', `${sp.takingName || 'מישהו'} כבר בדרך לחניה הזאת`);
+    return;
+  }
+  if (map) map.closePopup();
+  // Reserve the spot in Firebase
+  try {
+    await updateDoc(doc(db, 'spots', id), {
+      takingBy: state.userId,
+      takingName: state.userName || 'אנונימי',
+      takingAt: Date.now()
+    });
+  } catch(e) {
+    console.warn('claim err:', e);
+    toast('err', 'לא הצלחתי לתפוס - נסה שוב');
+    return;
+  }
+  // Open Waze in new tab
+  window.open(`https://waze.com/ul?ll=${sp.lat},${sp.lng}&navigate=yes`, '_blank');
+  // Show arrival confirmation modal
+  showArrivedModal(sp);
+}
+
+let arrivedTimer = null;
+let currentClaim = null;
+
+function showArrivedModal(spot) {
+  currentClaim = spot;
+  const modal = document.getElementById('arrivedModal');
+  const street = document.getElementById('arrivedStreet');
+  const timer = document.getElementById('arrivedTimer');
+  const bar = document.getElementById('arrivedBar');
+  street.textContent = spot.street + ' · ' + (spot.type === 'blue' ? 'כחול-לבן' : spot.type === 'free' ? 'חינם' : 'תושבים');
+  let secs = 60;
+  timer.textContent = secs;
+  bar.style.width = '100%';
+  modal.classList.add('show');
+  if (arrivedTimer) clearInterval(arrivedTimer);
+  arrivedTimer = setInterval(() => {
+    secs--;
+    timer.textContent = secs;
+    bar.style.width = (secs / 60 * 100) + '%';
+    if (secs <= 0) {
+      // Time up - cancel claim, revert spot
+      cancelClaim(true);
+    }
+  }, 1000);
+}
+
+function hideArrivedModal() {
+  document.getElementById('arrivedModal').classList.remove('show');
+  if (arrivedTimer) { clearInterval(arrivedTimer); arrivedTimer = null; }
+}
+
+// User confirms arrival - delete the spot and reward
+async function confirmArrival() {
+  const sp = currentClaim;
+  hideArrivedModal();
+  if (!sp) return;
+  // Save details for feedback step
+  const arrivedSpot = { ...sp };
+  // Notify original owner
+  try {
+    if (sp.userId && sp.userId !== state.userId) {
+      await addDoc(takesCol, {
+        spotId: sp.id,
+        ownerId: sp.userId,
+        takerId: state.userId,
+        takerName: state.userName || 'אנונימי',
+        street: sp.street,
+        at: Date.now()
+      });
+    }
+  } catch(e) {}
+  addToHistory(sp, 'taken');
+  await removeSpot(sp.id);
+  state.user.helped++;
+  state.user.arrivedConfirmed++;
+  updateStreak();
+  addCredits(1, 'הגעת לחניה');
+  addXP(5, 'הגעת לחניה');
+  vibrate([100, 50, 100]);
+  toast('win', '🎉 תהנה מהחניה');
+  currentClaim = null;
+  // Show feedback modal after a short delay (only if not your own spot)
+  if (arrivedSpot.userId && arrivedSpot.userId !== state.userId) {
+    setTimeout(() => showFeedbackModal(arrivedSpot), 1800);
+  }
+}
+
+// 👍/👎 Feedback modal
+function showFeedbackModal(spot) {
+  const modal = document.getElementById('feedbackModal');
+  if (!modal) return;
+  document.getElementById('feedbackStreet').textContent = spot.street;
+  document.getElementById('feedbackReporter').textContent = spot.userName || 'אנונימי';
+  modal.classList.add('show');
+  const cleanup = () => modal.classList.remove('show');
+  document.getElementById('feedbackYes').onclick = async () => {
+    cleanup();
+    addCredits(1, 'משוב חיובי');
+    toast('xp', 'תודה! המדווח קיבל +1 לאמינות');
+    // We'd update the reporter's trust here in a real backend
+  };
+  document.getElementById('feedbackNo').onclick = async () => {
+    cleanup();
+    toast('err', 'דיווחת שהחניה לא הייתה שם');
+    // Decrement reporter's trust slightly (handled via flags system)
+  };
+  document.getElementById('feedbackSkip').onclick = cleanup;
+  // Auto-close after 15s
+  setTimeout(cleanup, 15000);
+}
+
+// User canceled or timed out - revert claim, spot returns to list
+async function cancelClaim(timeout) {
+  const sp = currentClaim;
+  hideArrivedModal();
+  if (!sp) return;
+  try {
+    await updateDoc(doc(db, 'spots', sp.id), {
+      takingBy: null,
+      takingName: null,
+      takingAt: null
+    });
+  } catch(e) {}
+  if (timeout) {
+    // Timed out without arriving - mild penalty to discourage spam claims
+    state.user.falseReports++;
+    saveState();
+    toast('err', 'הזמן עבר - החניה חזרה לרשימה');
+  }
+  else toast('xp', 'ביטלת - החניה זמינה שוב');
+  currentClaim = null;
+}
+
+async function deleteMySpot(id) {
+  const sp = state.spots.find(s => s.id === id);
+  if (!sp || sp.userId !== state.userId) return;
+  await removeSpot(id);
+  if (map) map.closePopup();
+  toast('xp', '✓ מחקת את הדיווח');
+}
+
+function subscribeToTakes() {
+  try {
+    onSnapshot(takesCol, (snapshot) => {
+      const now = Date.now();
+      snapshot.docChanges().forEach(change => {
+        if (change.type !== 'added') return;
+        const data = change.doc.data();
+        // Only notify if: this event is for ME and it's recent (within 2 minutes)
+        if (data.ownerId === state.userId && now - data.at < 2 * 60 * 1000) {
+          const key = change.doc.id;
+          if (!state.lastNotifiedTakes[key]) {
+            state.lastNotifiedTakes[key] = true;
+            // XP bonus for helping!
+            state.user.xp += 1;
+            saveState();
+            renderAll();
+            toast('win', `${data.takerName} תפס את החניה שלך · +1 XP`);
+          }
+          // Clean up old take event from DB (older than 5 min)
+          if (now - data.at > 5 * 60 * 1000) {
+            deleteDoc(change.doc.ref).catch(() => {});
+          }
+        } else if (now - data.at > 10 * 60 * 1000) {
+          // Clean up old events for everyone
+          deleteDoc(change.doc.ref).catch(() => {});
+        }
+      });
+    }, (err) => console.warn('takes subscribe err:', err));
+  } catch(e) { console.warn('takes err:', e); }
+}
+
+// ═══════════════════════════════════════════════════
+// GEOLOCATION
+// ═══════════════════════════════════════════════════
+function locate(opts = {}) {
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) {
+      state.locError = 'no_support';
+      updateLocStatus();
+      return reject('no_support');
+    }
+    navigator.geolocation.getCurrentPosition(
+      p => {
+        state.myLoc = [p.coords.latitude, p.coords.longitude];
+        state.locError = null;
+        if (map) showMe();
+        if (opts.fly) flyToMe();
+        updateLocStatus();
+        renderAll();
+        resolve(state.myLoc);
+      },
+      err => {
+        state.locError = err.code === 1 ? 'denied' : 'unavailable';
+        updateLocStatus();
+        reject(state.locError);
+      },
+      { enableHighAccuracy: true, timeout: 8000, maximumAge: 30000 }
+    );
+  });
+}
+
+function updateLocStatus() {
+  const el = document.getElementById('locStatus');
+  if (!el) return;
+  if (state.myLoc) {
+    el.className = 'loc-status ok';
+    el.innerHTML = `<div class="ic">●</div><div class="txt">מיקום זוהה · ${state.myLoc[0].toFixed(4)}°, ${state.myLoc[1].toFixed(4)}°</div>`;
+  } else if (state.locError) {
+    el.className = 'loc-status err';
+    el.innerHTML = `<div class="ic">!</div><div class="txt">${state.locError === 'denied' ? 'אין גישה למיקום' : 'לא הצלחתי למצוא מיקום'}</div><button class="act" id="pickManual">בחירה ידנית</button>`;
+    document.getElementById('pickManual').onclick = openPicker;
+  } else {
+    el.className = 'loc-status';
+    el.innerHTML = `<div class="ic">◌</div><div class="txt">ממתין למיקום…</div><button class="act" id="pickManual">בחירה ידנית</button>`;
+    document.getElementById('pickManual').onclick = openPicker;
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// RELEASE
+// ═══════════════════════════════════════════════════
+async function releaseSpot() {
+  let loc = state.myLoc;
+  if (!loc) {
+    try {
+      loc = await locate();
+    } catch {
+      toast('err', 'צריך מיקום — בחר ידנית');
+      openPicker();
+      return;
+    }
+  }
+  const note = document.getElementById('noteInput').value.trim();
+  const finalLoc = [
+    loc[0] + (Math.random() - 0.5) * 0.0002,
+    loc[1] + (Math.random() - 0.5) * 0.0002
+  ];
+  const btn = document.getElementById('submitRelease');
+  btn.disabled = true;
+  btn.textContent = 'שולח…';
+  const ok = await publishSpot(finalLoc, state.selType, note);
+  btn.disabled = false;
+  btn.textContent = 'דווח על חניה · +5 XP';
+  if (ok) {
+    state.user.released++;
+    updateStreak();
+    addCredits(1, 'דיווח חניה');
+    document.getElementById('noteInput').value = '';
+    closeSheet('releaseSheet');
+    addXP(5, 'שחררת חניה');
+    vibrate(50);
+    if (map) map.flyTo(finalLoc, 17, { duration: 0.7 });
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// PICKER
+// ═══════════════════════════════════════════════════
+let pickerMap;
+function openPicker() {
+  closeSheet('releaseSheet');
+  const ov = document.getElementById('pickerOverlay');
+  ov.classList.add('show');
+  setTimeout(() => {
+    if (!pickerMap) {
+      pickerMap = L.map('pickerMap', {
+        center: state.myLoc || TLV,
+        zoom: 15,
+        zoomControl: false,
+        attributionControl: false
+      });
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', { subdomains: 'abcd' }).addTo(pickerMap);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png', { subdomains: 'abcd' }).addTo(pickerMap);
+    } else {
+      pickerMap.invalidateSize();
+    }
+  }, 100);
+}
+
+function closePicker() {
+  document.getElementById('pickerOverlay').classList.remove('show');
+}
+
+async function pickerConfirm() {
+  if (!pickerMap) return;
+  const c = pickerMap.getCenter();
+  const note = document.getElementById('noteInput').value.trim();
+  const btn = document.getElementById('pickerConfirm');
+  btn.disabled = true;
+  btn.textContent = 'שולח…';
+  const ok = await publishSpot([c.lat, c.lng], state.selType, note);
+  btn.disabled = false;
+  btn.textContent = 'אישור המיקום · +5 XP';
+  if (ok) {
+    state.user.released++;
+    updateStreak();
+    addCredits(1, 'דיווח חניה');
+    document.getElementById('noteInput').value = '';
+    closePicker();
+    addXP(5, 'שחררת חניה');
+    vibrate(50);
+    if (map) map.flyTo([c.lat, c.lng], 17, { duration: 0.7 });
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════
+function renderList() {
+  const wrap = document.getElementById('listContent');
+  const now = Date.now();
+
+  const filtered = filterSpots(state.spots);
+  let sorted;
+  // Trip mode takes priority over user location for sorting
+  if (tripDestination) {
+    sorted = filtered.map(s => ({
+      ...s,
+      _d: dist(tripDestination.lat, tripDestination.lng, s.lat, s.lng)
+    })).sort((a, b) => a._d - b._d);
+    // Update trip stats
+    const closeCount = sorted.filter(s => s._d <= 0.5).length;
+    document.getElementById('tripCount').textContent = closeCount;
+  } else if (state.myLoc) {
+    sorted = filtered.map(s => ({
+      ...s,
+      _d: dist(state.myLoc[0], state.myLoc[1], s.lat, s.lng)
+    })).sort((a, b) => a._d - b._d);
+  } else {
+    sorted = [...filtered].sort((a, b) => b.at - a.at);
+  }
+
+  if (sorted.length === 0) {
+    if (state.initialLoad) {
+      wrap.innerHTML = `<div class="loading">טוען חניות מהקהילה…</div>`;
+    } else {
+      const msg = state.filter === 'all' ? 'אין חניות פנויות כרגע' : 'אין חניות בסינון הזה';
+      const sub = state.filter === 'all' ? 'תהיה הראשון לדווח — הקהילה תודה לך' : 'נסה סינון אחר או דווח חניה';
+      wrap.innerHTML = `
+        <div class="empty">
+          <div class="empty-ornament">❦</div>
+          <div class="empty-ttl">${msg}</div>
+          <div class="empty-sub">${sub}</div>
+        </div>
+      `;
+    }
+    return;
+  }
+
+  wrap.innerHTML = sorted.map(sp => {
+    const remaining = getSpotRemaining(sp, state.spots);
+    const ttl = getSpotTTL(sp, state.spots);
+    const cdLabel = formatCountdown(remaining);
+    // Color class based on remaining time
+    let cdClass = 'countdown cd-warm';
+    if (remaining < 30000) cdClass = 'countdown cd-critical';
+    else if (remaining < 60000) cdClass = 'countdown cd-hot';
+
+    const typLbl = { blue: 'P', free: '✓', red: 'R' }[sp.type];
+    const typName = { blue: 'כחול-לבן', free: 'חינם', red: 'תושבים' }[sp.type];
+    const isMine = sp.userId === state.userId;
+    const isTaking = sp.takingBy && sp.takingBy !== state.userId;
+    const isMyClaim = sp.takingBy === state.userId;
+    let distHTML = '';
+    if (sp._d !== undefined) {
+      const d = fmtDist(sp._d);
+      distHTML = `<div class="spot-dist">${d.n}<span class="unit">${d.u}</span></div>`;
+    } else {
+      distHTML = `<div class="spot-dist" style="font-size:14px;color:#8f8b82">—</div>`;
+    }
+    const metaParts = [typName];
+    if (sp.userName && sp.userName !== 'אנונימי' && !isMine) metaParts.push(`<span style="color:#c9a770;">${sp.userName}</span>`);
+    if (isTaking) metaParts.push(`<span class="taking-tag">${sp.takingName} בדרך</span>`);
+    if (isMyClaim) metaParts.push(`<span class="taking-tag">אתה בדרך</span>`);
+    if (sp.note && sp.note !== sp.street) metaParts.push(sp.note);
+    return `
+      <div class="spot ${remaining < 60000 ? 'fresh' : ''} ${isMine ? 'mine' : ''} ${isTaking || isMyClaim ? 'taking' : ''}" data-id="${sp.id}">
+        <div class="spot-badge ${sp.type}">${typLbl}</div>
+        <div class="spot-body">
+          <div class="spot-street">${sp.street || 'חניה'}</div>
+          <div class="spot-meta">${metaParts.join('<span class="sep">·</span>')}</div>
+        </div>
+        <div class="spot-right">
+          ${distHTML}
+          <div class="spot-age ${cdClass}">${cdLabel}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  document.querySelectorAll('.spot').forEach(card => {
+    card.onclick = () => {
+      const id = card.dataset.id;
+      const sp = state.spots.find(x => x.id === id);
+      if (!sp) return;
+      switchView('map');
+      setTimeout(() => {
+        if (map) {
+          map.flyTo([sp.lat, sp.lng], 17, { duration: 0.6 });
+          setTimeout(() => {
+            const mk = pinsMap.get(id);
+            if (mk) mk.openPopup();
+          }, 700);
+        }
+      }, 100);
+    };
+  });
+}
+
+function renderStats() {
+  const lvl = getLevel(state.user.xp);
+  document.getElementById('sXp').textContent = state.user.xp;
+  document.getElementById('sCredits').textContent = state.user.credits || 0;
+  document.getElementById('sReleased').textContent = state.user.released;
+  document.getElementById('sHelped').textContent = state.user.helped;
+  document.getElementById('sStreak').textContent = state.user.streak || 0;
+  document.getElementById('sTrust').textContent = '⭐'.repeat(state.user.trustLevel || 3);
+  document.getElementById('pLvl').textContent = lvl.name;
+  document.getElementById('pNxt').textContent = lvl.nxtName;
+  const inLvl = state.user.xp - lvl.curMin;
+  const ofLvl = lvl.nextAt - lvl.curMin;
+  document.getElementById('pTxt').textContent = `${inLvl} / ${ofLvl} XP`;
+  document.getElementById('progFill').style.width = Math.min(100, (inLvl / ofLvl) * 100) + '%';
+
+  // Priority access card
+  const pc = document.getElementById('priorityCard');
+  if (pc) pc.style.display = hasPriorityAccess() ? 'block' : 'none';
+
+  // Weekly activity chart
+  renderWeeklyChart();
+
+  const grid = document.getElementById('badgesGrid');
+  grid.innerHTML = BADGES.map(b => {
+    const earned = state.user.badges.find(x => x.id === b.id);
+    return `
+      <div class="badge-row ${earned ? 'earned' : 'locked'}">
+        <div class="badge-seal">${b.emoji}</div>
+        <div>
+          <div class="badge-nm">${b.name}</div>
+          <div class="badge-dsc">${b.dsc}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderAll() {
+  document.getElementById('xpNum').textContent = state.user.xp;
+  // Streak chip
+  const streakChip = document.getElementById('streakChip');
+  if (streakChip) {
+    if ((state.user.streak || 0) >= 2) {
+      streakChip.style.display = 'flex';
+      document.getElementById('streakNum').textContent = state.user.streak;
+    } else {
+      streakChip.style.display = 'none';
+    }
+  }
+  // Peak hour banner
+  const banner = document.getElementById('peakBanner');
+  if (banner) {
+    const msg = getPeakHourMessage();
+    if (msg) {
+      banner.style.display = 'block';
+      banner.textContent = msg;
+    } else {
+      banner.style.display = 'none';
+    }
+  }
+  const filtered = filterSpots(state.spots);
+  document.getElementById('availCount').textContent = filtered.length;
+  document.getElementById('listCount').textContent = filtered.length;
+  const lvl = getLevel(state.user.xp);
+  document.getElementById('lvlNum').textContent = lvl.name;
+
+  const mine = state.spots.filter(s => s.userId === state.userId);
+  const badge = document.getElementById('mineBadge');
+  if (badge) {
+    if (mine.length > 0) {
+      badge.style.display = 'inline-block';
+      badge.textContent = mine.length;
+    } else {
+      badge.style.display = 'none';
+    }
+  }
+
+  const desc = document.getElementById('availDesc');
+  if (filtered.length === 0) desc.textContent = 'ברגע זה שקט בעיר';
+  else if (state.filter === 'all') desc.textContent = filtered.length === 1 ? 'זמינה בתל אביב כרגע' : 'זמינות בתל אביב כרגע';
+  else desc.textContent = `בסינון: ${state.filter === 'blue' ? 'כחול-לבן' : state.filter === 'free' ? 'חינם' : 'תושבים'}`;
+
+  if (state.myLoc) {
+    const near = filtered.filter(s => dist(state.myLoc[0], state.myLoc[1], s.lat, s.lng) <= NEARBY_KM).length;
+    document.getElementById('nearbyCount').textContent = near;
+  } else {
+    document.getElementById('nearbyCount').textContent = '—';
+  }
+
+  renderList();
+  renderStats();
+  if (map) renderPins();
+  saveState();
+}
+
+// ═══════════════════════════════════════════════════
+// MY SPOTS / HISTORY / HEAT / SHARE renderers
+// ═══════════════════════════════════════════════════
+function renderMineList() {
+  const mine = state.spots.filter(s => s.userId === state.userId);
+  const wrap = document.getElementById('mineList');
+  if (mine.length === 0) {
+    wrap.innerHTML = `
+      <div class="empty">
+        <div class="empty-ornament">❦</div>
+        <div class="empty-ttl">לא דיווחת על חניות עדיין</div>
+        <div class="empty-sub">לחץ על הכפתור הזהוב למטה כדי לדווח חניה ראשונה</div>
+      </div>
+    `;
+    return;
+  }
+  wrap.innerHTML = mine.sort((a, b) => b.at - a.at).map(sp => {
+    const age = fmtAge(Date.now() - sp.at);
+    const typ = sp.type === 'blue' ? 'כחול-לבן' : sp.type === 'free' ? 'חינם' : 'תושבים';
+    const typLbl = sp.type === 'blue' ? 'P' : sp.type === 'free' ? '✓' : 'R';
+    return `
+      <div class="my-spot">
+        <div class="spot-badge ${sp.type}" style="width:40px;height:40px;font-size:16px;">${typLbl}</div>
+        <div class="my-spot-info">
+          <div class="my-spot-street">${sp.street || 'חניה'}</div>
+          <div class="my-spot-meta">${typ} · ${age.t}${sp.note && sp.note !== sp.street ? ' · ' + sp.note : ''}</div>
+        </div>
+        <button class="my-spot-del" data-delmine="${sp.id}">✕</button>
+      </div>
+    `;
+  }).join('');
+  wrap.querySelectorAll('[data-delmine]').forEach(btn => {
+    btn.onclick = async () => {
+      await deleteMySpot(btn.dataset.delmine);
+      renderMineList();
+    };
+  });
+}
+
+function renderHistory() {
+  const wrap = document.getElementById('historyList');
+  if (state.history.length === 0) {
+    wrap.innerHTML = `
+      <div class="empty">
+        <div class="empty-ornament">❦</div>
+        <div class="empty-ttl">אין היסטוריה עדיין</div>
+        <div class="empty-sub">חניות שתפסת או שחררת יופיעו כאן</div>
+      </div>
+    `;
+    return;
+  }
+  wrap.innerHTML = state.history.slice(0, 30).map(h => {
+    const age = Math.floor((Date.now() - h.actionAt) / 60000);
+    const ageStr = age < 1 ? 'עכשיו' : age < 60 ? `לפני ${age} ד׳` : age < 1440 ? `לפני ${Math.floor(age/60)} שעות` : `לפני ${Math.floor(age/1440)} ימים`;
+    const typ = h.type === 'blue' ? 'כחול-לבן' : h.type === 'free' ? 'חינם' : 'תושבים';
+    const typLbl = h.type === 'blue' ? 'P' : h.type === 'free' ? '✓' : 'R';
+    const actionLbl = h.action === 'released' ? 'דיווחת' : 'תפסת';
+    const actionColor = h.action === 'released' ? '#c9a770' : '#5a6675';
+    return `
+      <div class="my-spot">
+        <div class="spot-badge ${h.type}" style="width:40px;height:40px;font-size:16px;">${typLbl}</div>
+        <div class="my-spot-info">
+          <div class="my-spot-street">${h.street || 'חניה'}</div>
+          <div class="my-spot-meta"><span style="color:${actionColor};font-weight:600;">${actionLbl}</span> · ${typ} · ${ageStr}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderHeatZones() {
+  const zones = calculateHeatZones();
+  const wrap = document.getElementById('heatList');
+  if (zones.length === 0) {
+    wrap.innerHTML = `
+      <div class="empty">
+        <div class="empty-ornament">❦</div>
+        <div class="empty-ttl">אין אזורים חמים כרגע</div>
+        <div class="empty-sub">צריך לפחות 2 חניות באותו אזור כדי לזהות אשכול</div>
+      </div>
+    `;
+    return;
+  }
+  wrap.innerHTML = zones.map(z => {
+    const name = getAreaName(z.lat, z.lng);
+    const level = z.spots.length >= 5 ? 'חם מאוד 🔥🔥' : z.spots.length >= 3 ? 'חם 🔥' : 'פעיל ⚡';
+    return `
+      <div class="my-spot" data-heat-lat="${z.lat}" data-heat-lng="${z.lng}" style="cursor:pointer;">
+        <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#c46570,#7d3440);display:grid;place-items:center;font-family:'Frank Ruhl Libre',serif;font-size:18px;font-weight:900;color:#fff;">${z.spots.length}</div>
+        <div class="my-spot-info">
+          <div class="my-spot-street">${name}</div>
+          <div class="my-spot-meta">${level} · ${z.spots.length} חניות פנויות</div>
+        </div>
+        <div style="font-size:18px;color:#c9a770;">←</div>
+      </div>
+    `;
+  }).join('');
+  wrap.querySelectorAll('[data-heat-lat]').forEach(el => {
+    el.onclick = () => {
+      closeSheet('heatSheet');
+      switchView('map');
+      setTimeout(() => {
+        if (map) map.flyTo([parseFloat(el.dataset.heatLat), parseFloat(el.dataset.heatLng)], 16, { duration: 0.7 });
+      }, 100);
+    };
+  });
+}
+
+// ═══════════════════════════════════════════════════
+// SHARE
+// ═══════════════════════════════════════════════════
+function shareWhatsApp() {
+  const url = window.location.href;
+  const msg = `🚗 פנוי תפוס - האפליקציה שעוזרת למצוא חניה בתל אביב בזמן אמת!\n\nמצטרפים בקישור:\n${url}`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+async function copyLink() {
+  const url = window.location.href;
+  try {
+    await navigator.clipboard.writeText(url);
+    toast('xp', '✓ הקישור הועתק');
+  } catch {
+    toast('err', 'לא הצלחתי להעתיק');
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// UI
+// ═══════════════════════════════════════════════════
+function switchView(v) {
+  state.view = v;
+  const lv = document.getElementById('listView');
+  const mv = document.getElementById('mapView');
+  const lt = document.getElementById('listTab');
+  const mt = document.getElementById('mapTab');
+  if (v === 'list') {
+    lv.classList.remove('hidden'); mv.classList.add('hidden');
+    lt.classList.add('active'); mt.classList.remove('active');
+  } else {
+    lv.classList.add('hidden'); mv.classList.remove('hidden');
+    lt.classList.remove('active'); mt.classList.add('active');
+    initMap();
+    setTimeout(() => { if (map) map.invalidateSize(); }, 50);
+  }
+}
+
+function openSheet(id) {
+  document.getElementById('sheetBg').classList.add('show');
+  document.getElementById(id).classList.add('show');
+  if (id === 'releaseSheet') {
+    updateLocStatus();
+    if (!state.myLoc && !state.locError) locate().catch(() => {});
+  }
+  if (id === 'statsSheet') renderStats();
+  if (id === 'mineSheet') renderMineList();
+  if (id === 'historySheet') renderHistory();
+  if (id === 'heatSheet') renderHeatZones();
+  if (id === 'shareSheet') document.getElementById('shareUrl').textContent = window.location.href;
+}
+
+function closeSheet(id) {
+  document.getElementById('sheetBg').classList.remove('show');
+  if (id) document.getElementById(id).classList.remove('show');
+  else document.querySelectorAll('.sheet').forEach(s => s.classList.remove('show'));
+}
+
+function toast(kind, msg) {
+  const el = document.getElementById('toast');
+  const ic = document.getElementById('toastIc');
+  el.className = 'toast ' + kind;
+  ic.textContent = kind === 'xp' ? '✦' : kind === 'win' ? '❖' : kind === 'err' ? '!' : '✦';
+  document.getElementById('toastMsg').textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+// ═══════════════════════════════════════════════════
+// EVENTS
+// ═══════════════════════════════════════════════════
+document.getElementById('startBtn').onclick = () => {
+  document.getElementById('onboard').classList.add('hidden');
+  setTimeout(() => {
+    document.getElementById('onboard').style.display = 'none';
+    if (state.userName) {
+      // Already have name, go to app
+      document.getElementById('app').classList.add('active');
+      localStorage.setItem('bechik_onboarded_v1', '1');
+      locate({ fly: true }).catch(() => {});
+    } else {
+      // Show name modal
+      document.getElementById('nameModal').style.display = 'flex';
+      setTimeout(() => document.getElementById('nameInput').focus(), 300);
+    }
+  }, 400);
+};
+
+// Name input enable/disable continue button
+const nameInput = document.getElementById('nameInput');
+const saveNameBtn = document.getElementById('saveNameBtn');
+nameInput.addEventListener('input', () => {
+  const v = nameInput.value.trim();
+  if (v.length >= 2) {
+    saveNameBtn.disabled = false;
+    saveNameBtn.style.opacity = '1';
+  } else {
+    saveNameBtn.disabled = true;
+    saveNameBtn.style.opacity = '0.5';
+  }
+});
+
+saveNameBtn.onclick = () => {
+  const v = nameInput.value.trim();
+  if (v.length < 2) return;
+  state.userName = v;
+  saveState();
+  document.getElementById('nameModal').style.display = 'none';
+  document.getElementById('app').classList.add('active');
+  localStorage.setItem('bechik_onboarded_v1', '1');
+  setTimeout(() => toast('win', `ברוך הבא, ${v}`), 500);
+  locate({ fly: true }).catch(() => {});
+};
+
+document.getElementById('listTab').onclick = () => switchView('list');
+document.getElementById('mapTab').onclick = () => switchView('map');
+document.getElementById('locateBtn').onclick = () => {
+  locate({ fly: true }).catch(() => toast('err', 'אין גישה למיקום'));
+};
+document.getElementById('refreshBtn').onclick = () => {
+  renderAll();
+  toast('xp', 'המפה עודכנה');
+};
+document.getElementById('xpChip').onclick = () => openSheet('statsSheet');
+document.getElementById('sheetBg').onclick = () => closeSheet();
+document.querySelectorAll('[data-close]').forEach(b => b.onclick = () => closeSheet());
+
+// ═══════ BOTTOM NAV ═══════
+function setActiveNav(id) {
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  if (id) document.getElementById(id).classList.add('active');
+}
+
+document.getElementById('navHome').onclick = () => {
+  setActiveNav('navHome');
+  closeSheet();
+  switchView('list');
+  // Scroll to top
+  const list = document.getElementById('listView');
+  if (list) list.scrollTop = 0;
+};
+document.getElementById('navHeat').onclick = () => {
+  setActiveNav('navHeat');
+  openSheet('heatSheet');
+};
+document.getElementById('navReport').onclick = () => {
+  // First-time tutorial
+  if (!localStorage.getItem('bechik_release_tutorial_seen')) {
+    showReleaseTutorial();
+    return;
+  }
+  openSheet('releaseSheet');
+};
+
+function showReleaseTutorial() {
+  const html = `
+    <div class="arrived-modal show" id="tutorialModal">
+      <div class="arrived-card" style="max-width:400px;text-align:right;">
+        <div style="text-align:center;margin-bottom:14px;">
+          <div class="arrived-icon" style="margin:0 auto 12px;">i</div>
+          <div class="arrived-title">איך לדווח <span class="it">נכון</span></div>
+        </div>
+
+        <div style="margin-bottom:12px;padding:12px;background:#0d0d0e;border-radius:10px;border-right:3px solid #5a6675;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+            <div style="width:24px;height:24px;border-radius:6px;background:linear-gradient(180deg,#7a8a9a,#3a4250);color:#fff;display:grid;place-items:center;font-weight:900;font-size:12px;">P</div>
+            <div style="font-family:'Frank Ruhl Libre',serif;font-weight:600;color:#ebe8e2;">כחול-לבן</div>
+          </div>
+          <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:#8f8b82;">חניה בתשלום עם פנגו/סלופארק. נפוץ במרכז העיר.</div>
+        </div>
+
+        <div style="margin-bottom:12px;padding:12px;background:#0d0d0e;border-radius:10px;border-right:3px solid #4a7a5c;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+            <div style="width:24px;height:24px;border-radius:6px;background:linear-gradient(180deg,#6ba578,#2d5e3f);color:#fff;display:grid;place-items:center;font-weight:900;font-size:12px;">✓</div>
+            <div style="font-family:'Frank Ruhl Libre',serif;font-weight:600;color:#ebe8e2;">חינם</div>
+          </div>
+          <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:#8f8b82;">חניה ללא תשלום (סימון לבן). יותר נדיר במרכז.</div>
+        </div>
+
+        <div style="margin-bottom:18px;padding:12px;background:#0d0d0e;border-radius:10px;border-right:3px solid #7d3440;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+            <div style="width:24px;height:24px;border-radius:6px;background:linear-gradient(180deg,#a4505e,#5a2530);color:#fff;display:grid;place-items:center;font-weight:900;font-size:12px;">R</div>
+            <div style="font-family:'Frank Ruhl Libre',serif;font-weight:600;color:#ebe8e2;">תושבים</div>
+          </div>
+          <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:#8f8b82;">חניה לתושבי האזור (תו תושב). אם אין לך תו — לא חוקי.</div>
+        </div>
+
+        <div style="padding:10px;background:rgba(201,167,112,0.05);border:1px solid rgba(201,167,112,0.15);border-radius:10px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11px;color:#c9a770;line-height:1.5;text-align:center;margin-bottom:14px;">
+          💡 <strong>חשוב:</strong> דווח רק כשאתה באמת עוזב — לא דקה לפני
+        </div>
+
+        <button class="arrived-btn primary" id="tutorialDone" style="width:100%;">הבנתי, בוא נדווח</button>
+      </div>
+    </div>
+  `;
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = html;
+  document.body.appendChild(wrapper.firstElementChild);
+  document.getElementById('tutorialDone').onclick = () => {
+    localStorage.setItem('bechik_release_tutorial_seen', '1');
+    document.getElementById('tutorialModal').remove();
+    setTimeout(() => openSheet('releaseSheet'), 200);
+  };
+}
+document.getElementById('navMine').onclick = () => {
+  setActiveNav('navMine');
+  openSheet('mineSheet');
+};
+document.getElementById('navMore').onclick = () => {
+  setActiveNav('navMore');
+  openSheet('moreSheet');
+};
+
+// More menu rows
+document.getElementById('moreHistory').onclick = () => {
+  closeSheet('moreSheet');
+  setTimeout(() => openSheet('historySheet'), 300);
+};
+document.getElementById('moreShare').onclick = () => {
+  closeSheet('moreSheet');
+  setTimeout(() => openSheet('shareSheet'), 300);
+};
+document.getElementById('moreProfile').onclick = () => {
+  closeSheet('moreSheet');
+  setTimeout(() => openSheet('statsSheet'), 300);
+};
+document.getElementById('moreNotif').onclick = () => {
+  closeSheet('moreSheet');
+  setTimeout(() => {
+    openSheet('notifSheet');
+    renderNotifSettings();
+  }, 300);
+};
+document.getElementById('moreFavArea').onclick = () => {
+  closeSheet('moreSheet');
+  setTimeout(() => {
+    openSheet('favAreaSheet');
+    renderFavArea();
+  }, 300);
+};
+
+// ═══════════════════════════════════════════════════
+// 💡 HELP BOT (FAQ) + ABOUT
+// ═══════════════════════════════════════════════════
+
+// FAQ Database - all questions and answers
+const FAQ = {
+  install: {
+    title: '📱 איך מתקינים את האפליקציה במסך הבית?',
+    body: `<strong>iPhone (Safari):</strong>
+<ol>
+<li>פתח את האפליקציה בספארי</li>
+<li>לחץ על כפתור השיתוף ⤴️ למטה במסך</li>
+<li>גלול ובחר "הוסף למסך הבית" / "Add to Home Screen"</li>
+<li>לחץ "הוסף" ✓</li>
+</ol>
+<strong>Android (Chrome):</strong>
+<ol>
+<li>פתח את האפליקציה בכרום</li>
+<li>לחץ על 3 הנקודות ⋮ למעלה</li>
+<li>בחר "הוסף למסך הבית"</li>
+</ol>
+<div class="help-tip">💡 לאחר ההתקנה, פתיחה תהיה כמו אפליקציה רגילה ללא דפדפן.</div>`
+  },
+  firstuse: {
+    title: '⚡ איך מתחילים לעבוד עם האפליקציה?',
+    body: `<ol>
+<li><strong>אפשר גישה למיקום</strong> - חיוני למציאת חניות סביבך</li>
+<li><strong>הפעל התראות</strong> - תקבל הודעה כשמתפנה חניה לידך</li>
+<li><strong>צא לדרך!</strong> - האפליקציה תציג מפה עם חניות פנויות</li>
+<li><strong>תרום לקהילה</strong> - כשאתה עוזב חניה, לחץ ➕ ושכן יקבל התראה</li>
+</ol>
+<div class="help-tip">💡 ככל שיותר אנשים משתמשים, כולם מוצאים חניה יותר מהר.</div>`
+  },
+  changename: {
+    title: '✏️ איך משנים את השם שלי?',
+    body: `כרגע השם נקבע פעם אחת בכניסה לאפליקציה. כדי לשנות:
+<ol>
+<li>לך ל"עוד" → "אודות" → "צור קשר"</li>
+<li>שלח לנו אימייל עם הבקשה</li>
+</ol>
+<div class="help-tip">💡 בעדכון הבא נוסיף אפשרות לשנות שם ישירות.</div>`
+  },
+  report: {
+    title: '➕ איך מדווחים על חניה פנויה?',
+    body: `<ol>
+<li>כשאתה עומד לעזוב את החניה - לחץ על הכפתור הכתום הגדול ➕ באמצע למטה</li>
+<li>בחר את סוג החניה: <strong>זוז זוז</strong> (אזרחית רגילה), <strong>כחול לבן</strong>, או <strong>כחולה (פנויה אחה"צ)</strong></li>
+<li>אשר את המיקום במפה</li>
+<li>לחץ "שחרר חניה"</li>
+</ol>
+האפליקציה תשלח התראה לשכנים בסביבה.
+<div class="help-tip">🎁 על כל דיווח אתה מקבל +5 XP ו-1 קרדיט!</div>`
+  },
+  cancelreport: {
+    title: '❌ איך מבטלים דיווח שהיה בטעות?',
+    body: `<ol>
+<li>לך ל"עוד" → "היסטוריה"</li>
+<li>מצא את הדיווח שלך</li>
+<li>לחץ על "בטל דיווח"</li>
+</ol>
+<div class="help-tip">⚠️ אם מישהו כבר תפס את החניה, לא ניתן לבטל. במקרים של דיווח כוזב חוזר - החשבון עלול להיחסם.</div>`
+  },
+  ttl: {
+    title: '⏱ למה החניה שדיווחתי נעלמה?',
+    body: `חניות נשמרות במערכת לזמן מוגבל:
+<ul>
+<li><strong>90 שניות</strong> - באזור עמוס (5+ חניות פנויות)</li>
+<li><strong>3 דקות</strong> - באזור בינוני</li>
+<li><strong>5 דקות</strong> - באזור שקט</li>
+</ul>
+זה נועד למנוע מצב של חניות "רפאים" שכבר נתפסו.
+<div class="help-tip">💡 אם אף אחד לא תפס תוך הזמן הזה, סביר שמישהו לקח אותה והפסיק לדווח.</div>`
+  },
+  search: {
+    title: '📍 איך מוצאים חניה ברחוב מסוים?',
+    body: `יש 2 דרכים:
+<ol>
+<li><strong>חיפוש מהיר:</strong> בשדה החיפוש למעלה - הקלד שם רחוב</li>
+<li><strong>מצב יעד:</strong> חפש כתובת + לחץ "ניווט ליעד" - תקבל רשימה ממוינת לפי קרבה ליעד שלך</li>
+</ol>
+<div class="help-tip">💡 במצב יעד תראה עיגול זהוב על המפה סביב היעד.</div>`
+  },
+  onway: {
+    title: '🚶 מה זה "מישהו בדרך"?',
+    body: `כשמישהו לוחץ "אני בדרך" לחניה, היא מסומנת באדום למשך 60 שניות.
+<ul>
+<li>אם הוא מגיע - הוא לוחץ "הגעתי"</li>
+<li>אם לא הגיע תוך 60 שניות - החניה חוזרת להיות פנויה</li>
+</ul>
+<div class="help-tip">💡 אם לחצת בטעות - לא נורא. תוך דקה היא תחזור להיות זמינה.</div>`
+  },
+  trip: {
+    title: '🎯 איך עובד מצב יעד?',
+    body: `מצב יעד מאפשר לך לחפש חניה ליד מקום ספציפי:
+<ol>
+<li>לחץ על שדה החיפוש</li>
+<li>הקלד שם של מקום (למשל "דיזנגוף סנטר")</li>
+<li>בחר תוצאה</li>
+<li>לחץ "ניווט ליעד"</li>
+</ol>
+האפליקציה תמיין חניות לפי קרבה ליעד שלך, ותציג עיגול זהוב על המפה.
+<div class="help-tip">💡 לסיום מצב יעד - לחץ ✕ בבאנר העליון.</div>`
+  },
+  notif: {
+    title: '🔕 ההתראות שלי לא עובדות',
+    body: `בדוק את הדברים הבאים:
+<ol>
+<li>לך ל"עוד" → "התראות" - וודא שהכל מופעל</li>
+<li>בהגדרות הטלפון - אשר התראות לאפליקציה</li>
+<li>אם אתה ב<strong>שעות שקט</strong> (22:00-07:00) - זה תקין</li>
+<li>בדוק את <strong>רדיוס ההתראות</strong> (100/300/500 מטר)</li>
+</ol>
+<div class="help-tip">⚠️ ב-iPhone: התראות יעבדו רק אם הוספת את האפליקציה למסך הבית.</div>`
+  },
+  favarea: {
+    title: '⭐ מה זה אזור מועדף?',
+    body: `אזור מועדף הוא מקום שאתה רוצה לקבל בו <strong>התראות חזקות</strong> גם כשאתה לא שם.
+<strong>איך מגדירים:</strong>
+<ol>
+<li>"עוד" → "האזור שלי"</li>
+<li>"בחר את המיקום הנוכחי שלי" או "בחר על המפה"</li>
+</ol>
+מעכשיו - כל פעם שמישהו ידווח על חניה באזור הזה, תקבל התראה <strong>גם אם אתה רחוק</strong>.
+<div class="help-tip">💡 שימושי במיוחד אם אתה גר במקום ובא אליו לעיתים קרובות.</div>`
+  },
+  quiet: {
+    title: '🌙 איך משתיקים בלילה?',
+    body: `שעות שקט מוגדרות כברירת מחדל מ-22:00 עד 07:00.
+לשנות:
+<ol>
+<li>"עוד" → "התראות"</li>
+<li>גלול ל"שעות שקט"</li>
+<li>שנה לפי הצורך</li>
+</ol>
+<div class="help-tip">💡 אפשר גם לכבות התראות לחלוטין מהמסך הזה.</div>`
+  },
+  credits: {
+    title: '💰 מה זה קרדיטים? איך משיגים?',
+    body: `קרדיטים הם מטבע פנימי שמראה כמה אתה תורם לקהילה.
+<strong>איך משיגים:</strong>
+<ul>
+<li>+1 קרדיט על כל חניה ששחררת</li>
+<li>+1 קרדיט על כל הגעה מאושרת</li>
+<li>בונוסים על רצף ימים</li>
+</ul>
+<strong>איך מאבדים:</strong>
+<ul>
+<li>-1 קרדיט אם הצהרת "בדרך" ולא הגעת</li>
+</ul>
+<div class="help-tip">⭐ עם 10+ קרדיטים אתה מקבל <strong>גישת VIP</strong> - התראות חזקות יותר על חניות חדשות!</div>`
+  },
+  xp: {
+    title: '⭐ מה זה XP ורמות?',
+    body: `XP (נקודות ניסיון) מודדות את הפעילות שלך באפליקציה.
+<strong>יש 8 רמות:</strong>
+I → II → III → IV → V → VI → VII → VIII
+<strong>איך משיגים XP:</strong>
+<ul>
+<li>+5 XP על שחרור חניה</li>
+<li>+3 XP על תפיסת חניה</li>
+<li>+10 XP על אישור הגעה</li>
+<li><strong>X2 XP</strong> בשעת זהב (18:00-19:00)!</li>
+</ul>
+<div class="help-tip">🎉 כשאתה עולה רמה - יש קונפטי!</div>`
+  },
+  streak: {
+    title: '🔥 מה זה רצף ימים?',
+    body: `רצף ימים סופר כמה ימים ברצף השתמשת באפליקציה.
+<strong>בונוסים:</strong>
+<ul>
+<li>5 ימים → +10 קרדיטים</li>
+<li>10 ימים → +25 קרדיטים</li>
+<li>14 ימים → +15 קרדיטים נוספים</li>
+</ul>
+<div class="help-tip">⚠️ אם תפסיד יום - הרצף מתאפס מ-0.</div>`
+  },
+  trust: {
+    title: '⭐ מה זה דירוג אמון?',
+    body: `דירוג אמון (1-5 כוכבים) מראה כמה אנשים סומכים עליך.
+<strong>איך מעלים:</strong>
+<ul>
+<li>אישורי הגעה לחניות שדיווחת</li>
+<li>פידבקים חיוביים מהמשתמשים</li>
+</ul>
+<strong>איך יורד:</strong>
+<ul>
+<li>דיווחים כוזבים שדגלו עליהם</li>
+<li>הצהרת "בדרך" ולא הגעת</li>
+</ul>
+<div class="help-tip">⭐ אנשים עם דירוג גבוה נראים בולט יותר במפה.</div>`
+  },
+  privacy: {
+    title: '🔒 האם המיקום שלי גלוי לכולם?',
+    body: `<strong>קצרה: לא.</strong>
+<ul>
+<li>המיקום שלך משמש רק כדי להציג לך חניות בקרבת מקום</li>
+<li>כשאתה מדווח על חניה - <strong>רק מיקום החניה</strong> נשמר, לא המיקום שלך</li>
+<li>אנחנו לא שומרים היסטוריה של היכן הסתובבת</li>
+<li>הדיווחים אנונימיים - אנשים רואים רק את השם שבחרת</li>
+</ul>
+<div class="help-tip">🛡️ אנחנו לא מבקשים טלפון, אימייל, או גישה לאנשי הקשר.</div>`
+  },
+  flag: {
+    title: '🚩 מישהו דיווח דיווח כוזב — מה עושים?',
+    body: `אם הגעת לחניה ולא היתה שם:
+<ol>
+<li>לחץ על "👎 לא הייתה" כשהאפליקציה שואלת</li>
+<li>או לחץ "🚩 דווח כדיווח שגוי" על החניה במפה</li>
+</ol>
+<strong>איך זה עוזר:</strong>
+<ul>
+<li>3 דגלים שונים על אותה חניה - היא נמחקת אוטומטית</li>
+<li>המדווח מאבד אמון</li>
+<li>במקרים חוזרים - הוא יחסם</li>
+</ul>
+<div class="help-tip">💡 הקהילה שומרת על עצמה.</div>`
+  },
+  loc: {
+    title: '📍 האפליקציה לא מוצאת אותי',
+    body: `<strong>פתרונות:</strong>
+<ol>
+<li>וודא שאישרת גישה למיקום (הגדרות הטלפון)</li>
+<li>בדוק שה-GPS מופעל</li>
+<li>אם אתה בבניין - צא לרגע החוצה</li>
+<li>סגור את האפליקציה ופתח מחדש</li>
+<li>נסה מחוץ ל-iCloud Private Relay (אם פועל)</li>
+</ol>
+<div class="help-tip">⚠️ ב-iPhone: הגדרות → פרטיות ואבטחה → שירותי מיקום → ספארי → "תוך כדי שימוש".</div>`
+  }
+};
+
+// Open help sheet
+document.getElementById('moreHelp').onclick = () => {
+  closeSheet('moreSheet');
+  setTimeout(() => {
+    openSheet('helpSheet');
+    showHelpCategories();
+  }, 300);
+};
+
+// Open about sheet
+document.getElementById('moreAbout').onclick = () => {
+  closeSheet('moreSheet');
+  setTimeout(() => openSheet('aboutSheet'), 300);
+};
+
+// Help question handlers
+document.querySelectorAll('.help-q').forEach(btn => {
+  btn.onclick = () => showHelpAnswer(btn.dataset.q);
+});
+
+document.getElementById('helpBack').onclick = showHelpCategories;
+
+document.getElementById('helpSearch').oninput = (e) => {
+  const q = e.target.value.toLowerCase().trim();
+  if (!q) {
+    showHelpCategories();
+    return;
+  }
+  // Find matching questions
+  const matches = Object.entries(FAQ).filter(([key, item]) => 
+    item.title.toLowerCase().includes(q) || item.body.toLowerCase().includes(q)
+  );
+  // Hide normal categories, show only matches
+  const cats = document.getElementById('helpCategories');
+  cats.style.display = 'block';
+  document.getElementById('helpAnswer').style.display = 'none';
+  // Update visibility
+  document.querySelectorAll('.help-q').forEach(btn => {
+    const key = btn.dataset.q;
+    btn.style.display = matches.find(m => m[0] === key) ? 'block' : 'none';
+  });
+  document.querySelectorAll('.help-cat-title').forEach(t => {
+    // Check if any visible button follows this title
+    let next = t.nextElementSibling;
+    let hasVisible = false;
+    while (next && next.classList.contains('help-q')) {
+      if (next.style.display !== 'none') { hasVisible = true; break; }
+      next = next.nextElementSibling;
+    }
+    t.style.display = hasVisible ? 'block' : 'none';
+  });
+};
+
+document.getElementById('helpEmail').onclick = () => {
+  const subject = encodeURIComponent('שאלה על פנוי תפוס');
+  const body = encodeURIComponent('היי,\n\nיש לי שאלה לגבי האפליקציה:\n\n');
+  window.location.href = `mailto:panui.tafus@gmail.com?subject=${subject}&body=${body}`;
+};
+
+function showHelpCategories() {
+  document.getElementById('helpCategories').style.display = 'block';
+  document.getElementById('helpAnswer').style.display = 'none';
+  document.getElementById('helpSearch').value = '';
+  // Reset visibility
+  document.querySelectorAll('.help-q, .help-cat-title').forEach(el => el.style.display = '');
+}
+
+function showHelpAnswer(key) {
+  const item = FAQ[key];
+  if (!item) return;
+  document.getElementById('helpCategories').style.display = 'none';
+  document.getElementById('helpAnswer').style.display = 'block';
+  document.getElementById('helpAnswerContent').innerHTML = `
+    <div class="help-answer-title">${item.title}</div>
+    <div class="help-answer-body">${item.body}</div>
+  `;
+}
+
+// ═══════════════════════════════════════════════════
+// 📜 LEGAL TEXTS (Terms, Privacy, Contact)
+// ═══════════════════════════════════════════════════
+const LEGAL = {
+  terms: {
+    eyebrow: 'Terms',
+    titleHTML: 'תנאי <span class="it">שימוש</span>',
+    body: `
+<p style="color:#8f8b82;font-style:italic;font-size:11px;margin-bottom:16px;">עדכון אחרון: אפריל 2026</p>
+
+<p><strong>1. ברוכים הבאים</strong></p>
+<p>פנוי תפוס היא רשת קהילתית חינמית למציאת חניה בתל אביב. השירות ניתן ע"י השימוש בו אתה מסכים לתנאים אלו.</p>
+
+<p style="margin-top:16px;"><strong>2. שימוש ראוי</strong></p>
+<p>אסור לדווח על חניות לא קיימות, לפרסם תוכן פוגעני, או להפריע לפעילות התקינה של האפליקציה.</p>
+
+<p style="margin-top:16px;"><strong>3. אחריות מוגבלת</strong></p>
+<p>האפליקציה מספקת מידע שמשתמשים מדווחים בזמן אמת. איננו מתחייבים שהחניה אכן זמינה כשתגיע. השימוש על אחריותך.</p>
+
+<p style="margin-top:16px;"><strong>4. תוכן משתמשים</strong></p>
+<p>אתה אחראי לתוכן שאתה מדווח. אנחנו רשאים למחוק דיווחים שמפרים את התנאים.</p>
+
+<p style="margin-top:16px;"><strong>5. סיום שימוש</strong></p>
+<p>אנחנו רשאים לחסום משתמשים שמפרים את התנאים בצורה חוזרת.</p>
+
+<p style="margin-top:16px;"><strong>6. שינויים בתנאים</strong></p>
+<p>אנחנו רשאים לעדכן את התנאים. עדכונים יפורסמו בעמוד זה.</p>
+
+<p style="margin-top:16px;"><strong>7. דין חל</strong></p>
+<p>על תנאים אלו חל הדין הישראלי. סמכות שיפוט - בתי המשפט בתל אביב.</p>
+
+<p style="margin-top:16px;"><strong>8. יצירת קשר</strong></p>
+<p>שאלות? שלח אימייל ל-panui.tafus@gmail.com</p>
+`
+  },
+  privacy: {
+    eyebrow: 'Privacy',
+    titleHTML: 'מדיניות <span class="it">פרטיות</span>',
+    body: `
+<p style="color:#8f8b82;font-style:italic;font-size:11px;margin-bottom:16px;">עדכון אחרון: אפריל 2026</p>
+
+<p><strong>1. המחויבות שלנו</strong></p>
+<p>אנחנו מאמינים בפרטיות. האפליקציה מתוכננת לאסוף מינימום מידע אישי.</p>
+
+<p style="margin-top:16px;"><strong>2. מה אנחנו אוספים</strong></p>
+<ul style="padding-right:18px;margin-top:8px;">
+<li>שם שאתה בוחר (יכול להיות כינוי)</li>
+<li>מיקומי חניות שאתה מדווח</li>
+<li>הגדרות אפליקציה (התראות, אזור מועדף)</li>
+<li>סטטיסטיקות שימוש (XP, קרדיטים)</li>
+</ul>
+
+<p style="margin-top:16px;"><strong>3. מה אנחנו לא אוספים</strong></p>
+<ul style="padding-right:18px;margin-top:8px;">
+<li>מספר טלפון</li>
+<li>כתובת אימייל</li>
+<li>אנשי קשר</li>
+<li>היסטוריית מיקום</li>
+<li>פרטי כרטיס אשראי</li>
+</ul>
+
+<p style="margin-top:16px;"><strong>4. שיתוף עם צדדים שלישיים</strong></p>
+<p>איננו מוכרים או משכירים את המידע שלך. הנתונים נשמרים בשרתי Firebase של Google.</p>
+
+<p style="margin-top:16px;"><strong>5. עוגיות (Cookies)</strong></p>
+<p>אנחנו משתמשים ב-localStorage של הדפדפן לשמור הגדרות מקומיות. אין מעקב או צד שלישי.</p>
+
+<p style="margin-top:16px;"><strong>6. הזכויות שלך</strong></p>
+<ul style="padding-right:18px;margin-top:8px;">
+<li>למחוק את הנתונים שלך - שלח לנו אימייל</li>
+<li>לבקש עותק של המידע - שלח לנו אימייל</li>
+<li>לתקן שגיאות - שלח לנו אימייל</li>
+</ul>
+
+<p style="margin-top:16px;"><strong>7. ילדים</strong></p>
+<p>השירות אינו מיועד לילדים מתחת לגיל 13. אם אתה הורה וגילית שילדך משתמש - פנה אלינו.</p>
+
+<p style="margin-top:16px;"><strong>8. שינויים במדיניות</strong></p>
+<p>אנחנו עשויים לעדכן את המדיניות. שינויים מהותיים יוצגו באפליקציה.</p>
+
+<p style="margin-top:16px;"><strong>9. ליצירת קשר</strong></p>
+<p>שאלות פרטיות? אימייל: panui.tafus@gmail.com</p>
+`
+  },
+  contact: {
+    eyebrow: 'Contact',
+    titleHTML: 'צור <span class="it">קשר</span>',
+    body: `
+<p>שמחים לשמוע ממך! בחר את האופציה המתאימה:</p>
+
+<div style="background:rgba(201,167,112,0.08);border:1px solid rgba(201,167,112,0.3);border-radius:14px;padding:18px;margin-top:16px;">
+  <div style="font-family:'Frank Ruhl Libre',serif;font-size:15px;font-weight:500;color:#ebe8e2;margin-bottom:8px;">💡 שאלות נפוצות</div>
+  <p style="font-size:13px;color:#c8c4bc;line-height:1.6;margin:0 0 12px;">לפני ששולח אימייל - בדוק אם השאלה שלך כבר נענתה בבוט העזרה.</p>
+  <button onclick="closeSheet('legalSheet');setTimeout(()=>{closeSheet('aboutSheet');setTimeout(()=>{openSheet('helpSheet');showHelpCategories();},300);},300);" style="background:none;border:1px solid #c9a770;color:#c9a770;padding:8px 14px;border-radius:8px;font-family:'Frank Ruhl Libre',serif;font-size:13px;cursor:pointer;">עבור לבוט עזרה →</button>
+</div>
+
+<p style="margin-top:20px;"><strong>📧 אימייל</strong></p>
+<p>לשאלות, באגים, הצעות, או בעיות פרטיות:</p>
+<p style="background:#0d0d0e;padding:12px;border-radius:10px;text-align:center;font-family:'Inter',monospace;font-size:14px;color:#c9a770;margin:8px 0;">panui.tafus@gmail.com</p>
+
+<button onclick="window.location.href='mailto:panui.tafus@gmail.com?subject=' + encodeURIComponent('פנייה - פנוי תפוס')" style="width:100%;padding:14px;background:#1a1a1c;border:1px solid rgba(201,167,112,0.3);border-radius:12px;color:#c9a770;font-family:'Frank Ruhl Libre',serif;font-size:14px;font-weight:500;cursor:pointer;margin-top:10px;">
+  ✉️ פתח אימייל מוכן
+</button>
+
+<p style="margin-top:24px;"><strong>⏱ זמני תגובה</strong></p>
+<p>אנחנו עונים תוך 24-48 שעות בימי חול. בסופי שבוע יתכן עיכוב.</p>
+
+<p style="margin-top:16px;"><strong>🔧 דיווח על באג?</strong></p>
+<p>תכלול במייל:</p>
+<ul style="padding-right:18px;margin-top:8px;">
+<li>סוג הטלפון (iPhone/Android)</li>
+<li>מה ניסית לעשות</li>
+<li>מה קרה בפועל</li>
+<li>צילום מסך אם אפשר</li>
+</ul>
+`
+  }
+};
+
+document.getElementById('openTerms').onclick = () => openLegal('terms');
+document.getElementById('openPrivacy').onclick = () => openLegal('privacy');
+document.getElementById('openContact').onclick = () => openLegal('contact');
+
+function openLegal(type) {
+  const item = LEGAL[type];
+  if (!item) return;
+  document.getElementById('legalEyebrow').textContent = item.eyebrow;
+  document.getElementById('legalTitle').innerHTML = item.titleHTML;
+  document.getElementById('legalContent').innerHTML = item.body;
+  closeSheet('aboutSheet');
+  setTimeout(() => openSheet('legalSheet'), 300);
+}
+
+// 🔍 Search bar handlers
+document.getElementById('searchInput').oninput = (e) => onSearchInput(e.target.value);
+document.getElementById('searchInput').onfocus = () => {
+  // Re-show results if there's a current value
+  const val = document.getElementById('searchInput').value;
+  if (val.length >= 2) onSearchInput(val);
+};
+document.getElementById('searchClear').onclick = () => {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchClear').style.display = 'none';
+  document.getElementById('searchResults').style.display = 'none';
+};
+document.getElementById('tripClose').onclick = endTripMode;
+
+// Close search results when clicking outside
+document.addEventListener('click', (e) => {
+  const wrap = document.getElementById('searchWrap');
+  const results = document.getElementById('searchResults');
+  if (wrap && results && !wrap.contains(e.target) && !results.contains(e.target)) {
+    results.style.display = 'none';
+  }
+});
+
+// Favorite area handlers
+document.getElementById('favAreaPickHere').onclick = setFavAreaToCurrent;
+document.getElementById('favAreaPickMap').onclick = pickFavAreaOnMap;
+document.getElementById('favAreaShowMap').onclick = showFavAreaOnMap;
+document.getElementById('favAreaNavigate').onclick = navigateToFavArea;
+document.getElementById('favAreaChange').onclick = () => {
+  if (confirm('להחליף את האזור?')) {
+    clearFavArea();
+  }
+};
+
+// ═══════ NOTIFICATION SETTINGS HANDLERS ═══════
+function renderNotifSettings() {
+  const perm = checkNotifPermission();
+  const enabled = state.notif.enabled && perm === 'granted';
+  const status = document.getElementById('notifStatus');
+  const settings = document.getElementById('notifSettings');
+  const icon = document.getElementById('notifIcon');
+  const text = document.getElementById('notifStatusText');
+  const enableBtn = document.getElementById('notifEnableBtn');
+  const moreNotifDesc = document.getElementById('moreNotifDesc');
+
+  if (perm === 'unsupported') {
+    icon.textContent = '🚫';
+    text.textContent = 'הדפדפן לא תומך בהתראות';
+    enableBtn.style.display = 'none';
+    settings.style.display = 'none';
+    if (moreNotifDesc) moreNotifDesc.textContent = 'לא נתמך בדפדפן';
+    return;
+  }
+  if (perm === 'denied') {
+    icon.textContent = '🚫';
+    text.textContent = 'התראות חסומות בדפדפן';
+    enableBtn.textContent = 'איך להפעיל מחדש?';
+    enableBtn.onclick = () => {
+      toast('err', 'פתח הגדרות → אתרים → התראות → אפשר');
+    };
+    settings.style.display = 'none';
+    if (moreNotifDesc) moreNotifDesc.textContent = 'חסומות בדפדפן';
+    return;
+  }
+  if (enabled) {
+    icon.textContent = '✅';
+    text.textContent = 'התראות פעילות';
+    enableBtn.style.display = 'none';
+    settings.style.display = 'block';
+    if (moreNotifDesc) moreNotifDesc.textContent = `פעילות · ${Math.round(state.notif.radius * 1000)}מ׳`;
+  } else {
+    icon.textContent = '🔔';
+    text.textContent = 'הפעל כדי לקבל התראות על חניות חדשות';
+    enableBtn.style.display = 'inline-block';
+    enableBtn.textContent = 'הפעל התראות';
+    enableBtn.onclick = async () => {
+      const ok = await requestNotifPermission();
+      if (ok) renderNotifSettings();
+    };
+    settings.style.display = 'none';
+    if (moreNotifDesc) moreNotifDesc.textContent = 'התראות כבויות';
+  }
+
+  // Update segment buttons
+  document.querySelectorAll('.notif-seg').forEach(b => {
+    b.classList.toggle('active', parseFloat(b.dataset.radius) === state.notif.radius);
+  });
+  // Update toggles
+  document.getElementById('notifQuietToggle').classList.toggle('active', state.notif.quietStart !== null);
+  document.getElementById('notifVibrateToggle').classList.toggle('active', state.notif.vibrate);
+  document.getElementById('notifSoundToggle').classList.toggle('active', state.notif.sound);
+}
+
+// Radius selection
+document.querySelectorAll('.notif-seg').forEach(b => {
+  b.onclick = () => {
+    state.notif.radius = parseFloat(b.dataset.radius);
+    saveState();
+    renderNotifSettings();
+    toast('xp', `רדיוס עודכן ל-${Math.round(state.notif.radius * 1000)}מ׳`);
+  };
+});
+
+// Quiet hours toggle
+document.getElementById('notifQuietToggle').onclick = () => {
+  if (state.notif.quietStart !== null) {
+    state.notif.quietStart = null;
+    state.notif.quietEnd = null;
+  } else {
+    state.notif.quietStart = 22;
+    state.notif.quietEnd = 7;
+  }
+  saveState();
+  renderNotifSettings();
+};
+
+// Vibrate toggle
+document.getElementById('notifVibrateToggle').onclick = () => {
+  state.notif.vibrate = !state.notif.vibrate;
+  saveState();
+  renderNotifSettings();
+  if (state.notif.vibrate) vibrate(50);
+};
+
+// Sound toggle
+document.getElementById('notifSoundToggle').onclick = () => {
+  state.notif.sound = !state.notif.sound;
+  saveState();
+  renderNotifSettings();
+};
+
+// Test notification
+document.getElementById('notifTestBtn').onclick = () => {
+  sendNotif('🔔 בדיקת התראה', 'אם אתה רואה את זה - הכל עובד!', { tag: 'test' });
+  toast('xp', 'נשלחה התראת בדיקה');
+};
+
+// Disable
+document.getElementById('notifDisableBtn').onclick = () => {
+  state.notif.enabled = false;
+  saveState();
+  renderNotifSettings();
+  toast('xp', 'התראות הושבתו');
+};
+
+// Reset nav to home when sheets close
+document.querySelectorAll('[data-close]').forEach(b => {
+  const original = b.onclick;
+  b.onclick = () => {
+    if (original) original();
+    setTimeout(() => setActiveNav('navHome'), 100);
+  };
+});
+
+document.getElementById('shareWaBtn').onclick = shareWhatsApp;
+document.getElementById('shareCopyBtn').onclick = copyLink;
+
+// Arrived confirmation modal buttons
+document.getElementById('arrivedConfirm').onclick = confirmArrival;
+document.getElementById('arrivedCancel').onclick = () => cancelClaim(false);
+
+// Filter buttons
+document.querySelectorAll('[data-filter]').forEach(btn => {
+  btn.onclick = () => {
+    state.filter = btn.dataset.filter;
+    document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderAll();
+  };
+});
+
+document.querySelectorAll('.type-opt').forEach(b => {
+  b.onclick = () => {
+    document.querySelectorAll('.type-opt').forEach(x => x.classList.remove('selected'));
+    b.classList.add('selected');
+    state.selType = b.dataset.type;
+  };
+});
+document.getElementById('submitRelease').onclick = releaseSpot;
+document.getElementById('pickerClose').onclick = closePicker;
+document.getElementById('pickerConfirm').onclick = pickerConfirm;
+
+window.addEventListener('error', (e) => console.warn('caught:', e.message));
+
+// ═══════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════
+loadState();
+subscribeToSpots();
+subscribeToTakes();
+
+// Init notifications: sync permission state on load
+checkNotifPermission();
+if (state.notif.enabled && state.notif.permission !== 'granted') {
+  // User had it enabled but permission revoked - reset
+  state.notif.enabled = false;
+  saveState();
+}
+// Try wake lock if notifications are on
+if (state.notif.enabled) tryWakeLock();
+
+// 📱 PWA Install Prompt
+let deferredInstallPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  // Show install hint after user has used the app a bit
+  if (state.user.released >= 2 && !localStorage.getItem('bechik_install_dismissed')) {
+    setTimeout(() => showInstallPrompt(), 8000);
+  }
+});
+
+function showInstallPrompt() {
+  if (!deferredInstallPrompt) return;
+  if (document.getElementById('installPrompt')) return;
+  const html = `
+    <div id="installPrompt" style="position:fixed;bottom:80px;left:14px;right:14px;z-index:1300;background:#1a1a1c;border:1px solid rgba(201,167,112,0.4);border-radius:14px;padding:14px;box-shadow:0 16px 48px rgba(0,0,0,0.7);animation:slideUp 0.3s ease-out;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="width:42px;height:42px;border-radius:10px;background:radial-gradient(circle at 30% 30%,#e0c28c,#c9a770 40%,#8b6f47 90%);display:grid;place-items:center;color:#2a1f1a;font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:900;flex-shrink:0;">ח</div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-family:'Frank Ruhl Libre',serif;font-size:14px;color:#ebe8e2;font-weight:600;">התקן את האפליקציה</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:#8f8b82;">גישה מהירה + התראות חזקות</div>
+        </div>
+        <button id="installPromptYes" style="padding:8px 14px;background:linear-gradient(180deg,#e0c28c,#c9a770);color:#2a1f1a;border-radius:99px;font-family:'Frank Ruhl Libre',serif;font-size:12px;font-weight:600;flex-shrink:0;">התקן</button>
+        <button id="installPromptNo" style="padding:8px;background:transparent;color:#8f8b82;font-size:14px;flex-shrink:0;">✕</button>
+      </div>
+    </div>
+    <style>@keyframes slideUp { from { transform: translateY(100%); opacity:0; } to { transform: translateY(0); opacity:1; } }</style>
+
+`;
+document.body.insertAdjacentHTML(‘beforeend’, html);
+document.getElementById(‘installPromptYes’).onclick = async () => {
+document.getElementById(‘installPrompt’).remove();
+deferredInstallPrompt.prompt();
+const result = await deferredInstallPrompt.userChoice;
+deferredInstallPrompt = null;
+if (result.outcome === ‘accepted’) {
+toast(‘win’, ‘הותקן בהצלחה!’);
+}
+};
+document.getElementById(‘installPromptNo’).onclick = () => {
+document.getElementById(‘installPrompt’).remove();
+localStorage.setItem(‘bechik_install_dismissed’, ‘1’);
+};
+// Auto-dismiss after 12s
+setTimeout(() => {
+const el = document.getElementById(‘installPrompt’);
+if (el) el.remove();
+}, 12000);
+}
+
+// 🌐 Offline detection
+window.addEventListener(‘online’, () => {
+setLiveChip(true);
+toast(‘xp’, ‘✓ חזרת לאינטרנט’);
+});
+window.addEventListener(‘offline’, () => {
+setLiveChip(false);
+toast(‘err’, ‘⚠ אין חיבור לאינטרנט’);
+});
+
+if (localStorage.getItem(‘bechik_onboarded_v1’)) {
+document.getElementById(‘onboard’).style.display = ‘none’;
+document.getElementById(‘app’).classList.add(‘active’);
+setTimeout(() => locate().catch(() => {}), 300);
+}
+
+renderAll();
+
+// Show daily tip after app loads
+maybeShowDailyTip();
+
+// Register minimal service worker for PWA installability (no caching to avoid stale issues)
+if (‘serviceWorker’ in navigator) {
+const swCode = `self.addEventListener('install', e => self.skipWaiting()); self.addEventListener('activate', e => e.waitUntil(self.clients.claim())); self.addEventListener('fetch', e => {});`;
+try {
+const blob = new Blob([swCode], { type: ‘application/javascript’ });
+const swUrl = URL.createObjectURL(blob);
+navigator.serviceWorker.register(swUrl).catch(() => {});
+// Also unregister any old service workers that may be caching
+navigator.serviceWorker.getRegistrations().then(regs => {
+regs.forEach(r => {
+if (r.active && r.active.scriptURL && !r.active.scriptURL.includes(‘blob:’)) {
+r.unregister();
+}
+});
+}).catch(() => {});
+} catch(e) {}
+}
+
+// Live countdown updater - re-renders every second when active spots exist
+// Only does heavy renderAll once per 30s to save battery
+let renderCount = 0;
+setInterval(() => {
+renderCount++;
+// Every second: just update countdowns in list view (cheap)
+if (state.view === ‘list’ && state.spots.length > 0) {
+renderList();
+}
+// Every 5 seconds: update map pins too (medium)
+if (renderCount % 5 === 0 && state.view === ‘map’ && map) {
+renderPins();
+}
+// Every 30 seconds: full render (counts, badges, etc)
+if (renderCount % 30 === 0) {
+renderAll();
+}
+}, 1000);
+
+// PWA manifest
+try {
+const manifest = {
+name: ‘פנוי תפוס’,
+short_name: ‘פנוי’,
+start_url: ‘.’,
+display: ‘standalone’,
+background_color: ‘#0d0d0e’,
+theme_color: ‘#c9a770’,
+orientation: ‘portrait’,
+lang: ‘he’, dir: ‘rtl’,
+icons: [{
+src: ‘data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 192 192%22%3E%3Ccircle cx=%2296%22 cy=%2296%22 r=%2290%22 fill=%22%23c9a770%22/%3E%3Ctext x=%2296%22 y=%22130%22 font-size=%22100%22 font-family=%22serif%22 font-weight=%22900%22 fill=%22%232a1f1a%22 text-anchor=%22middle%22%3E%D7%A4%3C/text%3E%3C/svg%3E’,
+sizes: ‘192x192’, type: ‘image/svg+xml’
+}]
+};
+const blob = new Blob([JSON.stringify(manifest)], { type: ‘application/json’ });
+const link = document.createElement(‘link’);
+link.rel = ‘manifest’;
+link.href = URL.createObjectURL(blob);
+document.head.appendChild(link);
+} catch(e) {}
+</script>
+
+</body>
+</html>
